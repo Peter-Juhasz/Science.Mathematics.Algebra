@@ -34,15 +34,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="AlgebraExpression.cs" />
     <Compile Include="AtomicExpression.cs" />
+    <Compile Include="ExpressionList.cs" />
     <Compile Include="ExpressionFactory.cs" />
     <Compile Include="ConstantExpression.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="ProductExpressionList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SumExpressionList.cs" />
     <Compile Include="VariableExpression.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\packages\Microsoft.Bcl.Immutable.1.0.34\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

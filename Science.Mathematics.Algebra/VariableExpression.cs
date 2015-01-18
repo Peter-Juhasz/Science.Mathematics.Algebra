@@ -7,7 +7,7 @@ namespace Science.Mathematics.Algebra
         public VariableExpression(string name)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (name.Length == 0)
                 throw new ArgumentException("Variable name can not be a zero-length string.", "name");

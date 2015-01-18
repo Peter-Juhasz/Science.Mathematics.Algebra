@@ -13,11 +13,15 @@ namespace Science.Mathematics.Algebra
         {
             this.Value = value;
         }
+        public ConstantExpression(double value)
+        {
+            this.Value = value;
+        }
 
         /// <summary>
         /// Gets the value of the expression.
         /// </summary>
-        public int Value { get; private set; }
+        public double Value { get; private set; }
 
 
         public override double? GetConstantValue()
