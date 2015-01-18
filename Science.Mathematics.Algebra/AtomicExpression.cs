@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace Science.Mathematics.Algebra
+﻿namespace Science.Mathematics.Algebra
 {
+    /// <summary>
+    /// Represents an atomic expression.
+    /// </summary>
     public abstract class AtomicExpression : AlgebraExpression
     {
         public override AlgebraExpression Simplify()

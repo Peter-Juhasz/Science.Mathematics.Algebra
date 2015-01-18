@@ -8,7 +8,7 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Represents the sum of multiple terms.
     /// </summary>
-    public class SumExpressionList : ExpressionList
+    public class SumExpressionList : ExpressionList, IEquatable<SumExpressionList>
     {
         public SumExpressionList(IEnumerable<AlgebraExpression> terms)
             : base(terms)
@@ -94,6 +94,25 @@ namespace Science.Mathematics.Algebra
             );
         }
 
+
+        public bool Equals(SumExpressionList other)
+        {
+            if (Object.ReferenceEquals(other, null)) return false;
+
+            if (this.Terms.Count != other.Terms.Count)
+                return false;
+
+            return this.Terms.All(t => other.Terms.Contains(t)); // TODO: Add equality comparer
+        }
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj as SumExpressionList);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Terms.Select(o => o.GetHashCode()).Aggregate((x, y) => x ^ y);
+        }
 
         public override string ToString()
         {

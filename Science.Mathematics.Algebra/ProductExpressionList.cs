@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Science.Mathematics.Algebra
 {
-    public class ProductExpressionList : ExpressionList
+    public class ProductExpressionList : ExpressionList, IEquatable<ProductExpressionList>
     {
         public ProductExpressionList(IEnumerable<AlgebraExpression> terms)
             : base(terms)
@@ -93,6 +93,25 @@ namespace Science.Mathematics.Algebra
             );
         }
 
+
+        public bool Equals(ProductExpressionList other)
+        {
+            if (Object.ReferenceEquals(other, null)) return false;
+
+            if (this.Terms.Count != other.Terms.Count)
+                return false;
+
+            return this.Terms.All(t => other.Terms.Contains(t)); // TODO: Add equality comparer
+        }
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj as ProductExpressionList);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Terms.Select(o => o.GetHashCode()).Aggregate((x, y) => x ^ y);
+        }
 
         public override string ToString()
         {

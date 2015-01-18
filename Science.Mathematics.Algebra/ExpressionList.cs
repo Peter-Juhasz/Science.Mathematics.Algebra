@@ -4,6 +4,9 @@ using System.Collections.Immutable;
 
 namespace Science.Mathematics.Algebra
 {
+    /// <summary>
+    /// Represents a list of expression terms.
+    /// </summary>
     public abstract class ExpressionList : AlgebraExpression
     {
         public ExpressionList(IEnumerable<AlgebraExpression> terms)
@@ -20,6 +23,9 @@ namespace Science.Mathematics.Algebra
             this.Terms = terms;
         }
 
+        /// <summary>
+        /// Gets the expression terms.
+        /// </summary>
         public IImmutableList<AlgebraExpression> Terms { get; private set; }
     }
 }

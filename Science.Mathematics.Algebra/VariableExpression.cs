@@ -62,26 +62,25 @@ namespace Science.Mathematics.Algebra
         #endregion
 
 
-        public override string ToString()
-        {
-            return this.Name;
-        }
-
-        public bool Equals(VariableExpression other)
-        {
-            if (other == null) return false;
-
-            return this.Name == other.Name;
-        }
-        
         public override int GetHashCode()
         {
             return this.Name.GetHashCode();
         }
 
+        public bool Equals(VariableExpression other)
+        {
+            if (Object.ReferenceEquals(other, null)) return false;
+
+            return this.Name == other.Name;
+        }
         public override bool Equals(object obj)
         {
             return this.Equals(obj as VariableExpression);
+        }
+
+        public override string ToString()
+        {
+            return this.Name;
         }
     }
 }

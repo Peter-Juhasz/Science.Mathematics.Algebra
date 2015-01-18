@@ -3,6 +3,9 @@ using System.Text;
 
 namespace Science.Mathematics.Algebra
 {
+    /// <summary>
+    /// Represents a power expression.
+    /// </summary>
     public class PowerExpression : AlgebraExpression
     {
         public PowerExpression(AlgebraExpression @base, AlgebraExpression exponent)
@@ -12,13 +15,19 @@ namespace Science.Mathematics.Algebra
 
             if (exponent == null)
                 throw new ArgumentNullException(nameof(exponent));
-
+            
             this.Base = @base;
             this.Exponent = exponent;
         }
 
+        /// <summary>
+        /// Gets the base of the power.
+        /// </summary>
         public AlgebraExpression Base { get; private set; }
 
+        /// <summary>
+        /// Gets the exponent of the power.
+        /// </summary>
         public AlgebraExpression Exponent { get; private set; }
 
 
@@ -123,43 +132,48 @@ namespace Science.Mathematics.Algebra
 
         public override bool Equals(object obj)
         {
-            return obj is PowerExpression ? this.Equals(obj as PowerExpression) : false;
+            return this.Equals(obj as PowerExpression);
         }
 
         public bool Equals(PowerExpression other)
         {
-            if (other == null) return false;
+            if (Object.ReferenceEquals(other, null)) return false;
 
-            return this.Base.Equals(other.Base) && this.Exponent.Equals(other.Exponent);
+            return this.Base == other.Base && this.Exponent == other.Exponent;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Base.GetHashCode() ^ this.Exponent.GetHashCode();
         }
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder result = new StringBuilder();
 
             var baseNeedsParenthesis = this.Base is ExpressionList || this.Base is ExpressionList;
             if (baseNeedsParenthesis)
-                sb.Append('(');
+                result.Append('(');
 
-            sb.Append(this.Base);
+            result.Append(this.Base);
 
             if (baseNeedsParenthesis)
-                sb.Append(')');
+                result.Append(')');
 
-            sb.Append(' ');
-            sb.Append('^');
-            sb.Append(' ');
+            result.Append(' ');
+            result.Append('^');
+            result.Append(' ');
 
             var exponentNeedsParenthesis = this.Exponent is ExpressionList || this.Exponent is ExpressionList;
             if (exponentNeedsParenthesis)
-                sb.Append('(');
+                result.Append('(');
 
-            sb.Append(this.Exponent);
+            result.Append(this.Exponent);
 
             if (exponentNeedsParenthesis)
-                sb.Append(')');
+                result.Append(')');
 
-            return sb.ToString();
+            return result.ToString();
         }
     }
 }

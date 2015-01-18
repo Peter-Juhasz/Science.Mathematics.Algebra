@@ -21,17 +21,17 @@ namespace Science.Mathematics.Algebra
         /// <summary>
         /// 
         /// </summary>
-        public static readonly ConstantExpression Zero = new ConstantExpression(0);
+        public static readonly ConstantExpression Zero = 0;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly ConstantExpression One = new ConstantExpression(1);
+        public static readonly ConstantExpression One = 1;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly ConstantExpression MinusOne = new ConstantExpression(-1);
+        public static readonly ConstantExpression MinusOne = -1;
 
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Science.Mathematics.Algebra
 
         public bool Equals(ConstantExpression other)
         {
-            if (other == null) return false;
+            if (Object.ReferenceEquals(other, null)) return false;
 
             return this.Value == other.Value;
         }

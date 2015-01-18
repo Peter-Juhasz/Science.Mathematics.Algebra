@@ -150,5 +150,12 @@
             return !(left == right);
         }
         #endregion
+
+        #region Conversions
+        public static implicit operator AlgebraExpression(double value)
+        {
+            return ExpressionFactory.Constant(value);
+        }
+        #endregion
     }
 }
