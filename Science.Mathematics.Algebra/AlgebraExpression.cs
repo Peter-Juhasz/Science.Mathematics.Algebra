@@ -63,11 +63,11 @@
         #endregion
         
         /// <summary>
-		/// Replaces every occurrences of <paramref name="subject"/> to <paramref name="replacement"/>.
-		/// </summary>
-		/// <param name="subject"></param>
-		/// <param name="replacement"></param>
-		/// <returns></returns>
+        /// Replaces every occurrences of <paramref name="subject"/> to <paramref name="replacement"/>.
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <param name="replacement"></param>
+        /// <returns></returns>
         public abstract AlgebraExpression Substitute(AlgebraExpression subject, AlgebraExpression replacement);
 
         #region Operators
@@ -75,25 +75,65 @@
         {
             return ExpressionFactory.Add(left, right);
         }
+        public static AlgebraExpression operator +(double left, AlgebraExpression right)
+        {
+            return ExpressionFactory.Add(ExpressionFactory.Constant(left), right);
+        }
+        public static AlgebraExpression operator +(AlgebraExpression left, double right)
+        {
+            return ExpressionFactory.Add(left, ExpressionFactory.Constant(right));
+        }
 
         public static AlgebraExpression operator -(AlgebraExpression left, AlgebraExpression right)
         {
             return ExpressionFactory.Subtract(left, right);
+        }
+        public static AlgebraExpression operator -(double left, AlgebraExpression right)
+        {
+            return ExpressionFactory.Subtract(ExpressionFactory.Constant(left), right);
+        }
+        public static AlgebraExpression operator -(AlgebraExpression left, double right)
+        {
+            return ExpressionFactory.Subtract(left, ExpressionFactory.Constant(right));
         }
 
         public static AlgebraExpression operator *(AlgebraExpression left, AlgebraExpression right)
         {
             return ExpressionFactory.Multiply(left, right);
         }
+        public static AlgebraExpression operator *(double left, AlgebraExpression right)
+        {
+            return ExpressionFactory.Multiply(ExpressionFactory.Constant(left), right);
+        }
+        public static AlgebraExpression operator *(AlgebraExpression left, double right)
+        {
+            return ExpressionFactory.Multiply(left, ExpressionFactory.Constant(right));
+        }
 
         public static AlgebraExpression operator /(AlgebraExpression left, AlgebraExpression right)
         {
             return ExpressionFactory.Divide(left, right);
         }
+        public static AlgebraExpression operator /(double left, AlgebraExpression right)
+        {
+            return ExpressionFactory.Divide(ExpressionFactory.Constant(left), right);
+        }
+        public static AlgebraExpression operator /(AlgebraExpression left, double right)
+        {
+            return ExpressionFactory.Divide(left, ExpressionFactory.Constant(right));
+        }
 
         public static AlgebraExpression operator ^(AlgebraExpression left, AlgebraExpression right)
         {
             return ExpressionFactory.Exponentiate(left, right);
+        }
+        public static AlgebraExpression operator ^(double left, AlgebraExpression right)
+        {
+            return ExpressionFactory.Exponentiate(ExpressionFactory.Constant(left), right);
+        }
+        public static AlgebraExpression operator ^(AlgebraExpression left, double right)
+        {
+            return ExpressionFactory.Exponentiate(left, ExpressionFactory.Constant(right));
         }
 
         public static AlgebraExpression operator -(AlgebraExpression expr)
@@ -105,7 +145,6 @@
         {
             return left.Equals(right);
         }
-
         public static bool operator !=(AlgebraExpression left, AlgebraExpression right)
         {
             return !(left == right);

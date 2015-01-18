@@ -63,7 +63,7 @@ namespace Science.Mathematics.Algebra
 
         
         #region Conversions
-        public static implicit operator ConstantExpression(int value)
+        public static implicit operator ConstantExpression(double value)
         {
             return ExpressionFactory.Constant(value);
         }
