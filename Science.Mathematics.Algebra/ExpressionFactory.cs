@@ -63,9 +63,21 @@ namespace Science.Mathematics.Algebra
             return new ProductExpressionList(ImmutableList.Create(terms));
         }
         
-        public static ProductExpressionList Exponentiate(AlgebraExpression left, AlgebraExpression right)
+        public static PowerExpression Exponentiate(AlgebraExpression @base, AlgebraExpression exponent)
         {
-            throw new System.NotImplementedException();
+            return new PowerExpression(@base, exponent);
+        }
+        public static PowerExpression Root(AlgebraExpression @base, AlgebraExpression exponent)
+        {
+            return new PowerExpression(@base, ExpressionFactory.Divide(ConstantExpression.One, exponent));
+        }
+        public static PowerExpression Square(AlgebraExpression expression)
+        {
+            return new PowerExpression(expression, ExpressionFactory.Constant(2));
+        }
+        public static PowerExpression SquareRoot(AlgebraExpression expression)
+        {
+            return new PowerExpression(expression, ExpressionFactory.Divide(ConstantExpression.One, ExpressionFactory.Constant(2)));
         }
     }
 }
