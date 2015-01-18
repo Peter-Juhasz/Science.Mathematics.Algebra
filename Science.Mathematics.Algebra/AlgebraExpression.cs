@@ -1,4 +1,6 @@
-﻿namespace Science.Mathematics.Algebra
+﻿using System;
+
+namespace Science.Mathematics.Algebra
 {
     /// <summary>
     /// Represents an algebra expression. Serves as the base class of all expressions.
@@ -157,5 +159,45 @@
             return ExpressionFactory.Constant(value);
         }
         #endregion
+    }
+
+    /// <summary>
+    /// Contains extensions for <see cref="AlgebraExpression"/>s.
+    /// </summary>
+    public static class AlgebraExpressionExtensions
+    {
+        /// <summary>
+        /// Differentiates a given expression <paramref name="degree"/> times.
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <param name="respectTo"></param>
+        /// <param name="degree"></param>
+        /// <returns></returns>
+        public static AlgebraExpression Differentiate(this AlgebraExpression subject, AlgebraExpression respectTo, int degree)
+        {
+            if (degree < 0)
+                throw new ArgumentException("Degree of differentiation must be a non-negative integer.", nameof(degree));
+
+            AlgebraExpression result = subject;
+
+            for (int i = 0; i < degree; i++)
+                result = result.Differentiate(respectTo);
+            
+            return respectTo;
+        }
+
+        /// <summary>
+        /// Calculates the Riemann Integral of the expression in a given interval.
+        /// </summary>
+        /// <param name="respectTo"></param>
+        /// <param name="lowerBound"></param>
+        /// <param name="upperBound"></param>
+        /// <returns></returns>
+        public static AlgebraExpression Integrate(this AlgebraExpression subject, AlgebraExpression respectTo, AlgebraExpression lowerBound, AlgebraExpression upperBound)
+        {
+            AlgebraExpression primitiveFunction = subject.Integrate(respectTo);
+
+            return primitiveFunction.Substitute(respectTo, upperBound) - primitiveFunction.Substitute(respectTo, lowerBound);
+        }
     }
 }
