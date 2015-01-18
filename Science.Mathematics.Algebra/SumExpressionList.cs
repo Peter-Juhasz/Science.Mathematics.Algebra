@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -9,15 +10,19 @@ namespace Science.Mathematics.Algebra
     /// </summary>
     public class SumExpressionList : ExpressionList
     {
-        public SumExpressionList(ImmutableList<AlgebraExpression> terms)
+        public SumExpressionList(IEnumerable<AlgebraExpression> terms)
             : base(terms)
         { }
         
 
         public override AlgebraExpression Simplify()
         {
+            // Simplify terms
+            var simplifiedTerms = this.Terms.Select(t => t.Simplify());
+
+
             // Collect constants
-            var constants = this.Terms.ToDictionary(e => e, e => e.GetConstantValue());
+            var constants = simplifiedTerms.ToDictionary(e => e, e => e.GetConstantValue());
 
             // all constant: 1 + 2 + 3
             if (constants.Values.All(v => v != null))
@@ -29,6 +34,7 @@ namespace Science.Mathematics.Algebra
 
             if (sum != 0) // 0 + ?
                 newTerms = newTerms.Add(ExpressionFactory.Constant(sum));
+
 
             // TODO: Collect multiplication terms
 
@@ -52,9 +58,32 @@ namespace Science.Mathematics.Algebra
         }
 
 
+        public override AlgebraExpression Limit(AlgebraExpression expression, AlgebraExpression subject, LimitDirection direction = LimitDirection.Both)
+        {
+            return new SumExpressionList(
+                this.Terms.Select(t => t.Limit(expression, subject, direction)).ToImmutableList()
+            );
+        }
+
+        public override AlgebraExpression Differentiate(AlgebraExpression respectTo)
+        {
+            return new SumExpressionList(
+                this.Terms.Select(t => t.Differentiate(respectTo)).ToImmutableList()
+            );
+        }
+
+        public override AlgebraExpression Integrate(AlgebraExpression respectTo)
+        {
+            return new SumExpressionList(
+                this.Terms.Select(t => t.Integrate(respectTo)).ToImmutableList()
+            );
+        }
+
+        
         public override string ToString()
         {
             return String.Join(" + ", this.Terms);
         }
+
     }
 }

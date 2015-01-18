@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace Science.Mathematics.Algebra
+﻿namespace Science.Mathematics.Algebra
 {
     /// <summary>
     /// Represents an algebra expression. Serves as the base class of all expressions.
@@ -32,5 +30,33 @@ namespace Science.Mathematics.Algebra
         /// </summary>
         /// <returns></returns>
         public abstract double? GetConstantValue();
+        
+        #region Calculus
+        /// <summary>
+        /// Computes the limit as <paramref name="expression"/> approaches <paramref name="subject"/>.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <param name="subject"></param>
+        /// <returns></returns>
+        public abstract AlgebraExpression Limit(AlgebraExpression expression, AlgebraExpression subject, LimitDirection direction = LimitDirection.Both);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="respectTo"></param>
+        /// <returns></returns>
+        public virtual AlgebraExpression Differentiate(AlgebraExpression respectTo)
+        {
+            VariableExpression limitVariable = new VariableExpression("h");
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Constructs the primitive function the given expression respect to <paramref name="respectTo"/>.
+        /// </summary>
+        /// <param name="respectTo"></param>
+        /// <returns></returns>
+        public abstract AlgebraExpression Integrate(AlgebraExpression respectTo);
+        #endregion
     }
 }

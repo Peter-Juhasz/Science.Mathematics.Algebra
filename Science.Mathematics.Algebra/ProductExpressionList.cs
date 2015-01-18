@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace Science.Mathematics.Algebra
 {
     public class ProductExpressionList : ExpressionList
     {
-        public ProductExpressionList(ImmutableList<AlgebraExpression> terms)
+        public ProductExpressionList(IEnumerable<AlgebraExpression> terms)
             : base(terms)
         { }
         
@@ -49,6 +50,26 @@ namespace Science.Mathematics.Algebra
         public override double? GetConstantValue()
         {
             return this.Terms.Select(t => t.GetConstantValue()).Product(v => v);
+        }
+
+
+        public override AlgebraExpression Limit(AlgebraExpression expression, AlgebraExpression subject, LimitDirection direction = LimitDirection.Both)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override AlgebraExpression Differentiate(AlgebraExpression respectTo)
+        {
+            return new SumExpressionList(
+                this.Terms.Select(
+                    exp => new ProductExpressionList(this.Terms.Where(e => !exp.Equals(e)).Union(new AlgebraExpression[] { exp.Differentiate(respectTo) }))
+                )
+            );
+        }
+
+        public override AlgebraExpression Integrate(AlgebraExpression respectTo)
+        {
+            throw new NotImplementedException();
         }
 
 

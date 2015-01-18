@@ -40,6 +40,7 @@
     <Compile Include="ExpressionFactory.cs" />
     <Compile Include="ConstantExpression.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="LimitDirection.cs" />
     <Compile Include="ProductExpressionList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SumExpressionList.cs" />

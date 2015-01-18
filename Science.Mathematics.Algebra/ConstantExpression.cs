@@ -19,18 +19,6 @@ namespace Science.Mathematics.Algebra
         }
 
         /// <summary>
-        /// Gets the value of the expression.
-        /// </summary>
-        public double Value { get; private set; }
-
-
-        public override double? GetConstantValue()
-        {
-            return this.Value;
-        }
-
-
-        /// <summary>
         /// 
         /// </summary>
         public static readonly ConstantExpression Zero = new ConstantExpression(0);
@@ -46,6 +34,34 @@ namespace Science.Mathematics.Algebra
         public static readonly ConstantExpression MinusOne = new ConstantExpression(-1);
 
 
+        /// <summary>
+        /// Gets the value of the expression.
+        /// </summary>
+        public double Value { get; private set; }
+
+
+        public override double? GetConstantValue()
+        {
+            return this.Value;
+        }
+
+
+        public override AlgebraExpression Limit(AlgebraExpression expression, AlgebraExpression subject, LimitDirection direction = LimitDirection.Both)
+        {
+            return this;
+        }
+
+        public override AlgebraExpression Differentiate(AlgebraExpression respectTo)
+        {
+            return Zero;
+        }
+
+        public override AlgebraExpression Integrate(AlgebraExpression respectTo)
+        {
+            return ExpressionFactory.Multiply(this, respectTo);
+        }
+
+        
         #region Conversions
         public static implicit operator ConstantExpression(int value)
         {

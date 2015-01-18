@@ -26,6 +26,10 @@ namespace Science.Mathematics.Algebra
         {
             return new SumExpressionList(ImmutableList.Create(left, right));
         }
+        public static SumExpressionList Subtract(AlgebraExpression left, AlgebraExpression right)
+        {
+            return ExpressionFactory.Add(left, ExpressionFactory.Multiply(ConstantExpression.MinusOne, right));
+        }
         public static SumExpressionList Sum(params AlgebraExpression[] terms)
         {
             return new SumExpressionList(ImmutableList.Create(terms));
@@ -35,9 +39,19 @@ namespace Science.Mathematics.Algebra
         {
             return new ProductExpressionList(ImmutableList.Create(left, right));
         }
+        public static ProductExpressionList Divide(AlgebraExpression left, AlgebraExpression right)
+        {
+            return ExpressionFactory.Multiply(left, ExpressionFactory.Exponentiate(right, ConstantExpression.MinusOne));
+        }
         public static ProductExpressionList Product(params AlgebraExpression[] terms)
         {
             return new ProductExpressionList(ImmutableList.Create(terms));
+        }
+
+
+        public static ProductExpressionList Exponentiate(AlgebraExpression left, AlgebraExpression right)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
