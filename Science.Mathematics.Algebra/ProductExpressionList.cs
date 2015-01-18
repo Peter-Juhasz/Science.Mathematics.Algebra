@@ -22,18 +22,18 @@ namespace Science.Mathematics.Algebra
             var constants = simplifiedTerms.ToDictionary(e => e, e => e.GetConstantValue());
 
 
-            // all constant: 1 * 2 * 3
+            // all constant: 1 * 2 * 3  =>  6
             if (constants.Values.All(v => v != null))
                 return ExpressionFactory.Constant(constants.Values.Cast<double>().Product(v => v));
 
-            // collect constants: 1 * ? * 2 -> (1 * 2) * ? -> 3 * ?
+            // collect constants: 1 * ? * 3  =>  (1 * 3) * ?  =>  3 * ?
             double product = constants.Values.Where(v => v != null).Cast<double>().Product(v => v);
             var newTerms = this.Terms.RemoveAll(e => constants[e].HasValue);
 
-            if (product == 0) // 0 * ?
+            if (product == 0) // 0 * ?  =>  0
                 return ConstantExpression.Zero;
 
-            if (product != 1) // 1 * ?
+            if (product != 1) // 1 * ?  =>  ?
                 newTerms = newTerms.Insert(0, ExpressionFactory.Constant(product));
 
 

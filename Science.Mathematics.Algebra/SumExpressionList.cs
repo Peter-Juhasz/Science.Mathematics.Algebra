@@ -24,15 +24,15 @@ namespace Science.Mathematics.Algebra
             // Collect constants
             var constants = simplifiedTerms.ToDictionary(e => e, e => e.GetConstantValue());
 
-            // all constant: 1 + 2 + 3
+            // all constant: 1 + 2 + 3  =>  6
             if (constants.Values.All(v => v != null))
                 return ExpressionFactory.Constant(constants.Values.Cast<double>().Sum(v => v));
 
-            // collect constants: 1 + ? + 2 -> (1 + 2) + ? -> 3 + ?
+            // collect constants: 1 + ? + 3  =>  (1 + 3) + ?  =>  4 + ?
             double sum = constants.Values.Where(v => v != null).Cast<double>().Sum(v => v);
             var newTerms = this.Terms.RemoveAll(e => constants[e].HasValue);
 
-            if (sum != 0) // 0 + ?
+            if (sum != 0) // 0 + ?  =>  ?
                 newTerms = newTerms.Add(ExpressionFactory.Constant(sum));
 
 
