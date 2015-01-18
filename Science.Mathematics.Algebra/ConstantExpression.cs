@@ -58,7 +58,7 @@ namespace Science.Mathematics.Algebra
 
         public override AlgebraExpression Integrate(AlgebraExpression respectTo)
         {
-            return ExpressionFactory.Multiply(this, respectTo);
+            return this * respectTo;
         }
 
         

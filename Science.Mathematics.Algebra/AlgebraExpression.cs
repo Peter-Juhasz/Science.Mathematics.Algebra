@@ -58,5 +58,47 @@
         /// <returns></returns>
         public abstract AlgebraExpression Integrate(AlgebraExpression respectTo);
         #endregion
+
+        #region Operators
+        public static AlgebraExpression operator +(AlgebraExpression left, AlgebraExpression right)
+        {
+            return ExpressionFactory.Add(left, right);
+        }
+
+        public static AlgebraExpression operator -(AlgebraExpression left, AlgebraExpression right)
+        {
+            return ExpressionFactory.Subtract(left, right);
+        }
+
+        public static AlgebraExpression operator *(AlgebraExpression left, AlgebraExpression right)
+        {
+            return ExpressionFactory.Multiply(left, right);
+        }
+
+        public static AlgebraExpression operator /(AlgebraExpression left, AlgebraExpression right)
+        {
+            return ExpressionFactory.Divide(left, right);
+        }
+
+        public static AlgebraExpression operator ^(AlgebraExpression left, AlgebraExpression right)
+        {
+            return ExpressionFactory.Exponentiate(left, right);
+        }
+
+        public static AlgebraExpression operator -(AlgebraExpression expr)
+        {
+            return ExpressionFactory.Negate(expr);
+        }
+
+        public static bool operator ==(AlgebraExpression left, AlgebraExpression right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(AlgebraExpression left, AlgebraExpression right)
+        {
+            return !(left == right);
+        }
+        #endregion
     }
 }

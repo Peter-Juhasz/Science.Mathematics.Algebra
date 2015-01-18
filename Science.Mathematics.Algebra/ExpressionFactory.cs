@@ -20,8 +20,12 @@ namespace Science.Mathematics.Algebra
         {
             return new VariableExpression(name);
         }
-
-
+        
+        public static AlgebraExpression Negate(AlgebraExpression expression)
+        {
+            return ExpressionFactory.Multiply(ConstantExpression.MinusOne, expression);
+        }
+        
         public static SumExpressionList Add(AlgebraExpression left, AlgebraExpression right)
         {
             return new SumExpressionList(ImmutableList.Create(left, right));
@@ -47,8 +51,7 @@ namespace Science.Mathematics.Algebra
         {
             return new ProductExpressionList(ImmutableList.Create(terms));
         }
-
-
+        
         public static ProductExpressionList Exponentiate(AlgebraExpression left, AlgebraExpression right)
         {
             throw new System.NotImplementedException();

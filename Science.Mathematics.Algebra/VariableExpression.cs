@@ -32,19 +32,19 @@ namespace Science.Mathematics.Algebra
 
         public override AlgebraExpression Limit(AlgebraExpression expression, AlgebraExpression subject, LimitDirection direction = LimitDirection.Both)
         {
-            return this.Equals(expression) ? subject : this;
+            return this == expression ? subject : this;
         }
 
         public override AlgebraExpression Differentiate(AlgebraExpression respectTo)
         {
-            return this.Equals(respectTo) ? ConstantExpression.One : ConstantExpression.Zero;
+            return this == respectTo ? ConstantExpression.One : ConstantExpression.Zero;
         }
 
         public override AlgebraExpression Integrate(AlgebraExpression respectTo)
         {
-            return this.Equals(respectTo) ?
-                ExpressionFactory.Divide(ExpressionFactory.Exponentiate(this, ExpressionFactory.Constant(2)), ExpressionFactory.Constant(2)) :
-                ExpressionFactory.Multiply(this, respectTo)
+            return this == respectTo
+                ? ExpressionFactory.Exponentiate(this, ExpressionFactory.Constant(2)) / ExpressionFactory.Constant(2)
+                : this * respectTo
             ;
         }
 

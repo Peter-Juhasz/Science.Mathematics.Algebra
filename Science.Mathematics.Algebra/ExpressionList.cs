@@ -9,7 +9,7 @@ namespace Science.Mathematics.Algebra
         public ExpressionList(IEnumerable<AlgebraExpression> terms)
             : this(terms.ToImmutableList())
         { }
-        public ExpressionList(ImmutableList<AlgebraExpression> terms)
+        public ExpressionList(IImmutableList<AlgebraExpression> terms)
         {
             if (terms == null)
                 throw new ArgumentNullException(nameof(terms));
@@ -20,6 +20,6 @@ namespace Science.Mathematics.Algebra
             this.Terms = terms;
         }
 
-        public ImmutableList<AlgebraExpression> Terms { get; private set; }
+        public IImmutableList<AlgebraExpression> Terms { get; private set; }
     }
 }
