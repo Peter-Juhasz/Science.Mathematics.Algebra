@@ -14,8 +14,13 @@ namespace Science.Mathematics.Algebra
 
         public override AlgebraExpression Simplify()
         {
+            // Simplify terms
+            var simplifiedTerms = this.Terms.Select(t => t.Simplify());
+
+
             // Collect constants
-            var constants = this.Terms.ToDictionary(e => e, e => e.GetConstantValue());
+            var constants = simplifiedTerms.ToDictionary(e => e, e => e.GetConstantValue());
+
 
             // all constant: 1 * 2 * 3
             if (constants.Values.All(v => v != null))
@@ -31,9 +36,10 @@ namespace Science.Mathematics.Algebra
             if (product != 1) // 1 * ?
                 newTerms = newTerms.Insert(0, ExpressionFactory.Constant(product));
 
+
             // TODO: Collect power terms
 
-            return new ProductExpressionList(newTerms);
+            return ExpressionFactory.Product(newTerms);
         }
 
         public override AlgebraExpression Expand()
@@ -70,6 +76,21 @@ namespace Science.Mathematics.Algebra
         public override AlgebraExpression Integrate(AlgebraExpression respectTo)
         {
             throw new NotImplementedException();
+        }
+
+
+        public override AlgebraExpression Substitute(AlgebraExpression subject, AlgebraExpression replacement)
+        {
+            if (this == subject)
+                return replacement;
+
+            // TODO: If product expression, try replace childs
+
+            return ExpressionFactory.Product(
+                this.Terms
+                    .Select(t => t == subject ? replacement : subject)
+                    .Select(t => t.Substitute(subject, replacement))
+            );
         }
 
 

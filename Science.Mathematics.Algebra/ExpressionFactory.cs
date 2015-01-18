@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Science.Mathematics.Algebra
 {
@@ -34,6 +35,11 @@ namespace Science.Mathematics.Algebra
         {
             return ExpressionFactory.Add(left, ExpressionFactory.Multiply(ConstantExpression.MinusOne, right));
         }
+
+        public static SumExpressionList Sum(IEnumerable<AlgebraExpression> terms)
+        {
+            return new SumExpressionList(terms.ToImmutableList());
+        }
         public static SumExpressionList Sum(params AlgebraExpression[] terms)
         {
             return new SumExpressionList(ImmutableList.Create(terms));
@@ -46,6 +52,11 @@ namespace Science.Mathematics.Algebra
         public static ProductExpressionList Divide(AlgebraExpression left, AlgebraExpression right)
         {
             return ExpressionFactory.Multiply(left, ExpressionFactory.Exponentiate(right, ConstantExpression.MinusOne));
+        }
+
+        public static ProductExpressionList Product(IEnumerable<AlgebraExpression> terms)
+        {
+            return new ProductExpressionList(terms.ToImmutableList());
         }
         public static ProductExpressionList Product(params AlgebraExpression[] terms)
         {

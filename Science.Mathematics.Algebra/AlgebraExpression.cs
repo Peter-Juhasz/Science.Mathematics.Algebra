@@ -48,7 +48,10 @@
         public virtual AlgebraExpression Differentiate(AlgebraExpression respectTo)
         {
             VariableExpression limitVariable = new VariableExpression("h");
-            throw new System.NotImplementedException();
+
+            return (
+                this.Substitute(respectTo, respectTo - limitVariable) / (respectTo - limitVariable)
+            ).Limit(limitVariable, ConstantExpression.Zero);
         }
 
         /// <summary>
@@ -58,6 +61,14 @@
         /// <returns></returns>
         public abstract AlgebraExpression Integrate(AlgebraExpression respectTo);
         #endregion
+        
+        /// <summary>
+		/// Replaces every occurrences of <paramref name="subject"/> to <paramref name="replacement"/>.
+		/// </summary>
+		/// <param name="subject"></param>
+		/// <param name="replacement"></param>
+		/// <returns></returns>
+        public abstract AlgebraExpression Substitute(AlgebraExpression subject, AlgebraExpression replacement);
 
         #region Operators
         public static AlgebraExpression operator +(AlgebraExpression left, AlgebraExpression right)

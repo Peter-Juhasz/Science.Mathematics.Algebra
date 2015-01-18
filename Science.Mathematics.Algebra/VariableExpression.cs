@@ -43,7 +43,7 @@ namespace Science.Mathematics.Algebra
         public override AlgebraExpression Integrate(AlgebraExpression respectTo)
         {
             return this == respectTo
-                ? ExpressionFactory.Exponentiate(this, ExpressionFactory.Constant(2)) / ExpressionFactory.Constant(2)
+                ? (this ^ ExpressionFactory.Constant(2)) / ExpressionFactory.Constant(2)
                 : this * respectTo
             ;
         }

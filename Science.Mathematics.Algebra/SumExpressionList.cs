@@ -38,7 +38,7 @@ namespace Science.Mathematics.Algebra
 
             // TODO: Collect multiplication terms
 
-            return new SumExpressionList(newTerms);
+            return ExpressionFactory.Sum(newTerms);
         }
 
         public override AlgebraExpression Expand()
@@ -79,11 +79,25 @@ namespace Science.Mathematics.Algebra
             );
         }
 
-        
+
+        public override AlgebraExpression Substitute(AlgebraExpression subject, AlgebraExpression replacement)
+        {
+            if (this == subject)
+                return replacement;
+
+            // TODO: If sum expression, try replace childs
+
+            return ExpressionFactory.Sum(
+                this.Terms
+                    .Select(t => t == subject ? replacement : subject)
+                    .Select(t => t.Substitute(subject, replacement))
+            );
+        }
+
+
         public override string ToString()
         {
             return String.Join(" + ", this.Terms);
         }
-
     }
 }
