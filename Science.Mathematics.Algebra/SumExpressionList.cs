@@ -95,6 +95,25 @@ namespace Science.Mathematics.Algebra
         }
 
 
+        #region Immatability
+        public SumExpressionList Add(AlgebraExpression expression)
+        {
+            return expression is SumExpressionList
+                ? ExpressionFactory.Sum(this.Terms.Concat((expression as SumExpressionList).Terms))
+                : ExpressionFactory.Add(this, expression)
+            ;
+        }
+
+        public SumExpressionList Subtract(AlgebraExpression expression)
+        {
+            return expression is SumExpressionList
+                ? ExpressionFactory.Sum(this.Terms.Concat((expression as SumExpressionList).Terms.Select(ExpressionFactory.Negate)))
+                : ExpressionFactory.Subtract(this, expression)
+            ;
+        }
+        #endregion
+
+
         public bool Equals(SumExpressionList other)
         {
             if (Object.ReferenceEquals(other, null)) return false;

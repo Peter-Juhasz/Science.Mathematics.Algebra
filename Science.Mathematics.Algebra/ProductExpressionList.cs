@@ -35,12 +35,12 @@ namespace Science.Mathematics.Algebra
 
             if (product != 1) // 1 * ?  =>  ?
                 newTerms = newTerms.Insert(0, ExpressionFactory.Constant(product));
-
-
+            
             // TODO: Collect power terms
 
             return ExpressionFactory.Product(newTerms);
         }
+
 
         public override AlgebraExpression Expand()
         {
@@ -92,6 +92,25 @@ namespace Science.Mathematics.Algebra
                     .Select(t => t.Substitute(subject, replacement))
             );
         }
+
+
+        #region Immatability
+        public ProductExpressionList Multiply(AlgebraExpression expression)
+        {
+            return expression is ProductExpressionList
+                ? ExpressionFactory.Product(this.Terms.Concat((expression as ProductExpressionList).Terms))
+                : ExpressionFactory.Multiply(this, expression)
+            ;
+        }
+
+        public ProductExpressionList Divide(AlgebraExpression expression)
+        {
+            return expression is ProductExpressionList
+                ? ExpressionFactory.Product(this, ExpressionFactory.Reciprocal(expression))
+                : ExpressionFactory.Divide(this, expression)
+            ;
+        }
+        #endregion
 
 
         public bool Equals(ProductExpressionList other)

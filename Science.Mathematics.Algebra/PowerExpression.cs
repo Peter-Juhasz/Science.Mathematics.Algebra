@@ -151,7 +151,7 @@ namespace Science.Mathematics.Algebra
         {
             StringBuilder result = new StringBuilder();
 
-            var baseNeedsParenthesis = this.Base is ExpressionList || this.Base is ExpressionList;
+            var baseNeedsParenthesis = this.Base is ExpressionList;
             if (baseNeedsParenthesis)
                 result.Append('(');
 
@@ -164,7 +164,7 @@ namespace Science.Mathematics.Algebra
             result.Append('^');
             result.Append(' ');
 
-            var exponentNeedsParenthesis = this.Exponent is ExpressionList || this.Exponent is ExpressionList;
+            var exponentNeedsParenthesis = this.Exponent is ExpressionList;
             if (exponentNeedsParenthesis)
                 result.Append('(');
 

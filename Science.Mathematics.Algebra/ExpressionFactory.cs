@@ -54,6 +54,11 @@ namespace Science.Mathematics.Algebra
             return ExpressionFactory.Multiply(left, ExpressionFactory.Exponentiate(right, ConstantExpression.MinusOne));
         }
 
+        public static ProductExpressionList Reciprocal(AlgebraExpression expression)
+        {
+            return ExpressionFactory.Divide(ConstantExpression.One, expression);
+        }
+
         public static ProductExpressionList Product(IEnumerable<AlgebraExpression> terms)
         {
             return new ProductExpressionList(terms.ToImmutableList());
