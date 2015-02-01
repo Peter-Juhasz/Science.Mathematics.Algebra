@@ -14,7 +14,7 @@ var differentiated = expression.Differentiate(x);
 An example for a simplifier which denotes that power expressions like `x ^ 1` can be simplified to `x`:
 
 ```C#
-public sealed class ExponentiationWithExponentOneSimplifier : ISimplifier<PowerExpression>
+public sealed class ExponentOneSimplifier : ISimplifier<PowerExpression>
 {
     public AlgebraExpression Simplify(PowerExpression expression, CancellationToken cancellationToken)
     {

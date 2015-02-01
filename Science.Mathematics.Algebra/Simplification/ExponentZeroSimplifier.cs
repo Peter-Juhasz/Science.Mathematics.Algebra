@@ -5,7 +5,7 @@ namespace Science.Mathematics.Algebra.Simplification
     /// <summary>
     /// Simplifies expressions like x ^ 0 to x.
     /// </summary>
-    public sealed class ExponentiationWithExponentZeroSimplifier : ISimplifier<PowerExpression>
+    public sealed class ExponentZeroSimplifier : ISimplifier<PowerExpression>
     {
         public AlgebraExpression Simplify(PowerExpression expression, CancellationToken cancellationToken)
         {
