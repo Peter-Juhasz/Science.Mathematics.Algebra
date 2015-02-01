@@ -70,7 +70,11 @@ namespace Science.Mathematics.Algebra.Simplification
             var interfaceType = typeof(ISimplifier<>).MakeGenericType(expressionType);
 
             return typeof(ISimplifier<>).GetTypeInfo().Assembly.ExportedTypes
-                .Where(t => t.GetTypeInfo().ImplementedInterfaces.Contains(interfaceType))
+                .Where(t =>
+                    t.GetTypeInfo().ImplementedInterfaces
+                        .Where(i => i.GetGenericTypeDefinition() == typeof(ISimplifier<>))
+                        .Any(i => expressionType.GetTypeInfo().IsAssignableFrom(i.GenericTypeArguments[0].GetTypeInfo()))
+                )
             ;
         }
     }
