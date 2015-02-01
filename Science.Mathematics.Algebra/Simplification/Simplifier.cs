@@ -67,8 +67,6 @@ namespace Science.Mathematics.Algebra.Simplification
 
         private static IEnumerable<Type> FindSimplifiers(Type expressionType)
         {
-            var interfaceType = typeof(ISimplifier<>).MakeGenericType(expressionType);
-
             return typeof(ISimplifier<>).GetTypeInfo().Assembly.ExportedTypes
                 .Where(t =>
                     t.GetTypeInfo().ImplementedInterfaces
