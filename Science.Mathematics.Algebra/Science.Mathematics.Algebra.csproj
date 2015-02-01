@@ -44,6 +44,7 @@
     <Compile Include="PowerExpression.cs" />
     <Compile Include="ProductExpressionList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Simplification\ConstantSimplifier.cs" />
     <Compile Include="Simplification\ExponentZeroSimplifier.cs" />
     <Compile Include="Simplification\ExponentOneSimplifier.cs" />
     <Compile Include="Simplification\ISimplifier.cs" />
