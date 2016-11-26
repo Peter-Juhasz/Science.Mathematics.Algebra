@@ -3,13 +3,13 @@
 namespace Science.Mathematics.Algebra.Simplification
 {
     /// <summary>
-    /// Simplifies expressions like x ^ 0 to x.
+    /// Simplifies expressions like 1 ^ x to 1.
     /// </summary>
-    public sealed class ExponentZeroSimplifier : ISimplifier<PowerExpression>
+    public sealed class BaseOneSimplifier : ISimplifier<PowerExpression>
     {
         public AlgebraExpression Simplify(PowerExpression expression, CancellationToken cancellationToken)
         {
-            if (expression.Exponent.GetConstantValue(cancellationToken) == 0)
+            if (expression.Base.GetConstantValue(cancellationToken) == 1)
                 return ConstantExpression.One;
 
             return expression;

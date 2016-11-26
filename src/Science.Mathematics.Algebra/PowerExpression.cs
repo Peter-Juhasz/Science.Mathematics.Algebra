@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
@@ -76,7 +77,7 @@ namespace Science.Mathematics.Algebra
         #endregion
 
 
-        public override double? GetConstantValue()
+        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
         {
             // simplify
             AlgebraExpression simplified = this.Simplify();

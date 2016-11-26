@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
@@ -53,7 +54,7 @@ namespace Science.Mathematics.Algebra
         }
 
 
-        public override double? GetConstantValue()
+        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Terms.Select(t => t.GetConstantValue()).Product(v => v);
         }

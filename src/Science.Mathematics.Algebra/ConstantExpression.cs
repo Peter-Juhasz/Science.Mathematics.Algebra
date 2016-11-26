@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
@@ -40,7 +41,7 @@ namespace Science.Mathematics.Algebra
         public double Value { get; private set; }
 
 
-        public override double? GetConstantValue()
+        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.Value;
         }

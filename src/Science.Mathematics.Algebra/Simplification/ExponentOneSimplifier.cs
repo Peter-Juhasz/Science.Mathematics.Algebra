@@ -9,7 +9,7 @@ namespace Science.Mathematics.Algebra.Simplification
     {
         public AlgebraExpression Simplify(PowerExpression expression, CancellationToken cancellationToken)
         {
-            if (expression.Exponent.GetConstantValue() == 1)
+            if (expression.Exponent.GetConstantValue(cancellationToken) == 1)
                 return expression.Base;
 
             return expression;

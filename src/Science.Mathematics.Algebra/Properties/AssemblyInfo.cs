@@ -17,3 +17,5 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("7a32afca-3196-4f9c-a6f2-8efe23a47d49")]
+
+[assembly: InternalsVisibleTo("Science.Mathematics.Algebra.Tests")]

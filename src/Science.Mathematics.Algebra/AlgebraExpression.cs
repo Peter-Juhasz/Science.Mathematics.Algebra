@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
@@ -31,7 +32,7 @@ namespace Science.Mathematics.Algebra
         /// Computes the constant value of the expression.
         /// </summary>
         /// <returns></returns>
-        public abstract double? GetConstantValue();
+        public abstract double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken));
         
         #region Calculus
         /// <summary>

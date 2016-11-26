@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
@@ -17,6 +18,9 @@ namespace Science.Mathematics.Algebra
 
             this.Name = name;
         }
+        public VariableExpression(char name)
+            : this(name.ToString())
+        { }
 
         /// <summary>
         /// Gets or sets the name of the variable.
@@ -24,7 +28,7 @@ namespace Science.Mathematics.Algebra
         public string Name { get; private set; }
 
 
-        public override double? GetConstantValue()
+        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
         {
             return null;
         }
