@@ -1,6 +1,6 @@
 # Science.Mathematics.Algebra
 
-Computer Algebra System (CAS) implemented in .NET/C# using Roslyn as a model.
+Computer Algebra System (CAS) implemented in **.NET Standard 1.6** using Roslyn as a model.
 
 ```C#
 VariableExpression x = "x";

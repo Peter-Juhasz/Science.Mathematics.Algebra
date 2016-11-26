@@ -24,7 +24,7 @@ namespace Science.Mathematics.Algebra
         
         public static AlgebraExpression Negate(AlgebraExpression expression)
         {
-            return ExpressionFactory.Multiply(ConstantExpression.MinusOne, expression);
+            return Multiply(ConstantExpression.MinusOne, expression);
         }
         
         public static SumExpressionList Add(AlgebraExpression left, AlgebraExpression right)
@@ -33,7 +33,7 @@ namespace Science.Mathematics.Algebra
         }
         public static SumExpressionList Subtract(AlgebraExpression left, AlgebraExpression right)
         {
-            return ExpressionFactory.Add(left, ExpressionFactory.Multiply(ConstantExpression.MinusOne, right));
+            return Add(left, Multiply(ConstantExpression.MinusOne, right));
         }
 
         public static SumExpressionList Sum(IEnumerable<AlgebraExpression> terms)
@@ -51,12 +51,12 @@ namespace Science.Mathematics.Algebra
         }
         public static ProductExpressionList Divide(AlgebraExpression left, AlgebraExpression right)
         {
-            return ExpressionFactory.Multiply(left, ExpressionFactory.Exponentiate(right, ConstantExpression.MinusOne));
+            return Multiply(left, ExpressionFactory.Exponentiate(right, ConstantExpression.MinusOne));
         }
 
         public static ProductExpressionList Reciprocal(AlgebraExpression expression)
         {
-            return ExpressionFactory.Divide(ConstantExpression.One, expression);
+            return Divide(ConstantExpression.One, expression);
         }
 
         public static ProductExpressionList Product(IEnumerable<AlgebraExpression> terms)
