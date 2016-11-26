@@ -155,9 +155,24 @@ namespace Science.Mathematics.Algebra
         #endregion
 
         #region Conversions
+        public static implicit operator AlgebraExpression(int value)
+        {
+            return ExpressionFactory.Constant(value);
+        }
+
         public static implicit operator AlgebraExpression(double value)
         {
             return ExpressionFactory.Constant(value);
+        }
+
+        public static implicit operator AlgebraExpression(string name)
+        {
+            return ExpressionFactory.Variable(name);
+        }
+
+        public static implicit operator AlgebraExpression(char name)
+        {
+            return ExpressionFactory.Variable(name);
         }
         #endregion
     }

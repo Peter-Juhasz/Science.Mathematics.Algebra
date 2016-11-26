@@ -11,7 +11,7 @@ namespace Science.Mathematics.Algebra
     /// </summary>
     public class SumExpressionList : ExpressionList, IEquatable<SumExpressionList>
     {
-        public SumExpressionList(IEnumerable<AlgebraExpression> terms)
+        public SumExpressionList(IReadOnlyCollection<AlgebraExpression> terms)
             : base(terms)
         { }
         
@@ -92,15 +92,16 @@ namespace Science.Mathematics.Algebra
                 this.Terms
                     .Select(t => t == subject ? replacement : subject)
                     .Select(t => t.Substitute(subject, replacement))
+                    .ToImmutableList()
             );
         }
 
 
-        #region Immatability
+        #region Immutability
         public SumExpressionList Add(AlgebraExpression expression)
         {
             return expression is SumExpressionList
-                ? ExpressionFactory.Sum(this.Terms.Concat((expression as SumExpressionList).Terms))
+                ? ExpressionFactory.Sum(this.Terms.Concat((expression as SumExpressionList).Terms).ToImmutableList())
                 : ExpressionFactory.Add(this, expression)
             ;
         }
@@ -108,9 +109,14 @@ namespace Science.Mathematics.Algebra
         public SumExpressionList Subtract(AlgebraExpression expression)
         {
             return expression is SumExpressionList
-                ? ExpressionFactory.Sum(this.Terms.Concat((expression as SumExpressionList).Terms.Select(ExpressionFactory.Negate)))
+                ? ExpressionFactory.Sum(this.Terms.Concat((expression as SumExpressionList).Terms.Select(ExpressionFactory.Negate)).ToImmutableList())
                 : ExpressionFactory.Subtract(this, expression)
             ;
+        }
+
+        public SumExpressionList WithTerms(IImmutableList<AlgebraExpression> terms)
+        {
+            return new SumExpressionList(terms);
         }
         #endregion
 

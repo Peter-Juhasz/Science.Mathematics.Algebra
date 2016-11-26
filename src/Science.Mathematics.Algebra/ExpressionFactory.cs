@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace Science.Mathematics.Algebra
 {
     /// <summary>
-    /// Creates algebra expression.
+    /// Creates algebra expressions.
     /// </summary>
-    public static class ExpressionFactory
+    public static partial class ExpressionFactory
     {
         public static ConstantExpression Constant(int value)
         {
@@ -18,6 +19,10 @@ namespace Science.Mathematics.Algebra
         }
 
         public static VariableExpression Variable(string name)
+        {
+            return new VariableExpression(name);
+        }
+        public static VariableExpression Variable(char name)
         {
             return new VariableExpression(name);
         }
@@ -33,16 +38,16 @@ namespace Science.Mathematics.Algebra
         }
         public static SumExpressionList Subtract(AlgebraExpression left, AlgebraExpression right)
         {
-            return Add(left, Multiply(ConstantExpression.MinusOne, right));
+            return Add(left, Negate(right));
         }
 
-        public static SumExpressionList Sum(IEnumerable<AlgebraExpression> terms)
+        public static SumExpressionList Sum(IReadOnlyCollection<AlgebraExpression> terms)
         {
             return new SumExpressionList(terms.ToImmutableList());
         }
         public static SumExpressionList Sum(params AlgebraExpression[] terms)
         {
-            return new SumExpressionList(ImmutableList.Create(terms));
+            return Sum(terms as IReadOnlyCollection<AlgebraExpression>);
         }
 
         public static ProductExpressionList Multiply(AlgebraExpression left, AlgebraExpression right)
@@ -51,7 +56,7 @@ namespace Science.Mathematics.Algebra
         }
         public static ProductExpressionList Divide(AlgebraExpression left, AlgebraExpression right)
         {
-            return Multiply(left, ExpressionFactory.Exponentiate(right, ConstantExpression.MinusOne));
+            return Multiply(left, Exponentiate(right, ConstantExpression.MinusOne));
         }
 
         public static ProductExpressionList Reciprocal(AlgebraExpression expression)
@@ -59,13 +64,13 @@ namespace Science.Mathematics.Algebra
             return Divide(ConstantExpression.One, expression);
         }
 
-        public static ProductExpressionList Product(IEnumerable<AlgebraExpression> terms)
+        public static ProductExpressionList Product(IReadOnlyCollection<AlgebraExpression> terms)
         {
             return new ProductExpressionList(terms.ToImmutableList());
         }
         public static ProductExpressionList Product(params AlgebraExpression[] terms)
         {
-            return new ProductExpressionList(ImmutableList.Create(terms));
+            return Product(terms as IReadOnlyCollection<AlgebraExpression>);
         }
         
         public static PowerExpression Exponentiate(AlgebraExpression @base, AlgebraExpression exponent)
@@ -74,15 +79,28 @@ namespace Science.Mathematics.Algebra
         }
         public static PowerExpression Root(AlgebraExpression @base, AlgebraExpression exponent)
         {
-            return new PowerExpression(@base, ExpressionFactory.Divide(ConstantExpression.One, exponent));
+            return Exponentiate(@base, Divide(ConstantExpression.One, exponent));
         }
         public static PowerExpression Square(AlgebraExpression expression)
         {
-            return new PowerExpression(expression, ExpressionFactory.Constant(2));
+            return Exponentiate(expression, Constant(2));
         }
         public static PowerExpression SquareRoot(AlgebraExpression expression)
         {
-            return new PowerExpression(expression, ExpressionFactory.Divide(ConstantExpression.One, ExpressionFactory.Constant(2)));
+            return Exponentiate(expression, Divide(ConstantExpression.One, Constant(2)));
+        }
+
+        public static SumExpressionList Polynomial(VariableExpression variable, IReadOnlyList<AlgebraExpression> coefficients)
+        {
+            return new SumExpressionList(
+                coefficients
+                    .Select((c, i) => Multiply(c, Exponentiate(variable, coefficients.Count - i)))
+                    .ToImmutableList()
+            );
+        }
+        public static SumExpressionList Polynomial(VariableExpression variable, params AlgebraExpression[] coefficients)
+        {
+            return Polynomial(variable, coefficients as IReadOnlyList<AlgebraExpression>);
         }
     }
 }

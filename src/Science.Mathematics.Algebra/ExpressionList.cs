@@ -9,7 +9,7 @@ namespace Science.Mathematics.Algebra
     /// </summary>
     public abstract class ExpressionList : AlgebraExpression
     {
-        public ExpressionList(IEnumerable<AlgebraExpression> terms)
+        public ExpressionList(IReadOnlyCollection<AlgebraExpression> terms)
             : this(terms.ToImmutableList())
         { }
         public ExpressionList(IImmutableList<AlgebraExpression> terms)

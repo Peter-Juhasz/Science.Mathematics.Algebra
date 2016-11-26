@@ -8,7 +8,7 @@ namespace Science.Mathematics.Algebra
 {
     public class ProductExpressionList : ExpressionList, IEquatable<ProductExpressionList>
     {
-        public ProductExpressionList(IEnumerable<AlgebraExpression> terms)
+        public ProductExpressionList(IReadOnlyCollection<AlgebraExpression> terms)
             : base(terms)
         { }
         
@@ -69,8 +69,14 @@ namespace Science.Mathematics.Algebra
         {
             return new SumExpressionList(
                 this.Terms.Select(
-                    exp => new ProductExpressionList(this.Terms.Where(e => !exp.Equals(e)).Union(new AlgebraExpression[] { exp.Differentiate(respectTo) }))
+                    exp => new ProductExpressionList(
+                        this.Terms
+                            .Where(e => !exp.Equals(e))
+                            .Union(new AlgebraExpression[] { exp.Differentiate(respectTo) })
+                            .ToImmutableList()
+                    )
                 )
+                    .ToImmutableList()
             );
         }
 
@@ -91,15 +97,16 @@ namespace Science.Mathematics.Algebra
                 this.Terms
                     .Select(t => t == subject ? replacement : subject)
                     .Select(t => t.Substitute(subject, replacement))
+                    .ToImmutableList()
             );
         }
 
 
-        #region Immatability
+        #region Immutability
         public ProductExpressionList Multiply(AlgebraExpression expression)
         {
             return expression is ProductExpressionList
-                ? ExpressionFactory.Product(this.Terms.Concat((expression as ProductExpressionList).Terms))
+                ? ExpressionFactory.Product(this.Terms.Concat((expression as ProductExpressionList).Terms).ToImmutableList())
                 : ExpressionFactory.Multiply(this, expression)
             ;
         }
@@ -110,6 +117,11 @@ namespace Science.Mathematics.Algebra
                 ? ExpressionFactory.Product(this, ExpressionFactory.Reciprocal(expression))
                 : ExpressionFactory.Divide(this, expression)
             ;
+        }
+
+        public ProductExpressionList WithTerms(IImmutableList<AlgebraExpression> terms)
+        {
+            return new ProductExpressionList(terms);
         }
         #endregion
 
