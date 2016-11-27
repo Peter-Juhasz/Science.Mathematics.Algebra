@@ -9,6 +9,9 @@ namespace Science.Mathematics.Algebra
     {
         public AlgebraExpression Simplify(AlgebraExpression expression, CancellationToken cancellationToken)
         {
+            if (expression is ConstantExpression)
+                return expression;
+
             double? constantValue = expression.GetConstantValue(cancellationToken);
 
             if (constantValue != null)

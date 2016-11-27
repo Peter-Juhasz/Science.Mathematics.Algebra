@@ -9,6 +9,11 @@ namespace Science.Mathematics.Algebra
     /// </summary>
     public static partial class ExpressionFactory
     {
+        public static ConstantExpression Zero => ConstantExpression.Zero;
+
+        public static ConstantExpression One => ConstantExpression.One;
+
+
         public static ConstantExpression Constant(int value)
         {
             return new ConstantExpression(value);

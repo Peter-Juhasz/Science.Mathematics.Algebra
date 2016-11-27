@@ -17,6 +17,17 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
+        public void Constant_Equals()
+        {
+            const int reference = 5;
+
+            var expression1 = ExpressionFactory.Constant(reference);
+            var expression2 = ExpressionFactory.Constant(reference);
+
+            Assert.AreEqual(expression1, expression2);
+        }
+
+        [TestMethod]
         public void Constant_ToString()
         {
             const int reference = 3;

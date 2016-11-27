@@ -6,7 +6,7 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Collects constants in a sum expression.
     /// </summary>
-    public sealed class CollectConstantsInSumExpressionSimplifier : ISimplifier<SumExpressionList>
+    public sealed class CollectConstantsInSumSimplifier : ISimplifier<SumExpressionList>
     {
         public AlgebraExpression Simplify(SumExpressionList expression, CancellationToken cancellationToken)
         {
@@ -30,7 +30,7 @@ namespace Science.Mathematics.Algebra
                 newTerms = newTerms.Add(ExpressionFactory.Constant(sum));
             
 
-            return ExpressionFactory.Sum(newTerms);
+            return expression.WithTerms(newTerms);
         }
     }
 }

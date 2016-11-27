@@ -16,6 +16,17 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
+        public void Variable_Equals()
+        {
+            const string reference = "x";
+
+            var expression1 = ExpressionFactory.Variable(reference);
+            var expression2 = ExpressionFactory.Variable(reference);
+
+            Assert.AreEqual(expression1, expression2);
+        }
+
+        [TestMethod]
         public void Variable_ToString()
         {
             const string reference = "x";
