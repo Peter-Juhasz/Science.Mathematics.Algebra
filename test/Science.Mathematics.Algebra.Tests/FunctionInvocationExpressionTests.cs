@@ -6,7 +6,7 @@ namespace Science.Mathematics.Algebra.Tests
     public class FunctionInvocationExpressionTests
     {
         [TestMethod]
-        public void Constant_ToString_NoArguments()
+        public void Function_ToString_NoArguments()
         {
             var expression = ExpressionFactory.Invoke("f");
 
@@ -14,7 +14,7 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
-        public void Constant_ToString_OneArguments()
+        public void Function_ToString_OneArguments()
         {
             var expression = ExpressionFactory.Invoke("f", 2);
 
@@ -22,7 +22,7 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
-        public void Constant_ToString_MultipleArguments()
+        public void Function_ToString_MultipleArguments()
         {
             var expression = ExpressionFactory.Invoke("f", 2, "x");
 
