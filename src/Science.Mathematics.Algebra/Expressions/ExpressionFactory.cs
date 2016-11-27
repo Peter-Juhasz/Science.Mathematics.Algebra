@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -12,6 +13,8 @@ namespace Science.Mathematics.Algebra
         public static ConstantExpression Zero => ConstantExpression.Zero;
 
         public static ConstantExpression One => ConstantExpression.One;
+
+        public static ConstantExpression MinusOne => ConstantExpression.MinusOne;
 
 
         public static ConstantExpression Constant(int value)

@@ -34,11 +34,11 @@ namespace Science.Mathematics.Algebra
         
         public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
         {
-            // simplify
-            AlgebraExpression simplified = this.Simplify();
+            double? @base = this.Base.GetConstantValue(cancellationToken),
+                exponent = this.Exponent.GetConstantValue(cancellationToken);
 
-            if (!(simplified is PowerExpression))
-                return simplified.GetConstantValue();
+            if (@base != null && exponent != null)
+                return Math.Pow(@base.Value, exponent.Value);
 
             return null;
         }

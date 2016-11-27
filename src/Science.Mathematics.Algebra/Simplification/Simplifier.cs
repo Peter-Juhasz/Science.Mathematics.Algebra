@@ -54,14 +54,14 @@ namespace Science.Mathematics.Algebra
                 {
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    MethodInfo method = simplifier.GetType().GetRuntimeMethod("Simplify", new[] { expression.GetType(), typeof(CancellationToken) });
-                    simplified = method.Invoke(null, new[] { simplified }) as AlgebraExpression;
+                    MethodInfo method = simplifier.GetType().GetRuntimeMethod(nameof(ISimplifier<AlgebraExpression>.Simplify), new[] { expression.GetType(), typeof(CancellationToken) });
+                    simplified = method.Invoke(simplifier, new object[] { simplified, cancellationToken }) as AlgebraExpression;
 
                     // stop if not the same kind of expression
                     if (lastResult.GetType() != simplified.GetType())
-                        return simplified;
+                        break;
                 }
-            } while (simplified != lastResult);
+            } while (!lastResult.Equals(simplified));
 
             return simplified;
         }
@@ -71,6 +71,7 @@ namespace Science.Mathematics.Algebra
             return typeof(ISimplifier<>).GetTypeInfo().Assembly.ExportedTypes
                 .Where(t =>
                     t.GetTypeInfo().ImplementedInterfaces
+                        .Where(i => i.IsConstructedGenericType)
                         .Where(i => i.GetGenericTypeDefinition() == typeof(ISimplifier<>))
                         .Any(i => expressionType.GetTypeInfo().IsAssignableFrom(i.GenericTypeArguments[0].GetTypeInfo()))
                 )

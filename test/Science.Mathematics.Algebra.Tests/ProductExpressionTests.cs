@@ -35,5 +35,13 @@ namespace Science.Mathematics.Algebra.Tests
 
             Assert.AreEqual("60 * x", result.ToString());
         }
+
+        [TestMethod]
+        public void Product_ToString()
+        {
+            var expression = ExpressionFactory.Product(2, "x");
+
+            Assert.AreEqual("2 * x", expression.ToString());
+        }
     }
 }

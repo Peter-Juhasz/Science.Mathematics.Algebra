@@ -15,5 +15,13 @@ namespace Science.Mathematics.Algebra.Tests
             
             Assert.AreEqual("2 + x", result.ToString());
         }
+
+        [TestMethod]
+        public void Sum_ToString()
+        {
+            var expression = ExpressionFactory.Sum(2, "x");
+
+            Assert.AreEqual("2 + x", expression.ToString());
+        }
     }
 }

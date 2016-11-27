@@ -16,6 +16,19 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
+        public void Variable_Substitute()
+        {
+            const string name = "x";
+            const int referenceValue = 1;
+            var reference = ExpressionFactory.Constant(referenceValue);
+
+            var variable = ExpressionFactory.Variable(name);
+            var result = variable.Substitute("x", referenceValue);
+
+            Assert.AreEqual(reference, result);
+        }
+
+        [TestMethod]
         public void Variable_Equals()
         {
             const string reference = "x";
