@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Science.Mathematics.Algebra.Simplification;
 using System.Threading;
 
 namespace Science.Mathematics.Algebra.Tests

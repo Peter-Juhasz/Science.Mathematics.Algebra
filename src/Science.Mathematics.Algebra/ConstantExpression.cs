@@ -47,22 +47,12 @@ namespace Science.Mathematics.Algebra
         }
 
 
-        public override AlgebraExpression Limit(AlgebraExpression expression, AlgebraExpression subject, LimitDirection direction = LimitDirection.Both)
+        public override AlgebraExpression Substitute(VariableExpression variable, AlgebraExpression replacement)
         {
             return this;
         }
 
-        public override AlgebraExpression Differentiate(AlgebraExpression respectTo)
-        {
-            return Zero;
-        }
 
-        public override AlgebraExpression Integrate(AlgebraExpression respectTo)
-        {
-            return this * respectTo;
-        }
-
-        
         #region Conversions
         public static implicit operator ConstantExpression(double value)
         {

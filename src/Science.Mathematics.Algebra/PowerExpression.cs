@@ -31,52 +31,7 @@ namespace Science.Mathematics.Algebra
         /// </summary>
         public AlgebraExpression Exponent { get; private set; }
 
-
-        #region Basic
-        public override AlgebraExpression Simplify()
-        {
-            // Simplify children
-            AlgebraExpression simplifiedBase = this.Base.Simplify(),
-                simplifiedExponent = this.Exponent.Simplify();
-
-            double? baseValue = simplifiedBase.GetConstantValue(),
-                exponentValue = simplifiedExponent.GetConstantValue();
-
-            // 0 ^ 0
-            if (baseValue == 0 || exponentValue == 0)
-                return ConstantExpression.One;
-            
-            // 0 ^ ?
-            else if (baseValue == 0)
-                return ConstantExpression.Zero;
-
-            // 1 ^ ?
-            else if (baseValue == 1)
-                return ConstantExpression.One;
-
-            // ? ^ 0
-            else if (baseValue == 0)
-                return ConstantExpression.One;
-
-            // ? ^ 1
-            else if (baseValue == 0)
-                return simplifiedBase;
-
-            return ExpressionFactory.Exponentiate(simplifiedBase, simplifiedExponent);
-        }
-
-        public override AlgebraExpression Expand()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override AlgebraExpression Factor()
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-
-
+        
         public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
         {
             // simplify
@@ -87,37 +42,16 @@ namespace Science.Mathematics.Algebra
 
             return null;
         }
+        
 
-
-        #region Calculus
-        public override AlgebraExpression Limit(AlgebraExpression expression, AlgebraExpression subject, LimitDirection direction = LimitDirection.Both)
+        public override AlgebraExpression Substitute(VariableExpression variable, AlgebraExpression replacement)
         {
-            throw new NotImplementedException();
+            return this
+                .WithBase(this.Base.Substitute(variable, replacement))
+                .WithExponent(this.Exponent.Substitute(variable, replacement))
+            ;
         }
-
-        public override AlgebraExpression Differentiate(AlgebraExpression respectTo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override AlgebraExpression Integrate(AlgebraExpression respectTo)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-
-
-        public override AlgebraExpression Substitute(AlgebraExpression subject, AlgebraExpression replacement)
-        {
-            if (this == subject)
-                return replacement;
-            
-            return ExpressionFactory.Exponentiate(
-                subject.Substitute(subject, replacement),
-                replacement.Substitute(subject, replacement)
-            );
-        }
-
+                        
 
         #region Immutability
         public PowerExpression WithBase(AlgebraExpression newBase)

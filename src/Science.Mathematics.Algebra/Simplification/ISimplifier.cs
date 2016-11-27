@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Science.Mathematics.Algebra.Simplification
+namespace Science.Mathematics.Algebra
 {
     /// <summary>
     /// Provides simplification logic for a given type of <see cref="AlgebraExpression"/>.

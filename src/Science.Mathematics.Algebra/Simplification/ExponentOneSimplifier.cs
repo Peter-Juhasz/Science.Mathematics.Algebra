@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Science.Mathematics.Algebra.Simplification
+namespace Science.Mathematics.Algebra
 {
     /// <summary>
     /// Simplifies expressions like x ^ 1 to x.

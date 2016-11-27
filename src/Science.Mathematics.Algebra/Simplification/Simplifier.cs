@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 
-namespace Science.Mathematics.Algebra.Simplification
+namespace Science.Mathematics.Algebra
 {
     /// <summary>
     /// Simplifies <see cref="AlgebraExpression"/>s using all the simplifiers found in the library.
@@ -17,7 +17,7 @@ namespace Science.Mathematics.Algebra.Simplification
         /// <param name="expression"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static AlgebraExpression Simplify(AlgebraExpression expression, CancellationToken cancellationToken)
+        public static AlgebraExpression Simplify(this AlgebraExpression expression, CancellationToken cancellationToken = default(CancellationToken))
         {
             AlgebraExpression simplified = expression;
             AlgebraExpression lastResult;
@@ -32,6 +32,7 @@ namespace Science.Mathematics.Algebra.Simplification
 
             return simplified;
         }
+
 
         private static AlgebraExpression SimplifySpecificKind(AlgebraExpression expression, CancellationToken cancellationToken)
         {

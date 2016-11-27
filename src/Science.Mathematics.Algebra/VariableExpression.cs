@@ -34,22 +34,9 @@ namespace Science.Mathematics.Algebra
         }
 
 
-        public override AlgebraExpression Limit(AlgebraExpression expression, AlgebraExpression subject, LimitDirection direction = LimitDirection.Both)
+        public override AlgebraExpression Substitute(VariableExpression variable, AlgebraExpression replacement)
         {
-            return this == expression ? subject : this;
-        }
-
-        public override AlgebraExpression Differentiate(AlgebraExpression respectTo)
-        {
-            return this == respectTo ? ConstantExpression.One : ConstantExpression.Zero;
-        }
-
-        public override AlgebraExpression Integrate(AlgebraExpression respectTo)
-        {
-            return this == respectTo
-                ? (this ^ 2) / 2
-                : this * respectTo
-            ;
+            return this.Name == variable.Name ? replacement : this;
         }
 
 

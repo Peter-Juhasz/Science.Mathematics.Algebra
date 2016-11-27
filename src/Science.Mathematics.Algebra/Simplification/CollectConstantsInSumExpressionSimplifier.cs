@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 
-namespace Science.Mathematics.Algebra.Simplification
+namespace Science.Mathematics.Algebra
 {
     /// <summary>
     /// Collects constants in a sum expression.
