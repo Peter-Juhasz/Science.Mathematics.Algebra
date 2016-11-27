@@ -6,6 +6,9 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    /// <summary>
+    /// Represents a function invocation expression.
+    /// </summary>
     public class FunctionInvocationExpression : AlgebraExpression, IEquatable<FunctionInvocationExpression>
     {
         public FunctionInvocationExpression(string name, IImmutableList<AlgebraExpression> arguments)

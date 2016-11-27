@@ -26,7 +26,7 @@ namespace Science.Mathematics.Algebra
         { }
 
         /// <summary>
-        /// Gets or sets the name of the variable.
+        /// Gets the name of the variable.
         /// </summary>
         public string Name { get; private set; }
 

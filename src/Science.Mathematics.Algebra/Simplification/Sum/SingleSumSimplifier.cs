@@ -6,7 +6,7 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Simplifies expressions to their constant value, if possible.
     /// </summary>
-    public sealed class SingleSumSimplifier : ISimplifier<SumExpressionList>
+    internal sealed class SingleSumSimplifier : ISimplifier<SumExpressionList>
     {
         public AlgebraExpression Simplify(SumExpressionList expression, CancellationToken cancellationToken)
         {

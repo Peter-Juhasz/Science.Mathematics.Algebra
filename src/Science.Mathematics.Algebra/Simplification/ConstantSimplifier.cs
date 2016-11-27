@@ -5,7 +5,7 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Simplifies expressions to their constant value, if possible.
     /// </summary>
-    public sealed class ConstantSimplifier : ISimplifier<AlgebraExpression>
+    internal sealed class ConstantSimplifier : ISimplifier<AlgebraExpression>
     {
         public AlgebraExpression Simplify(AlgebraExpression expression, CancellationToken cancellationToken)
         {

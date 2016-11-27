@@ -7,7 +7,7 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Simplifies expressions like 0 + x to x.
     /// </summary>
-    public sealed class AdditionWithZeroSimplifier : ISimplifier<SumExpressionList>
+    internal sealed class AdditionWithZeroSimplifier : ISimplifier<SumExpressionList>
     {
         public AlgebraExpression Simplify(SumExpressionList expression, CancellationToken cancellationToken)
         {
