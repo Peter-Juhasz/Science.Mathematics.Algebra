@@ -3,6 +3,9 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    /// <summary>
+    /// Represents a variable.
+    /// </summary>
     public class VariableExpression : AtomicExpression, IEquatable<VariableExpression>
     {
         public VariableExpression(string name)
@@ -11,10 +14,10 @@ namespace Science.Mathematics.Algebra
                 throw new ArgumentNullException(nameof(name));
 
             if (name.Length == 0)
-                throw new ArgumentException("Variable name can not be a zero-length string.", "name");
+                throw new ArgumentException("Variable name can not be a zero-length string.", nameof(name));
 
             if (!Char.IsLetter(name[0]))
-                throw new ArgumentException("Variable name must start with a letter.", "name");
+                throw new ArgumentException("Variable name must start with a letter.", nameof(name));
 
             this.Name = name;
         }
