@@ -110,5 +110,10 @@ namespace Science.Mathematics.Algebra
         {
             return Polynomial(variable, coefficients as IReadOnlyList<AlgebraExpression>);
         }
+
+        public static AbsoluteValueExpression AbsoluteValue(AlgebraExpression expression)
+        {
+            return new AbsoluteValueExpression(expression);
+        }
     }
 }
