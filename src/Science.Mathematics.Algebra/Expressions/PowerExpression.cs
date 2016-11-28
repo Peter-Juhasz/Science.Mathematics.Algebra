@@ -111,4 +111,15 @@ namespace Science.Mathematics.Algebra
             return result.ToString();
         }
     }
+
+    public static partial class AlgebraExpressionExtensions
+    {
+        public static PowerExpression AsPower(this AlgebraExpression expression)
+        {
+            if (expression is PowerExpression)
+                return expression as PowerExpression;
+
+            return ExpressionFactory.Exponentiate(expression, ExpressionFactory.One);
+        }
+    }
 }
