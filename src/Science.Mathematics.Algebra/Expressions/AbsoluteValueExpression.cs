@@ -4,18 +4,21 @@ using System.Threading;
 namespace Science.Mathematics.Algebra
 {
     /// <summary>
-    /// Represents a constant expression.
+    /// Represents an absolute value expression.
     /// </summary>
     public class AbsoluteValueExpression : AlgebraExpression, IEquatable<AbsoluteValueExpression>
     {
         public AbsoluteValueExpression(AlgebraExpression expression)
         {
+            if (expression == null)
+                throw new ArgumentNullException(nameof(expression));
+
             this.Expression = expression;
         }
         
 
         /// <summary>
-        /// Gets the value of the expression.
+        /// Gets the expression.
         /// </summary>
         public AlgebraExpression Expression { get; private set; }
 

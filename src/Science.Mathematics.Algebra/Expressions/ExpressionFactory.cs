@@ -115,5 +115,10 @@ namespace Science.Mathematics.Algebra
         {
             return new AbsoluteValueExpression(expression);
         }
+
+        public static DifferentiationExpression Differentiate(AlgebraExpression expression, VariableExpression respectTo)
+        {
+            return new DifferentiationExpression(expression, respectTo);
+        }
     }
 }
