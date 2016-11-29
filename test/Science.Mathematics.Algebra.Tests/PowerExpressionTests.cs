@@ -78,6 +78,27 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
+        public void Power_Simplify_Nested()
+        {
+            var expression = ExpressionFactory.Exponentiate(ExpressionFactory.Exponentiate("x", "y"), "z");
+            var simplifier = new NestedPowerSimplifier();
+            var result = simplifier.Simplify(expression, CancellationToken.None);
+
+            Assert.AreEqual("x ^ (y * z)", result.ToString());
+        }
+
+        [TestMethod]
+        public void Power_Simplify_Constant()
+        {
+            var expression = ExpressionFactory.Exponentiate(2, 3);
+            var simplifier = new ConstantPowerSimplifier();
+            var result = simplifier.Simplify(expression, CancellationToken.None);
+
+            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+            Assert.AreEqual(8, result.GetConstantValue());
+        }
+
+        [TestMethod]
         public void Power_GetConstantValue()
         {
             var expression = ExpressionFactory.Exponentiate(3, 5);
