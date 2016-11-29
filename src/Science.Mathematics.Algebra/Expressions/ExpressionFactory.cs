@@ -111,6 +111,15 @@ namespace Science.Mathematics.Algebra
             return Polynomial(variable, coefficients as IReadOnlyList<AlgebraExpression>);
         }
 
+        public static FunctionInvocationExpression Invoke(string name, IReadOnlyList<AlgebraExpression> arguments)
+        {
+            return new FunctionInvocationExpression(name, arguments.ToImmutableList());
+        }
+        public static FunctionInvocationExpression Invoke(string name, params AlgebraExpression[] arguments)
+        {
+            return Invoke(name, arguments as IReadOnlyList<AlgebraExpression>);
+        }
+
         public static AbsoluteValueExpression AbsoluteValue(AlgebraExpression expression)
         {
             return new AbsoluteValueExpression(expression);

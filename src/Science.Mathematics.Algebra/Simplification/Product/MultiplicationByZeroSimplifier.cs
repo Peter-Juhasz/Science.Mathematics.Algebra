@@ -6,7 +6,7 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Simplifies expressions like 0 * x to 0.
     /// </summary>
-    public sealed class MultiplicationByZeroSimplifier : ISimplifier<ProductExpressionList>
+    internal sealed class MultiplicationByZeroSimplifier : ISimplifier<ProductExpressionList>
     {
         public AlgebraExpression Simplify(ProductExpressionList expression, CancellationToken cancellationToken)
         {

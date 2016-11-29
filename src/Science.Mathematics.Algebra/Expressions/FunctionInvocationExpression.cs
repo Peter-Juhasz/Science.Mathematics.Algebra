@@ -1,0 +1,96 @@
+﻿using System;
+using System.Collections.Immutable;
+using System.Linq;
+using System.Text;
+using System.Threading;
+
+namespace Science.Mathematics.Algebra
+{
+    /// <summary>
+    /// Represents a function invocation expression.
+    /// </summary>
+    public class FunctionInvocationExpression : AlgebraExpression, IEquatable<FunctionInvocationExpression>
+    {
+        public FunctionInvocationExpression(string name, IImmutableList<AlgebraExpression> arguments)
+        {
+            if (name == null)
+                throw new ArgumentNullException(nameof(name));
+
+            if (arguments == null)
+                throw new ArgumentNullException(nameof(arguments));
+
+            this.Name = name;
+            this.Arguments = arguments;
+        }
+
+
+        /// <summary>
+        /// Gets the name of the invoked function.
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the arguments of the invocation.
+        /// </summary>
+        public IImmutableList<AlgebraExpression> Arguments { get; private set; }
+
+
+        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return null;
+        }
+
+        public override AlgebraExpression Substitute(VariableExpression variable, AlgebraExpression replacement)
+        {
+            return this.WithArguments(this.Arguments.Select(a => a.Substitute(variable, replacement)).ToImmutableList());
+        }
+
+
+        #region Immutability
+        public FunctionInvocationExpression WithName(string name)
+        {
+            return ExpressionFactory.Invoke(name, this.Arguments);
+        }
+
+        public FunctionInvocationExpression WithArguments(IImmutableList<AlgebraExpression> arguments)
+        {
+            return ExpressionFactory.Invoke(this.Name, arguments);
+        }
+        #endregion
+
+
+        public bool Equals(FunctionInvocationExpression other)
+        {
+            if (Object.ReferenceEquals(other, null)) return false;
+
+            if (this.Name != other.Name)
+                return false;
+
+            if (this.Arguments.Count != other.Arguments.Count)
+                return false;
+
+            return this.Arguments.Zip(other.Arguments, (x, y) => x.Equals(y)).All(b => b);
+        }
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj as FunctionInvocationExpression);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Arguments.Select(o => o.GetHashCode()).Aggregate(this.Name.GetHashCode(), (x, y) => x ^ y);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(this.Name);
+            sb.Append('(');
+            sb.Append(String.Join(", ", this.Arguments));
+            sb.Append(')');
+
+            return sb.ToString();
+        }
+    }
+}

@@ -49,7 +49,7 @@ namespace Science.Mathematics.Algebra
 
         public ProductExpressionList WithTerms(IImmutableList<AlgebraExpression> terms)
         {
-            return new ProductExpressionList(terms);
+            return ExpressionFactory.Product(terms);
         }
         #endregion
 
@@ -61,7 +61,7 @@ namespace Science.Mathematics.Algebra
             if (this.Terms.Count != other.Terms.Count)
                 return false;
 
-            return this.Terms.All(t => other.Terms.Contains(t)); // TODO: Add equality comparer
+            return this.Terms.Zip(other.Terms, (x, y) => x.Equals(y)).All(b => b);
         }
         public override bool Equals(object obj)
         {

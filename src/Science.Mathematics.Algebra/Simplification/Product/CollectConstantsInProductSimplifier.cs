@@ -7,7 +7,7 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Simplifies expressions like 2 * 3 * x to 6 * x.
     /// </summary>
-    public sealed class CollectConstantsInProductSimplifier : ISimplifier<ProductExpressionList>
+    internal sealed class CollectConstantsInProductSimplifier : ISimplifier<ProductExpressionList>
     {
         public AlgebraExpression Simplify(ProductExpressionList expression, CancellationToken cancellationToken)
         {

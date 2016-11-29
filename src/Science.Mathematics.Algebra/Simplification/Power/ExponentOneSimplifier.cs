@@ -5,7 +5,7 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Simplifies expressions like x ^ 1 to x.
     /// </summary>
-    public sealed class ExponentOneSimplifier : ISimplifier<PowerExpression>
+    internal sealed class ExponentOneSimplifier : ISimplifier<PowerExpression>
     {
         public AlgebraExpression Simplify(PowerExpression expression, CancellationToken cancellationToken)
         {

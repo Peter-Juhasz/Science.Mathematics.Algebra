@@ -28,7 +28,7 @@ namespace Science.Mathematics.Algebra
 
                 // simplify by kind
                 simplified = SimplifySpecificKind(simplified, cancellationToken);
-            } while (simplified != lastResult);
+            } while (!lastResult.Equals(simplified));
 
             return simplified;
         }
@@ -40,10 +40,7 @@ namespace Science.Mathematics.Algebra
             AlgebraExpression lastResult;
 
             // find applicable simplifiers
-            IReadOnlyCollection<object> simplifiers = FindSimplifiers(expression.GetType())
-                .Select(Activator.CreateInstance)
-                .ToList()
-            ;
+            IReadOnlyCollection<object> simplifiers = GetSimplifiers(expression);
 
             do
             {
@@ -59,7 +56,7 @@ namespace Science.Mathematics.Algebra
 
                     // stop if not the same kind of expression
                     if (lastResult.GetType() != simplified.GetType())
-                        break;
+                        return simplified;
                 }
             } while (!lastResult.Equals(simplified));
 
@@ -76,6 +73,13 @@ namespace Science.Mathematics.Algebra
                         .Any(i => expressionType.GetTypeInfo().IsAssignableFrom(i.GenericTypeArguments[0].GetTypeInfo()))
                 )
             ;
+        }
+
+        private static IReadOnlyCollection<object> GetSimplifiers(AlgebraExpression expression)
+        {
+            return FindSimplifiers(expression.GetType())
+                .Select(Activator.CreateInstance)
+                .ToList();
         }
     }
 }

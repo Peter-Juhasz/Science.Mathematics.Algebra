@@ -5,7 +5,7 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Simplifies expressions like 0 ^ x to 0.
     /// </summary>
-    public sealed class BaseZeroSimplifier : ISimplifier<PowerExpression>
+    internal sealed class BaseZeroSimplifier : ISimplifier<PowerExpression>
     {
         public AlgebraExpression Simplify(PowerExpression expression, CancellationToken cancellationToken)
         {

@@ -7,7 +7,7 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Simplifies expressions like 1 * x to x.
     /// </summary>
-    public sealed class MultiplicationByOneSimplifier : ISimplifier<ProductExpressionList>
+    internal sealed class MultiplicationByOneSimplifier : ISimplifier<ProductExpressionList>
     {
         public AlgebraExpression Simplify(ProductExpressionList expression, CancellationToken cancellationToken)
         {
