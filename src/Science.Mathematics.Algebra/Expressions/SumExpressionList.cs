@@ -68,7 +68,7 @@ namespace Science.Mathematics.Algebra
         }
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as SumExpressionList);
+            return this.Equals(obj as SumExpressionList);
         }
 
         public override int GetHashCode()

@@ -9,19 +9,21 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Sum_Zero()
         {
-            var expression = ExpressionFactory.Sum(2, 0, "x");
+            var x = ExpressionFactory.Variable("x");
+            var expression = ExpressionFactory.Sum(2, 0, x);
             var simplifier = new AdditionWithZeroSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
             
-            Assert.AreEqual("2 + x", result.ToString());
+            Assert.AreEqual(2 + x, result);
         }
 
         [TestMethod]
         public void Sum_ToString()
         {
-            var expression = ExpressionFactory.Sum(2, "x");
+            var x = ExpressionFactory.Variable("x");
+            var expression = ExpressionFactory.Sum(2, x);
 
-            Assert.AreEqual("2 + x", expression.ToString());
+            Assert.AreEqual(2 + x, expression);
         }
     }
 }

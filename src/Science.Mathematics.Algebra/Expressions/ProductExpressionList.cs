@@ -65,7 +65,7 @@ namespace Science.Mathematics.Algebra
         }
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as ProductExpressionList);
+            return this.Equals(obj as ProductExpressionList);
         }
 
         public override int GetHashCode()
