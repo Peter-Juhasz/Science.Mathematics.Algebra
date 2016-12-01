@@ -20,11 +20,12 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Sum_CollectConstants()
         {
-            var expression = ExpressionFactory.Sum(2, 5, "x");
+            var x = ExpressionFactory.Variable("x");
+            var expression = ExpressionFactory.Sum(2, 5, x);
             var simplifier = new CollectConstantsInSumSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
-            Assert.AreEqual("x + 7", result.ToString());
+            Assert.AreEqual(x + 7, result);
         }
 
         [TestMethod]
