@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 
@@ -91,6 +93,29 @@ namespace Science.Mathematics.Algebra
             sb.Append(')');
 
             return sb.ToString();
+        }
+    }
+
+    public static partial class ExpressionFactory
+    {
+        public static FunctionInvocationExpression Invoke(string name, IReadOnlyList<AlgebraExpression> arguments)
+        {
+            var type = typeof(FunctionInvocationExpression).GetTypeInfo().Assembly.GetTypes()
+                .Select(t => t.GetTypeInfo())
+                .Where(t => !t.IsSpecialName)
+                .Where(t => t.IsClass)
+                .Where(t => !t.IsAbstract)
+                .Where(t => t.IsSubclassOf(typeof(FunctionInvocationExpression)))
+                .SingleOrDefault(t => t.GetCustomAttributes<FunctionNameAttribute>().Any(a => a.Name == name));
+
+            if (type != null)
+                return Activator.CreateInstance(type.AsType(), arguments.ToImmutableList()) as FunctionInvocationExpression;
+
+            return new FunctionInvocationExpression(name, arguments.ToImmutableList());
+        }
+        public static FunctionInvocationExpression Invoke(string name, params AlgebraExpression[] arguments)
+        {
+            return Invoke(name, arguments as IReadOnlyList<AlgebraExpression>);
         }
     }
 }

@@ -93,4 +93,12 @@ namespace Science.Mathematics.Algebra
             return ExpressionFactory.Differentiate(expression, respectTo);
         }
     }
+
+    public static partial class ExpressionFactory
+    {
+        public static DifferentiationExpression Differentiate(AlgebraExpression expression, VariableExpression respectTo)
+        {
+            return new DifferentiationExpression(expression, respectTo);
+        }
+    }
 }

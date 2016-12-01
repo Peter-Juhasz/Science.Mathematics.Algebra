@@ -88,4 +88,23 @@ namespace Science.Mathematics.Algebra
             return this.Value.CompareTo(other.Value);
         }
     }
+
+    public static partial class ExpressionFactory
+    {
+        public static ConstantExpression Zero => ConstantExpression.Zero;
+
+        public static ConstantExpression One => ConstantExpression.One;
+
+        public static ConstantExpression MinusOne => ConstantExpression.MinusOne;
+
+
+        public static ConstantExpression Constant(int value)
+        {
+            return new ConstantExpression(value);
+        }
+        public static ConstantExpression Constant(double value)
+        {
+            return new ConstantExpression(value);
+        }
+    }
 }

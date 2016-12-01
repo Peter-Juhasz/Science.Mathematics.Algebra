@@ -55,9 +55,9 @@ namespace Science.Mathematics.Algebra
             ;
         }
 
-        public SumExpressionList WithTerms(IImmutableList<AlgebraExpression> terms)
+        public SumExpressionList WithTerms(IImmutableList<AlgebraExpression> newTerms)
         {
-            return ExpressionFactory.Sum(terms);
+            return ExpressionFactory.Sum(newTerms);
         }
         #endregion
 
@@ -84,6 +84,27 @@ namespace Science.Mathematics.Algebra
         public override string ToString()
         {
             return String.Join(" + ", this.Terms);
+        }
+    }
+
+    public static partial class ExpressionFactory
+    {
+        public static SumExpressionList Add(AlgebraExpression left, AlgebraExpression right)
+        {
+            return new SumExpressionList(ImmutableList.Create(left, right));
+        }
+        public static SumExpressionList Subtract(AlgebraExpression left, AlgebraExpression right)
+        {
+            return Add(left, Negate(right));
+        }
+
+        public static SumExpressionList Sum(IReadOnlyCollection<AlgebraExpression> terms)
+        {
+            return new SumExpressionList(terms.ToImmutableList());
+        }
+        public static SumExpressionList Sum(params AlgebraExpression[] terms)
+        {
+            return Sum(terms as IReadOnlyCollection<AlgebraExpression>);
         }
     }
 }

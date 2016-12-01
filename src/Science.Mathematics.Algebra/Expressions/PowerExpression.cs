@@ -122,4 +122,24 @@ namespace Science.Mathematics.Algebra
             return ExpressionFactory.Exponentiate(expression, ExpressionFactory.One);
         }
     }
+
+    public static partial class ExpressionFactory
+    {
+        public static PowerExpression Exponentiate(AlgebraExpression @base, AlgebraExpression exponent)
+        {
+            return new PowerExpression(@base, exponent);
+        }
+        public static PowerExpression Root(AlgebraExpression @base, AlgebraExpression exponent)
+        {
+            return Exponentiate(@base, Divide(ConstantExpression.One, exponent));
+        }
+        public static PowerExpression Square(AlgebraExpression expression)
+        {
+            return Exponentiate(expression, Constant(2));
+        }
+        public static PowerExpression SquareRoot(AlgebraExpression expression)
+        {
+            return Exponentiate(expression, Divide(ConstantExpression.One, Constant(2)));
+        }
+    }
 }

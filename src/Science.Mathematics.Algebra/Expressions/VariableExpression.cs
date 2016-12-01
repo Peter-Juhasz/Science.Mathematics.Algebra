@@ -77,4 +77,16 @@ namespace Science.Mathematics.Algebra
             return this.Name;
         }
     }
+
+    public static partial class ExpressionFactory
+    {
+        public static VariableExpression Variable(string name)
+        {
+            return new VariableExpression(name);
+        }
+        public static VariableExpression Variable(char name)
+        {
+            return new VariableExpression(name);
+        }
+    }
 }

@@ -47,9 +47,9 @@ namespace Science.Mathematics.Algebra
             ;
         }
 
-        public ProductExpressionList WithTerms(IImmutableList<AlgebraExpression> terms)
+        public ProductExpressionList WithTerms(IImmutableList<AlgebraExpression> newTerms)
         {
-            return ExpressionFactory.Product(terms);
+            return ExpressionFactory.Product(newTerms);
         }
         #endregion
 
@@ -83,6 +83,37 @@ namespace Science.Mathematics.Algebra
         private static bool NeedsParenthesis(AlgebraExpression expression)
         {
             return expression is SumExpressionList;
+        }
+    }
+
+    public static partial class ExpressionFactory
+    {
+        public static AlgebraExpression Negate(AlgebraExpression expression)
+        {
+            return Multiply(ConstantExpression.MinusOne, expression);
+        }
+
+        public static ProductExpressionList Multiply(AlgebraExpression left, AlgebraExpression right)
+        {
+            return new ProductExpressionList(ImmutableList.Create(left, right));
+        }
+        public static ProductExpressionList Divide(AlgebraExpression left, AlgebraExpression right)
+        {
+            return Multiply(left, Exponentiate(right, ConstantExpression.MinusOne));
+        }
+
+        public static ProductExpressionList Reciprocal(AlgebraExpression expression)
+        {
+            return Divide(ConstantExpression.One, expression);
+        }
+
+        public static ProductExpressionList Product(IReadOnlyCollection<AlgebraExpression> terms)
+        {
+            return new ProductExpressionList(terms.ToImmutableList());
+        }
+        public static ProductExpressionList Product(params AlgebraExpression[] terms)
+        {
+            return Product(terms as IReadOnlyCollection<AlgebraExpression>);
         }
     }
 }

@@ -70,4 +70,12 @@ namespace Science.Mathematics.Algebra
             return this.Equals(obj as AbsoluteValueExpression);
         }
     }
+
+    public static partial class ExpressionFactory
+    {
+        public static AbsoluteValueExpression AbsoluteValue(AlgebraExpression expression)
+        {
+            return new AbsoluteValueExpression(expression);
+        }
+    }
 }
