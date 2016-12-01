@@ -82,13 +82,13 @@ namespace Science.Mathematics.Algebra
 
         public override bool Equals(object obj)
         {
-            return this.Equals(obj as AlgebraExpression);
+            return this.Equals(obj as DifferentiationExpression);
         }
     }
 
     public static partial class AlgebraExpressionExtensions
     {
-        public static AlgebraExpression Differentiate(AlgebraExpression expression, VariableExpression respectTo)
+        public static AlgebraExpression Differentiate(this AlgebraExpression expression, VariableExpression respectTo)
         {
             return ExpressionFactory.Differentiate(expression, respectTo);
         }

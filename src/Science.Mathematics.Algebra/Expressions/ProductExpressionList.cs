@@ -65,7 +65,7 @@ namespace Science.Mathematics.Algebra
         }
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as ProductExpressionList);
+            return this.Equals(obj as ProductExpressionList);
         }
 
         public override int GetHashCode()
@@ -75,7 +75,14 @@ namespace Science.Mathematics.Algebra
 
         public override string ToString()
         {
-            return String.Join(" * ", this.Terms);
+            return String.Join(" * ", this.Terms
+                .Select(t => NeedsParenthesis(t) ? $"({t})" : t.ToString())
+            );
+        }
+
+        private static bool NeedsParenthesis(AlgebraExpression expression)
+        {
+            return expression is SumExpressionList;
         }
     }
 }

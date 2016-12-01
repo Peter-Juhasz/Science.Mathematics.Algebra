@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -51,8 +52,14 @@ namespace Science.Mathematics.Algebra
                 {
                     cancellationToken.ThrowIfCancellationRequested();
 
+                    var original = simplified;
+
                     MethodInfo method = simplifier.GetType().GetRuntimeMethod(nameof(ISimplifier<AlgebraExpression>.Simplify), new[] { expression.GetType(), typeof(CancellationToken) });
                     simplified = method.Invoke(simplifier, new object[] { simplified, cancellationToken }) as AlgebraExpression;
+                    
+                    // trace
+                    if (!original.Equals(simplified))
+                        Debug.WriteLine($"Simplified '{original}' to '{simplified}' using '{simplifier}'");
 
                     // stop if not the same kind of expression
                     if (lastResult.GetType() != simplified.GetType())
@@ -65,7 +72,7 @@ namespace Science.Mathematics.Algebra
 
         private static IEnumerable<Type> FindSimplifiers(Type expressionType)
         {
-            return typeof(ISimplifier<>).GetTypeInfo().Assembly.ExportedTypes
+            return typeof(ISimplifier<>).GetTypeInfo().Assembly.GetTypes()
                 .Where(t =>
                     t.GetTypeInfo().ImplementedInterfaces
                         .Where(i => i.IsConstructedGenericType)

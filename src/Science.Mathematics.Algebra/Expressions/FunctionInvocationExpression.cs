@@ -73,7 +73,7 @@ namespace Science.Mathematics.Algebra
         }
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as FunctionInvocationExpression);
+            return this.Equals(obj as FunctionInvocationExpression);
         }
 
         public override int GetHashCode()

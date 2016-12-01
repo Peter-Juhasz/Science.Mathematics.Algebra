@@ -18,7 +18,12 @@ namespace Science.Mathematics.Algebra
         
         public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Terms.Sum(t => t.GetConstantValue());
+            var values = this.Terms.Select(t => t.GetConstantValue()).Memoize();
+
+            if (values.All(v => v == null))
+                return null;
+
+            return values.Sum();
         }
 
         
@@ -68,7 +73,7 @@ namespace Science.Mathematics.Algebra
         }
         public override bool Equals(object obj)
         {
-            return base.Equals(obj as SumExpressionList);
+            return this.Equals(obj as SumExpressionList);
         }
 
         public override int GetHashCode()

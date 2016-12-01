@@ -25,7 +25,7 @@ namespace Science.Mathematics.Algebra
                         .Select(g =>
                             ExpressionFactory.Exponentiate(g.Key, ExpressionFactory.Sum(g.Select(p => p.Exponent).ToImmutableList()))
                         )
-                        .Select(p =>exponentSimplifier.Simplify(p, cancellationToken))
+                        .Select(p => exponentSimplifier.Simplify(p, cancellationToken))
                         .ToImmutableList()
                 );
             }

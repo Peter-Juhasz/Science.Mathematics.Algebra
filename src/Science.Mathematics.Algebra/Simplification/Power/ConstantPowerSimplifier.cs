@@ -16,7 +16,7 @@ namespace Science.Mathematics.Algebra
             if (@base != null && exponent != null)
                 return ExpressionFactory.Constant(Math.Pow(@base.Value, exponent.Value));
 
-            return exponent;
+            return expression;
         }
     }
 }
