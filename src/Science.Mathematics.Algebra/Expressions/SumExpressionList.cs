@@ -18,7 +18,12 @@ namespace Science.Mathematics.Algebra
         
         public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.Terms.Sum(t => t.GetConstantValue());
+            var values = this.Terms.Select(t => t.GetConstantValue()).Memoize();
+
+            if (values.All(v => v == null))
+                return null;
+
+            return values.Sum();
         }
 
         

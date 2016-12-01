@@ -75,7 +75,14 @@ namespace Science.Mathematics.Algebra
 
         public override string ToString()
         {
-            return String.Join(" * ", this.Terms);
+            return String.Join(" * ", this.Terms
+                .Select(t => NeedsParenthesis(t) ? $"({t})" : t.ToString())
+            );
+        }
+
+        private static bool NeedsParenthesis(AlgebraExpression expression)
+        {
+            return expression is SumExpressionList;
         }
     }
 }

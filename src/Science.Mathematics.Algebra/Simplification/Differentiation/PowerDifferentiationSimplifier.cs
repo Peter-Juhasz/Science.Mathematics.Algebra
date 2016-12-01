@@ -13,9 +13,9 @@ namespace Science.Mathematics.Algebra
             {
                 var power = expression.Expression as PowerExpression;
                 
-                return power.Base ^ (power.Exponent - 1) * (
+                return (power.Base ^ (power.Exponent - 1)) * (
                     power.Exponent * power.Base.Differentiate(expression.RespectTo) +
-                    power.Base * ExpressionFactory.Invoke("Log", power.Base) * power.Exponent.Differentiate(expression.RespectTo)
+                    power.Base * ExpressionFactory.Invoke("log", power.Base) * power.Exponent.Differentiate(expression.RespectTo)
                 );
             }
 
