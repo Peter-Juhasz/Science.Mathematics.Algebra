@@ -88,7 +88,7 @@ namespace Science.Mathematics.Algebra
 
     public static partial class AlgebraExpressionExtensions
     {
-        public static AlgebraExpression Differentiate(AlgebraExpression expression, VariableExpression respectTo)
+        public static AlgebraExpression Differentiate(this AlgebraExpression expression, VariableExpression respectTo)
         {
             return ExpressionFactory.Differentiate(expression, respectTo);
         }
