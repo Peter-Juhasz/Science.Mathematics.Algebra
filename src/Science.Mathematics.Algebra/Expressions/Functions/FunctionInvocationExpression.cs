@@ -109,7 +109,15 @@ namespace Science.Mathematics.Algebra
                 .SingleOrDefault(t => t.GetCustomAttributes<FunctionNameAttribute>().Any(a => a.Name == name));
 
             if (type != null)
-                return Activator.CreateInstance(type.AsType(), arguments.ToImmutableList()) as FunctionInvocationExpression;
+            {
+                var constructors = type.DeclaredConstructors;
+
+                if (constructors.Any(c => c.GetParameters().Count() == 1 && c.GetParameters().Single().ParameterType == typeof(IImmutableList<AlgebraExpression>)))
+                    return Activator.CreateInstance(type.AsType(), arguments.ToImmutableList()) as FunctionInvocationExpression;
+
+                if (constructors.Any(c => c.GetParameters().Count() == arguments.Count && c.GetParameters().All(p => p.ParameterType == typeof(AlgebraExpression))))
+                    return Activator.CreateInstance(type.AsType(), arguments as object[]) as FunctionInvocationExpression;
+            }
 
             return new FunctionInvocationExpression(name, arguments.ToImmutableList());
         }

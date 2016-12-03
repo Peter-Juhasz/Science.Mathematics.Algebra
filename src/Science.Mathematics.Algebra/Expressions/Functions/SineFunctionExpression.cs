@@ -8,8 +8,8 @@ namespace Science.Mathematics.Algebra
     [FunctionName(PrimaryName)]
     public class SineFunctionExpression : FunctionInvocationExpression
     {
-        public SineFunctionExpression(IImmutableList<AlgebraExpression> arguments)
-            : base(PrimaryName, arguments)
+        public SineFunctionExpression(AlgebraExpression argument)
+            : base(PrimaryName, ImmutableList<AlgebraExpression>.Empty.Add(argument))
         { }
 
         public const string PrimaryName = "sin";
@@ -23,7 +23,7 @@ namespace Science.Mathematics.Algebra
     public static partial class ExpressionFactory
     {
         /// <summary>
-        /// Create a sine function invocation expression.
+        /// Creates a sine function invocation expression.
         /// </summary>
         public static SineFunctionExpression Sine(AlgebraExpression argument)
         {

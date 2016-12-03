@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Linq;
 
 namespace Science.Mathematics.Algebra
 {
@@ -8,8 +9,8 @@ namespace Science.Mathematics.Algebra
     [FunctionName(PrimaryName)]
     public class CosineFunctionExpression : FunctionInvocationExpression
     {
-        public CosineFunctionExpression(IImmutableList<AlgebraExpression> arguments)
-            : base(PrimaryName, arguments)
+        public CosineFunctionExpression(AlgebraExpression argument)
+            : base(PrimaryName, ImmutableList<AlgebraExpression>.Empty.Add(argument))
         { }
 
         public const string PrimaryName = "cos";
@@ -23,7 +24,7 @@ namespace Science.Mathematics.Algebra
     public static partial class ExpressionFactory
     {
         /// <summary>
-        /// Create a sine function invocation expression.
+        /// Creates a sine function invocation expression.
         /// </summary>
         public static CosineFunctionExpression Cosine(AlgebraExpression argument)
         {
