@@ -8,7 +8,7 @@ namespace Science.Mathematics.Algebra.Tests
     public class DifferentiationExpressionTests
     {
         [TestMethod]
-        public void Differentiation_Power_x2()
+        public void Differentiation_Power_x_2()
         {
             var x = Variable("x");
             var expression = x ^ 2;
@@ -18,7 +18,7 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
-        public void Differentiation_Power_ex()
+        public void Differentiation_Power_e_x()
         {
             var x = Variable("x");
             var expression = e ^ x;
@@ -26,7 +26,7 @@ namespace Science.Mathematics.Algebra.Tests
 
             Assert.AreEqual(expression, result);
         }
-
+        
         [TestMethod]
         public void Differentiation_Log_b_x()
         {
@@ -36,6 +36,16 @@ namespace Science.Mathematics.Algebra.Tests
             var result = expression.Differentiate(x).Simplify();
 
             Assert.AreEqual(Reciprocal(NaturalLogarithm(b) * x), result);
+        }
+
+        [TestMethod]
+        public void Differentiation_Log_e_x()
+        {
+            var x = Variable("x");
+            var expression = NaturalLogarithm(x);
+            var result = expression.Differentiate(x).Simplify();
+            
+            Assert.AreEqual(Reciprocal(x), result);
         }
     }
 }

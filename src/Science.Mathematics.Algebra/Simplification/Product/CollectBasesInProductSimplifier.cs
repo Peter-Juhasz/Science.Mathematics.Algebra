@@ -11,8 +11,6 @@ namespace Science.Mathematics.Algebra
     /// </summary>
     internal sealed class CollectBasesInProductSimplifier : ISimplifier<ProductExpressionList>
     {
-        private static readonly ExponentOneSimplifier exponentSimplifier = new ExponentOneSimplifier();
-
         public AlgebraExpression Simplify(ProductExpressionList expression, CancellationToken cancellationToken)
         {
             var groups = expression.Terms

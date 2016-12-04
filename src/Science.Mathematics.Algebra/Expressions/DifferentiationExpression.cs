@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Represents a differentiation expression.
     /// </summary>
@@ -58,12 +62,12 @@ namespace Science.Mathematics.Algebra
         #region Immutability
         public DifferentiationExpression WithRespectTo(VariableExpression newVariable)
         {
-            return ExpressionFactory.Differentiate(this.Expression, newVariable);
+            return Differentiate(this.Expression, newVariable);
         }
 
         public DifferentiationExpression WithExpression(AlgebraExpression newExpression)
         {
-            return ExpressionFactory.Differentiate(newExpression, this.RespectTo);
+            return Differentiate(newExpression, this.RespectTo);
         }
         #endregion
 
@@ -97,6 +101,23 @@ namespace Science.Mathematics.Algebra
         public static AlgebraExpression Differentiate(this AlgebraExpression expression, VariableExpression respectTo)
         {
             return ExpressionFactory.Differentiate(expression, respectTo);
+        }
+
+        public static AlgebraExpression PartialDerivative(this AlgebraExpression expression, VariableExpression respectTo)
+        {
+            return Differentiate(expression, respectTo);
+        }
+
+        public static AlgebraExpression TotalDerivative(this AlgebraExpression function, IReadOnlyCollection<VariableExpression> parameters, VariableExpression respectTo)
+        {
+            if (!parameters.Contains(respectTo))
+                throw new ArgumentException($"Parameter '{nameof(respectTo)}' must be one of the variables provided in parameter '{nameof(parameters)}'.", nameof(respectTo));
+
+            return Sum(
+                parameters
+                    .Select(p => function.PartialDerivative(p) * p.Differentiate(respectTo))
+                    .ToImmutableList()
+            );
         }
     }
 
