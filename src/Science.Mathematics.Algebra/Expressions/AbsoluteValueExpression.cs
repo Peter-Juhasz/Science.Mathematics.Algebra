@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Science.Mathematics.Algebra
@@ -37,6 +38,11 @@ namespace Science.Mathematics.Algebra
         public override AlgebraExpression Substitute(VariableExpression variable, AlgebraExpression replacement)
         {
             return this;
+        }
+
+        public override IEnumerable<AlgebraExpression> Children()
+        {
+            yield return this.Expression;
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Science.Mathematics.Algebra
@@ -21,6 +22,8 @@ namespace Science.Mathematics.Algebra
         /// <param name="replacement"></param>
         /// <returns></returns>
         public abstract AlgebraExpression Substitute(VariableExpression variable, AlgebraExpression replacement);
+
+        public abstract IEnumerable<AlgebraExpression> Children();
 
         #region Operators
         public static AlgebraExpression operator +(AlgebraExpression left, AlgebraExpression right)

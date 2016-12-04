@@ -47,6 +47,11 @@ namespace Science.Mathematics.Algebra
             return this.WithArguments(this.Arguments.Select(a => a.Substitute(variable, replacement)).ToImmutableList());
         }
 
+        public override IEnumerable<AlgebraExpression> Children()
+        {
+            return this.Arguments;
+        }
+
 
         #region Immutability
         public FunctionInvocationExpression WithName(string name)

@@ -27,5 +27,10 @@ namespace Science.Mathematics.Algebra
         /// Gets the expression terms.
         /// </summary>
         public IImmutableList<AlgebraExpression> Terms { get; private set; }
+
+        public override IEnumerable<AlgebraExpression> Children()
+        {
+            return this.Terms;
+        }
     }
 }

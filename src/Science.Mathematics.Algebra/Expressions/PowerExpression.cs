@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
@@ -51,7 +52,13 @@ namespace Science.Mathematics.Algebra
                 .WithExponent(this.Exponent.Substitute(variable, replacement))
             ;
         }
-                        
+
+        public override IEnumerable<AlgebraExpression> Children()
+        {
+            yield return this.Base;
+            yield return this.Exponent;
+        }
+
 
         #region Immutability
         public PowerExpression WithBase(AlgebraExpression newBase)

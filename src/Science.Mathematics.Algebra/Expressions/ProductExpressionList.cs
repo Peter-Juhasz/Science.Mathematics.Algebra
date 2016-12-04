@@ -28,7 +28,7 @@ namespace Science.Mathematics.Algebra
                     .ToImmutableList()
             );
         }
-
+        
 
         #region Immutability
         public ProductExpressionList Multiply(AlgebraExpression expression)
