@@ -14,7 +14,7 @@ namespace Science.Mathematics.Algebra
             : base(PrimaryName, ImmutableList<AlgebraExpression>.Empty.Add(argument).Add(@base))
         { }
         public LogarithmFunctionExpression(AlgebraExpression argument)
-            : this(argument, E)
+            : this(argument, e)
         { }
 
         public const string PrimaryName = "log";
@@ -46,11 +46,27 @@ namespace Science.Mathematics.Algebra
     public static partial class ExpressionFactory
     {
         /// <summary>
-        /// Creates a log function invocation expression.
+        /// Creates a log function invocation expression with base e.
         /// </summary>
         public static LogarithmFunctionExpression NaturalLogarithm(AlgebraExpression argument)
         {
-            return Logarithm(argument, E);
+            return Logarithm(argument, e);
+        }
+
+        /// <summary>
+        /// Creates a log function invocation expression with base 10.
+        /// </summary>
+        public static LogarithmFunctionExpression CommonLogarithm(AlgebraExpression argument)
+        {
+            return Logarithm(argument, 10);
+        }
+
+        /// <summary>
+        /// Creates a log function invocation expression with base 2.
+        /// </summary>
+        public static LogarithmFunctionExpression BinaryLogarithm(AlgebraExpression argument)
+        {
+            return Logarithm(argument, 2);
         }
 
         /// <summary>
