@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Science.Mathematics.Algebra
@@ -127,5 +128,31 @@ namespace Science.Mathematics.Algebra
             return ExpressionFactory.Variable(name);
         }
         #endregion
+    }
+
+    public static partial class AlgebraExpressionExtensions
+    {
+        public static bool IsConstant(this AlgebraExpression expression, VariableExpression respectTo)
+        {
+            return !expression.DescendantsAndSelf().Contains(respectTo);
+        }
+
+
+        public static IEnumerable<AlgebraExpression> Descendants(this AlgebraExpression expression)
+        {
+            foreach (var child in expression.Children())
+            {
+                foreach (var descendant in child.DescendantsAndSelf())
+                    yield return descendant;
+            }
+        }
+
+        public static IEnumerable<AlgebraExpression> DescendantsAndSelf(this AlgebraExpression expression)
+        {
+            yield return expression;
+
+            foreach (var descendant in expression.Descendants())
+                yield return descendant;
+        }
     }
 }

@@ -16,7 +16,6 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
-        [Ignore]
         public void Differentiation_Power_ex()
         {
             var x = ExpressionFactory.Variable("x");

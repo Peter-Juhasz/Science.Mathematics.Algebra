@@ -3,8 +3,10 @@
 
     "dependencies": {
         "NETStandard.Library": "1.6.1",
-        "System.Interactive": "3.1.1",
+
         "System.Collections.Immutable": "1.3.0",
+        "System.Interactive": "3.1.1",
+
         "System.Collections.Immutable.Analyzers": {
             "version": "1.2.0-*",
             "type": "build"

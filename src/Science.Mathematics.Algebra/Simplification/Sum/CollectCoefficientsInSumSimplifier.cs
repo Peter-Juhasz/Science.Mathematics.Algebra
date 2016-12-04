@@ -28,6 +28,7 @@ namespace Science.Mathematics.Algebra
                     )
                 )
                 .Where(g => g.Key.Terms.Any()) // exclude constants
+                .Where(g => g.Count() != 1) // exclude single terms
             ;
 
             var newTerms = expression.Terms

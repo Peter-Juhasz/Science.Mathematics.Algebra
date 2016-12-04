@@ -20,7 +20,7 @@ namespace Science.Mathematics.Algebra
         {
             var values = this.Terms.Select(t => t.GetConstantValue()).Memoize();
 
-            if (values.All(v => v == null))
+            if (values.Contains(null))
                 return null;
 
             return values.Sum();
@@ -83,7 +83,14 @@ namespace Science.Mathematics.Algebra
 
         public override string ToString()
         {
-            return String.Join(" + ", this.Terms);
+            return String.Join(" + ", this.Terms
+                .Select(t => NeedsParenthesis(t) ? $"({t})" : t.ToString())
+            );
+        }
+
+        private static bool NeedsParenthesis(AlgebraExpression expression)
+        {
+            return expression is SumExpressionList;
         }
     }
 
