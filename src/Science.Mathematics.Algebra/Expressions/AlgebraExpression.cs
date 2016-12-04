@@ -5,6 +5,8 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Represents an algebra expression. Serves as the base class of all expressions.
     /// </summary>
@@ -29,72 +31,72 @@ namespace Science.Mathematics.Algebra
         #region Operators
         public static AlgebraExpression operator +(AlgebraExpression left, AlgebraExpression right)
         {
-            return ExpressionFactory.Add(left, right);
+            return Add(left, right);
         }
         public static AlgebraExpression operator +(double left, AlgebraExpression right)
         {
-            return ExpressionFactory.Add(ExpressionFactory.Constant(left), right);
+            return Add(Constant(left), right);
         }
         public static AlgebraExpression operator +(AlgebraExpression left, double right)
         {
-            return ExpressionFactory.Add(left, ExpressionFactory.Constant(right));
+            return Add(left, Constant(right));
         }
 
         public static AlgebraExpression operator -(AlgebraExpression left, AlgebraExpression right)
         {
-            return ExpressionFactory.Subtract(left, right);
+            return Subtract(left, right);
         }
         public static AlgebraExpression operator -(double left, AlgebraExpression right)
         {
-            return ExpressionFactory.Subtract(ExpressionFactory.Constant(left), right);
+            return Subtract(Constant(left), right);
         }
         public static AlgebraExpression operator -(AlgebraExpression left, double right)
         {
-            return ExpressionFactory.Subtract(left, ExpressionFactory.Constant(right));
+            return Subtract(left, Constant(right));
         }
 
         public static AlgebraExpression operator *(AlgebraExpression left, AlgebraExpression right)
         {
-            return ExpressionFactory.Multiply(left, right);
+            return Multiply(left, right);
         }
         public static AlgebraExpression operator *(double left, AlgebraExpression right)
         {
-            return ExpressionFactory.Multiply(ExpressionFactory.Constant(left), right);
+            return Multiply(Constant(left), right);
         }
         public static AlgebraExpression operator *(AlgebraExpression left, double right)
         {
-            return ExpressionFactory.Multiply(left, ExpressionFactory.Constant(right));
+            return Multiply(left, Constant(right));
         }
 
         public static AlgebraExpression operator /(AlgebraExpression left, AlgebraExpression right)
         {
-            return ExpressionFactory.Divide(left, right);
+            return Divide(left, right);
         }
         public static AlgebraExpression operator /(double left, AlgebraExpression right)
         {
-            return ExpressionFactory.Divide(ExpressionFactory.Constant(left), right);
+            return Divide(Constant(left), right);
         }
         public static AlgebraExpression operator /(AlgebraExpression left, double right)
         {
-            return ExpressionFactory.Divide(left, ExpressionFactory.Constant(right));
+            return Divide(left, Constant(right));
         }
 
         public static AlgebraExpression operator ^(AlgebraExpression left, AlgebraExpression right)
         {
-            return ExpressionFactory.Exponentiate(left, right);
+            return Exponentiate(left, right);
         }
         public static AlgebraExpression operator ^(double left, AlgebraExpression right)
         {
-            return ExpressionFactory.Exponentiate(ExpressionFactory.Constant(left), right);
+            return Exponentiate(Constant(left), right);
         }
         public static AlgebraExpression operator ^(AlgebraExpression left, double right)
         {
-            return ExpressionFactory.Exponentiate(left, ExpressionFactory.Constant(right));
+            return Exponentiate(left, Constant(right));
         }
 
         public static AlgebraExpression operator -(AlgebraExpression expr)
         {
-            return ExpressionFactory.Negate(expr);
+            return Negate(expr);
         }
 
         public static bool operator ==(AlgebraExpression left, AlgebraExpression right)
@@ -110,12 +112,12 @@ namespace Science.Mathematics.Algebra
         #region Conversions
         public static implicit operator AlgebraExpression(int value)
         {
-            return ExpressionFactory.Constant(value);
+            return Constant(value);
         }
 
         public static implicit operator AlgebraExpression(double value)
         {
-            return ExpressionFactory.Constant(value);
+            return Constant(value);
         }
 
         public static implicit operator AlgebraExpression(string name)

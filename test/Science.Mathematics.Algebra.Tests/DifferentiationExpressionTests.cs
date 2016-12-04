@@ -26,5 +26,16 @@ namespace Science.Mathematics.Algebra.Tests
 
             Assert.AreEqual(expression, result);
         }
+
+        [TestMethod]
+        public void Differentiation_Log_b_x()
+        {
+            var x = Variable("x");
+            var b = Variable("b");
+            var expression = Logarithm(x, b);
+            var result = expression.Differentiate(x).Simplify();
+
+            Assert.AreEqual(Reciprocal(NaturalLogarithm(b) * x), result);
+        }
     }
 }

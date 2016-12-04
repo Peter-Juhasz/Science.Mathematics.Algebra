@@ -23,7 +23,7 @@ namespace Science.Mathematics.Algebra
 
         public static SumExpressionList Polynomial(VariableExpression variable, IReadOnlyList<AlgebraExpression> coefficients)
         {
-            return new SumExpressionList(
+            return Sum(
                 coefficients
                     .Select((c, i) => Multiply(c, Exponentiate(variable, coefficients.Count - i)))
                     .ToImmutableList()

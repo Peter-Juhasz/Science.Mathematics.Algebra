@@ -28,12 +28,12 @@ namespace Science.Mathematics.Algebra
         #region Immutability
         public LogarithmFunctionExpression WithBase(AlgebraExpression newBase)
         {
-            return ExpressionFactory.Logarithm(this.Argument, newBase);
+            return Logarithm(this.Argument, newBase);
         }
 
         public LogarithmFunctionExpression WithArgument(AlgebraExpression newArgument)
         {
-            return ExpressionFactory.Logarithm(newArgument, this.Base);
+            return Logarithm(newArgument, this.Base);
         }
         #endregion
     }

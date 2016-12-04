@@ -102,9 +102,9 @@ namespace Science.Mathematics.Algebra
             return Multiply(left, Exponentiate(right, ConstantExpression.MinusOne));
         }
 
-        public static ProductExpressionList Reciprocal(AlgebraExpression expression)
+        public static PowerExpression Reciprocal(AlgebraExpression expression)
         {
-            return Divide(ConstantExpression.One, expression);
+            return Exponentiate(expression, ConstantExpression.MinusOne);
         }
 
         public static ProductExpressionList Product(IReadOnlyCollection<AlgebraExpression> terms)
