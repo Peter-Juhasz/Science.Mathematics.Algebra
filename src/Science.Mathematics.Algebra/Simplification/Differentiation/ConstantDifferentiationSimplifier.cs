@@ -2,6 +2,8 @@
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Simplifies expressions like d/dx c to 0.
     /// </summary>
@@ -10,7 +12,7 @@ namespace Science.Mathematics.Algebra
         public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken)
         {
             if (expression.GetConstantValue(cancellationToken) != null)
-                return ExpressionFactory.Zero;
+                return Zero;
 
             return expression;
         }

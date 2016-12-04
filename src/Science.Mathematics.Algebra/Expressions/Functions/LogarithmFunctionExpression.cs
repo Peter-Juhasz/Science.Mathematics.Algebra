@@ -2,6 +2,8 @@
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Represents the sine function.
     /// </summary>
@@ -12,7 +14,7 @@ namespace Science.Mathematics.Algebra
             : base(PrimaryName, ImmutableList<AlgebraExpression>.Empty.Add(argument).Add(@base))
         { }
         public LogarithmFunctionExpression(AlgebraExpression argument)
-            : this(argument, WellKnownConstants.E)
+            : this(argument, E)
         { }
 
         public const string PrimaryName = "log";
@@ -46,9 +48,9 @@ namespace Science.Mathematics.Algebra
         /// <summary>
         /// Creates a log function invocation expression.
         /// </summary>
-        public static LogarithmFunctionExpression Logarithm(AlgebraExpression argument)
+        public static LogarithmFunctionExpression NaturalLogarithm(AlgebraExpression argument)
         {
-            return Logarithm(argument, WellKnownConstants.E);
+            return Logarithm(argument, E);
         }
 
         /// <summary>

@@ -3,6 +3,8 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Simplifies expressions like sin(f(x)) to f'(x) * cos(f(x)).
     /// </summary>
@@ -14,7 +16,7 @@ namespace Science.Mathematics.Algebra
             if (invocation?.Name == SineFunctionExpression.PrimaryName)
             {
                 var arg = invocation.Arguments.Single();
-                return arg.Differentiate(expression.RespectTo) * ExpressionFactory.Cosine(arg);
+                return arg.Differentiate(expression.RespectTo) * Cosine(arg);
             }
 
             return expression;

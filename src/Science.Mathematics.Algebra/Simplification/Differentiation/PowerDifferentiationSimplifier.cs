@@ -17,7 +17,7 @@ namespace Science.Mathematics.Algebra
                 
                 return (power.Base ^ (power.Exponent - 1)) * (
                     power.Exponent * power.Base.Differentiate(expression.RespectTo) +
-                    power.Base * Logarithm(power.Base) * power.Exponent.Differentiate(expression.RespectTo)
+                    power.Base * NaturalLogarithm(power.Base) * power.Exponent.Differentiate(expression.RespectTo)
                 );
             }
 

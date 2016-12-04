@@ -2,6 +2,8 @@
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Simplifies expressions like x ^ 0 to x.
     /// </summary>
@@ -10,7 +12,7 @@ namespace Science.Mathematics.Algebra
         public AlgebraExpression Simplify(PowerExpression expression, CancellationToken cancellationToken)
         {
             if (expression.Exponent.GetConstantValue(cancellationToken) == 0)
-                return ConstantExpression.One;
+                return One;
 
             return expression;
         }

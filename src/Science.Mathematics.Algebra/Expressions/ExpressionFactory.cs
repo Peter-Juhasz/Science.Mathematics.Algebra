@@ -10,6 +10,17 @@ namespace Science.Mathematics.Algebra
     /// </summary>
     public static partial class ExpressionFactory
     {
+        /// <summary>
+        /// Represents the base of the natural logarithm.
+        /// </summary>
+        public static readonly VariableExpression E = ExpressionFactory.Variable("e");
+
+        /// <summary>
+        /// Represents the mathematical constant π.
+        /// </summary>
+        public static readonly VariableExpression Pi = ExpressionFactory.Variable("π");
+
+
         public static SumExpressionList Polynomial(VariableExpression variable, IReadOnlyList<AlgebraExpression> coefficients)
         {
             return new SumExpressionList(

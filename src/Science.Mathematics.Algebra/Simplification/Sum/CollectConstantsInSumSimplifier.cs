@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Collects constants in a sum expression.
     /// </summary>
@@ -17,7 +18,7 @@ namespace Science.Mathematics.Algebra
 
             // all constant: 1 + 2 + 3  =>  6
             if (constants.Values.All(v => v != null))
-                return ExpressionFactory.Constant(constants.Values.Cast<double>().Sum(v => v));
+                return Constant(constants.Values.Cast<double>().Sum(v => v));
             
             // collect constants: 1 + ? + 3  =>  (1 + 3) + ?  =>  4 + ?
             double sum = constants.Values.Where(v => v != null).Cast<double>().Sum(v => v);
@@ -25,7 +26,7 @@ namespace Science.Mathematics.Algebra
 
             // do not add if zero
             if (sum != 0)
-                newTerms = newTerms.Add(ExpressionFactory.Constant(sum));
+                newTerms = newTerms.Add(Constant(sum));
 
             if (newTerms.Count == 1)
                 return newTerms.Single();

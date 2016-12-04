@@ -14,5 +14,16 @@ namespace Science.Mathematics.Algebra.Tests
 
             Assert.AreEqual(2 * x, result);
         }
+
+        [TestMethod]
+        [Ignore]
+        public void Differentiation_Power_ex()
+        {
+            var x = ExpressionFactory.Variable("x");
+            var expression = ExpressionFactory.E ^ x;
+            var result = expression.Differentiate(x).Simplify();
+
+            Assert.AreEqual(expression, result);
+        }
     }
 }

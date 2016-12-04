@@ -4,6 +4,8 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Simplifies expressions like d/dx (f(x) + g(x) + ...) to d/dx f(x) + d/dx g(x) + ....
     /// </summary>
@@ -15,7 +17,7 @@ namespace Science.Mathematics.Algebra
             {
                 var sum = expression.Expression as SumExpressionList;
 
-                return ExpressionFactory.Sum(
+                return Sum(
                     sum.Terms
                         .Select(t => t.Differentiate(expression.RespectTo))
                         .ToImmutableList()

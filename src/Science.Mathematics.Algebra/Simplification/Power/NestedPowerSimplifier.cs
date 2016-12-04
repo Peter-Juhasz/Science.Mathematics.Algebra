@@ -2,6 +2,8 @@
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Simplifies expressions (a ^ b) ^ c to a ^ (b * c).
     /// </summary>
@@ -12,7 +14,7 @@ namespace Science.Mathematics.Algebra
             if (expression.Base is PowerExpression)
             {
                 var @base = expression.Base as PowerExpression;
-                return ExpressionFactory.Exponentiate(@base.Base, ExpressionFactory.Multiply(@base.Exponent, expression.Exponent));
+                return Exponentiate(@base.Base, @base.Exponent * expression.Exponent);
             }
 
             return expression;

@@ -14,7 +14,7 @@ namespace Science.Mathematics.Algebra
                 exponent = expression.Exponent.GetConstantValue(cancellationToken);
 
             if (@base != null && exponent != null)
-                return ExpressionFactory.Constant(Math.Pow(@base.Value, exponent.Value));
+                return Math.Pow(@base.Value, exponent.Value);
 
             return expression;
         }

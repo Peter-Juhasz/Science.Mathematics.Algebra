@@ -3,6 +3,8 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Simplifies expressions like 0 * x to 0.
     /// </summary>
@@ -11,7 +13,7 @@ namespace Science.Mathematics.Algebra
         public AlgebraExpression Simplify(ProductExpressionList expression, CancellationToken cancellationToken)
         {
             if (expression.Terms.Any(t => t.GetConstantValue(cancellationToken) == 0))
-                return ExpressionFactory.Zero;
+                return Zero;
 
             return expression;
         }

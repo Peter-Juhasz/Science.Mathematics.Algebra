@@ -6,6 +6,8 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Collects terms in a sum expression.
     /// </summary>
@@ -19,7 +21,7 @@ namespace Science.Mathematics.Algebra
                 .Where(t => t.GetConstantValue() == null)
                 .Select(t => AsProduct(t))
                 .GroupBy(t =>
-                    ExpressionFactory.Product(
+                    Product(
                         t.Terms
                             .Where(r => r.GetConstantValue() == null)
                             .ToImmutableList()
@@ -33,7 +35,7 @@ namespace Science.Mathematics.Algebra
                 .InsertRange(0, 
                     groups.Select(g =>
                         simplifier.Simplify(
-                            ExpressionFactory.Multiply(
+                            Multiply(
                                 g
                                     .SelectMany(p => // calculate coefficients
                                         p.Terms
@@ -60,7 +62,7 @@ namespace Science.Mathematics.Algebra
             if (expression is ProductExpressionList)
                 return expression as ProductExpressionList;
 
-            return ExpressionFactory.Product(expression);
+            return Product(expression);
         }
 
         private static AlgebraExpression Normalize(ProductExpressionList expression)

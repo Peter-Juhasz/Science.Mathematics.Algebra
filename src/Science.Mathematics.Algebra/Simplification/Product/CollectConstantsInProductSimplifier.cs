@@ -4,6 +4,8 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Simplifies expressions like 2 * 3 * x to 6 * x.
     /// </summary>
@@ -27,9 +29,9 @@ namespace Science.Mathematics.Algebra
                 }
 
                 // append result
-                terms = terms.Insert(0, ExpressionFactory.Constant(coefficient));
+                terms = terms.Insert(0, coefficient);
                 
-                return ExpressionFactory.Product(terms);
+                return Product(terms);
             }
 
             return expression;
