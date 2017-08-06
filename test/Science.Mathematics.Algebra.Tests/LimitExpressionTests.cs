@@ -80,5 +80,27 @@ namespace Science.Mathematics.Algebra.Tests
 
             Assert.AreEqual(reference * Limit(fx, x, Infinity()), result);
         }
+
+        [TestMethod]
+        public void Limit_Simplify_SineWithConstant()
+        {
+            var x = Variable("x");
+            var a = Variable("a");
+            var expression = Limit(Sine(x), x, a);
+            var result = expression.Simplify();
+
+            Assert.AreEqual(Sine(a), result);
+        }
+
+        [TestMethod]
+        public void Limit_Simplify_CosineWithConstant()
+        {
+            var x = Variable("x");
+            var a = Variable("a");
+            var expression = Limit(Cosine(x), x, a);
+            var result = expression.Simplify();
+
+            Assert.AreEqual(Cosine(a), result);
+        }
     }
 }

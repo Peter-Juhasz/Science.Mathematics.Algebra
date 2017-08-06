@@ -121,7 +121,7 @@ namespace Science.Mathematics.Algebra
                     return Activator.CreateInstance(type.AsType(), arguments.ToImmutableList()) as FunctionInvocationExpression;
 
                 if (constructors.Any(c => c.GetParameters().Count() == arguments.Count && c.GetParameters().All(p => p.ParameterType == typeof(AlgebraExpression))))
-                    return Activator.CreateInstance(type.AsType(), arguments as object[]) as FunctionInvocationExpression;
+                    return Activator.CreateInstance(type.AsType(), args: arguments.ToArray()) as FunctionInvocationExpression;
             }
 
             return new FunctionInvocationExpression(name, arguments.ToImmutableList());
