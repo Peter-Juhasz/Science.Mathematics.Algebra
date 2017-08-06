@@ -88,7 +88,7 @@ namespace Science.Mathematics.Algebra
 
     public static partial class ExpressionFactory
     {
-        public static AlgebraExpression Negate(AlgebraExpression expression)
+        public static ProductExpressionList Negate(AlgebraExpression expression)
         {
             return Multiply(ConstantExpression.MinusOne, expression);
         }

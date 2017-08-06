@@ -77,7 +77,7 @@ namespace Science.Mathematics.Algebra
                     t.GetTypeInfo().ImplementedInterfaces
                         .Where(i => i.IsConstructedGenericType)
                         .Where(i => i.GetGenericTypeDefinition() == typeof(ISimplifier<>))
-                        .Any(i => expressionType.GetTypeInfo().IsAssignableFrom(i.GenericTypeArguments[0].GetTypeInfo()))
+                        .Any(i => i.GenericTypeArguments[0].GetTypeInfo().IsAssignableFrom(expressionType.GetTypeInfo()))
                 )
             ;
         }

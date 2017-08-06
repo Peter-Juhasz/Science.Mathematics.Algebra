@@ -3,13 +3,15 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra.Tests
 {
+    using static ExpressionFactory;
+
     [TestClass]
     public class ProductExpressionTests
     {
         [TestMethod]
         public void Product_One()
         {
-            var expression = ExpressionFactory.Product(2, 1, "x");
+            var expression = Product(2, 1, "x");
             var simplifier = new MultiplicationByOneSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
             
@@ -19,18 +21,18 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Product_Zero()
         {
-            var expression = ExpressionFactory.Product(2, 0, "x");
+            var expression = Product(2, 0, "x");
             var simplifier = new MultiplicationByZeroSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
-            Assert.AreEqual(ExpressionFactory.Zero, result);
+            Assert.AreEqual(Zero, result);
         }
 
         [TestMethod]
         public void Product_CollectConstants()
         {
-            var x = ExpressionFactory.Variable("x");
-            var expression = ExpressionFactory.Product(2, 5, x, 6);
+            var x = Variable("x");
+            var expression = Product(2, 5, x, 6);
             var simplifier = new CollectConstantsInProductSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -40,8 +42,8 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Product_CollectExponents_Single()
         {
-            var x = ExpressionFactory.Variable("x");
-            var expression = ExpressionFactory.Product(x ^ 2, x ^ 3);
+            var x = Variable("x");
+            var expression = Product(x ^ 2, x ^ 3);
             var simplifier = new CollectExponentsInProductSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -51,9 +53,9 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Product_CollectExponents_Double()
         {
-            var x = ExpressionFactory.Variable("x");
-            var y = ExpressionFactory.Variable("y");
-            var expression = ExpressionFactory.Product(x ^ 2, y ^ 3, x ^ 3, y ^ 1);
+            var x = Variable("x");
+            var y = Variable("y");
+            var expression = Product(x ^ 2, y ^ 3, x ^ 3, y ^ 1);
             var simplifier = new CollectExponentsInProductSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -63,9 +65,9 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Product_CollectExponents_WithOneExponent()
         {
-            var x = ExpressionFactory.Variable("x");
-            var y = ExpressionFactory.Variable("y");
-            var expression = ExpressionFactory.Product(5, x ^ 2, y ^ 0, x ^ 3, y ^ 1);
+            var x = Variable("x");
+            var y = Variable("y");
+            var expression = Product(5, x ^ 2, y ^ 0, x ^ 3, y ^ 1);
             var simplifier = new CollectExponentsInProductSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -73,10 +75,18 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
+        public void Product_IsInfinity()
+        {
+            var expression = 2 * Infinity();
+
+            Assert.IsTrue(expression.IsInfinity());
+        }
+
+        [TestMethod]
         public void Product_ToString()
         {
-            var x = ExpressionFactory.Variable("x");
-            var expression = ExpressionFactory.Product(2, x);
+            var x = Variable("x");
+            var expression = Product(2, x);
 
             Assert.AreEqual(2 * x, expression);
         }

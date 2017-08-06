@@ -28,73 +28,75 @@ namespace Science.Mathematics.Algebra
 
         public abstract IEnumerable<AlgebraExpression> Children();
 
+        public virtual bool IsInfinity() => this.DescendantsAndSelf().OfType<InfinityExpression>().Any();
+
         #region Operators
-        public static AlgebraExpression operator +(AlgebraExpression left, AlgebraExpression right)
+        public static SumExpressionList operator +(AlgebraExpression left, AlgebraExpression right)
         {
             return Add(left, right);
         }
-        public static AlgebraExpression operator +(double left, AlgebraExpression right)
+        public static SumExpressionList operator +(double left, AlgebraExpression right)
         {
             return Add(Constant(left), right);
         }
-        public static AlgebraExpression operator +(AlgebraExpression left, double right)
+        public static SumExpressionList operator +(AlgebraExpression left, double right)
         {
             return Add(left, Constant(right));
         }
 
-        public static AlgebraExpression operator -(AlgebraExpression left, AlgebraExpression right)
+        public static SumExpressionList operator -(AlgebraExpression left, AlgebraExpression right)
         {
             return Subtract(left, right);
         }
-        public static AlgebraExpression operator -(double left, AlgebraExpression right)
+        public static SumExpressionList operator -(double left, AlgebraExpression right)
         {
             return Subtract(Constant(left), right);
         }
-        public static AlgebraExpression operator -(AlgebraExpression left, double right)
+        public static SumExpressionList operator -(AlgebraExpression left, double right)
         {
             return Subtract(left, Constant(right));
         }
 
-        public static AlgebraExpression operator *(AlgebraExpression left, AlgebraExpression right)
+        public static ProductExpressionList operator *(AlgebraExpression left, AlgebraExpression right)
         {
             return Multiply(left, right);
         }
-        public static AlgebraExpression operator *(double left, AlgebraExpression right)
+        public static ProductExpressionList operator *(double left, AlgebraExpression right)
         {
             return Multiply(Constant(left), right);
         }
-        public static AlgebraExpression operator *(AlgebraExpression left, double right)
+        public static ProductExpressionList operator *(AlgebraExpression left, double right)
         {
             return Multiply(left, Constant(right));
         }
 
-        public static AlgebraExpression operator /(AlgebraExpression left, AlgebraExpression right)
+        public static ProductExpressionList operator /(AlgebraExpression left, AlgebraExpression right)
         {
             return Divide(left, right);
         }
-        public static AlgebraExpression operator /(double left, AlgebraExpression right)
+        public static ProductExpressionList operator /(double left, AlgebraExpression right)
         {
             return Divide(Constant(left), right);
         }
-        public static AlgebraExpression operator /(AlgebraExpression left, double right)
+        public static ProductExpressionList operator /(AlgebraExpression left, double right)
         {
             return Divide(left, Constant(right));
         }
 
-        public static AlgebraExpression operator ^(AlgebraExpression left, AlgebraExpression right)
+        public static PowerExpression operator ^(AlgebraExpression left, AlgebraExpression right)
         {
             return Exponentiate(left, right);
         }
-        public static AlgebraExpression operator ^(double left, AlgebraExpression right)
+        public static PowerExpression operator ^(double left, AlgebraExpression right)
         {
             return Exponentiate(Constant(left), right);
         }
-        public static AlgebraExpression operator ^(AlgebraExpression left, double right)
+        public static PowerExpression operator ^(AlgebraExpression left, double right)
         {
             return Exponentiate(left, Constant(right));
         }
 
-        public static AlgebraExpression operator -(AlgebraExpression expr)
+        public static ProductExpressionList operator -(AlgebraExpression expr)
         {
             return Negate(expr);
         }
@@ -108,6 +110,16 @@ namespace Science.Mathematics.Algebra
             return !(left == right);
         }
         #endregion
+
+        public override bool Equals(object obj)
+        {
+            return this == obj as AlgebraExpression;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ToString().GetHashCode();
+        }
 
         #region Conversions
         public static implicit operator AlgebraExpression(int value)

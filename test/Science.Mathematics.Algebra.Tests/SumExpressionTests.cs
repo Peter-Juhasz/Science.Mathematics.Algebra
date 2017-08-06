@@ -3,14 +3,16 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra.Tests
 {
+    using static ExpressionFactory;
+
     [TestClass]
     public class SumExpressionTests
     {
         [TestMethod]
         public void Sum_Zero()
         {
-            var x = ExpressionFactory.Variable("x");
-            var expression = ExpressionFactory.Sum(2, 0, x);
+            var x = Variable("x");
+            var expression = Sum(2, 0, x);
             var simplifier = new AdditionWithZeroSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
             
@@ -20,8 +22,8 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Sum_CollectConstants()
         {
-            var x = ExpressionFactory.Variable("x");
-            var expression = ExpressionFactory.Sum(2, 5, x);
+            var x = Variable("x");
+            var expression = Sum(2, 5, x);
             var simplifier = new CollectConstantsInSumSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -31,7 +33,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Sum_CollectConstants_OnlyConstants()
         {
-            var expression = ExpressionFactory.Sum(2, 5, 7);
+            var expression = Sum(2, 5, 7);
             var simplifier = new CollectConstantsInSumSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -42,7 +44,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Sum_CollectConstants_SingleExpressionRemains()
         {
-            var expression = ExpressionFactory.Sum(2, 5, -7, "x");
+            var expression = Sum(2, 5, -7, "x");
             var simplifier = new CollectConstantsInSumSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -52,8 +54,8 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Sum_CollectCoefficients()
         {
-            var x = ExpressionFactory.Variable("x");
-            var expression = ExpressionFactory.Sum(5 * x, 8 * x);
+            var x = Variable("x");
+            var expression = Sum(5 * x, 8 * x);
             var simplifier = new CollectCoefficientsInSumSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -63,8 +65,8 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Sum_CollectCoefficients_WithoutCoefficient()
         {
-            var x = ExpressionFactory.Variable("x");
-            var expression = ExpressionFactory.Sum(x, 8 * x);
+            var x = Variable("x");
+            var expression = Sum(x, 8 * x);
             var simplifier = new CollectCoefficientsInSumSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -74,8 +76,8 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Sum_CollectCoefficients_WithConstant()
         {
-            var x = ExpressionFactory.Variable("x");
-            var expression = ExpressionFactory.Sum(5 * x, 8 * x, 3);
+            var x = Variable("x");
+            var expression = Sum(5 * x, 8 * x, 3);
             var simplifier = new CollectCoefficientsInSumSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -85,9 +87,9 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Sum_CollectCoefficients_Multiple()
         {
-            var x = ExpressionFactory.Variable("x");
-            var y = ExpressionFactory.Variable("y");
-            var expression = ExpressionFactory.Sum(5 * x, 8 * x, 4 * y, 3 * x * y);
+            var x = Variable("x");
+            var y = Variable("y");
+            var expression = Sum(5 * x, 8 * x, 4 * y, 3 * x * y);
             var simplifier = new CollectCoefficientsInSumSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -95,10 +97,18 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
+        public void Sum_IsInfinity()
+        {
+            var expression = 2 + Infinity();
+
+            Assert.IsTrue(expression.IsInfinity());
+        }
+
+        [TestMethod]
         public void Sum_ToString()
         {
-            var x = ExpressionFactory.Variable("x");
-            var expression = ExpressionFactory.Sum(2, x);
+            var x = Variable("x");
+            var expression = Sum(2, x);
 
             Assert.AreEqual(2 + x, expression);
         }
