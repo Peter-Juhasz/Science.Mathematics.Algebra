@@ -54,5 +54,31 @@ namespace Science.Mathematics.Algebra.Tests
             Assert.IsInstanceOfType(result, typeof(ConstantExpression));
             Assert.AreEqual(reference, result);
         }
+
+        [TestMethod]
+        public void Limit_Simplify_SumWithConstant()
+        {
+            const int reference = 5;
+
+            var x = Variable("x");
+            var fx = Invoke("f", x);
+            var expression = Limit(reference + fx, x, Infinity());
+            var result = expression.Simplify();
+
+            Assert.AreEqual(Limit(fx, x, Infinity()) + reference, result);
+        }
+
+        [TestMethod]
+        public void Limit_Simplify_ProductWithConstant()
+        {
+            const int reference = 5;
+
+            var x = Variable("x");
+            var fx = Invoke("f", x);
+            var expression = Limit(reference * fx, x, Infinity());
+            var result = expression.Simplify();
+
+            Assert.AreEqual(reference * Limit(fx, x, Infinity()), result);
+        }
     }
 }

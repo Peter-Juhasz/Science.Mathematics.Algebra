@@ -103,6 +103,8 @@ namespace Science.Mathematics.Algebra
 
         public static bool operator ==(AlgebraExpression left, AlgebraExpression right)
         {
+            if (Object.ReferenceEquals(left, right)) return true;
+
             return left.Equals(right);
         }
         public static bool operator !=(AlgebraExpression left, AlgebraExpression right)
