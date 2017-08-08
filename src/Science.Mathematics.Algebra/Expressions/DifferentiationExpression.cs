@@ -59,6 +59,13 @@ namespace Science.Mathematics.Algebra
         }
 
 
+        public LimitExpression ToLimit()
+        {
+            var delta = Variable("h");
+            return Limit((this.Expression.Substitute(this.RespectTo, this.RespectTo + delta) - this.Expression) / delta, delta, 0);
+        }
+
+
         #region Immutability
         public DifferentiationExpression WithRespectTo(VariableExpression newVariable)
         {
@@ -98,12 +105,12 @@ namespace Science.Mathematics.Algebra
 
     public static partial class AlgebraExpressionExtensions
     {
-        public static AlgebraExpression Differentiate(this AlgebraExpression expression, VariableExpression respectTo)
+        public static DifferentiationExpression Differentiate(this AlgebraExpression expression, VariableExpression respectTo)
         {
             return ExpressionFactory.Differentiate(expression, respectTo);
         }
 
-        public static AlgebraExpression PartialDerivative(this AlgebraExpression expression, VariableExpression respectTo)
+        public static DifferentiationExpression PartialDerivative(this AlgebraExpression expression, VariableExpression respectTo)
         {
             return Differentiate(expression, respectTo);
         }

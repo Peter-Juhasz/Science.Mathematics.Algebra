@@ -47,5 +47,17 @@ namespace Science.Mathematics.Algebra.Tests
             
             Assert.AreEqual(Reciprocal(x), result);
         }
+
+
+        [TestMethod]
+        public void Differentiation_ToLimit_x2()
+        {
+            var x = Variable("x");
+            var body = (x ^ 2);
+            var expression = body.Differentiate(x);
+            var limit = expression.ToLimit();
+
+            Assert.AreEqual(Limit((((x + limit.RespectTo) ^ 2) - body) / limit.RespectTo, limit.RespectTo, 0), limit);
+        }
     }
 }
