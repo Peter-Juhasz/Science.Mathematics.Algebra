@@ -45,7 +45,7 @@ namespace Science.Mathematics.Algebra
         }
         
 
-        public override AlgebraExpression Substitute(VariableExpression variable, AlgebraExpression replacement)
+        public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement)
         {
             return this
                 .WithBase(this.Base.Substitute(variable, replacement))

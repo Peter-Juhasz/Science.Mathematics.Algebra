@@ -9,7 +9,7 @@ namespace Science.Mathematics.Algebra
     {
         public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken)
         {
-            if ((expression.Expression as VariableExpression)?.Equals(expression.RespectTo) ?? false)
+            if ((expression.Expression as SymbolExpression)?.Equals(expression.RespectTo) ?? false)
                 return ExpressionFactory.One;
 
             return expression;

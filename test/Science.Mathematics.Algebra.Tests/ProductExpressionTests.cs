@@ -31,7 +31,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Product_CollectConstants()
         {
-            var x = Variable("x");
+            var x = Symbol("x");
             var expression = Product(2, 5, x, 6);
             var simplifier = new CollectConstantsInProductSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
@@ -42,7 +42,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Product_CollectExponents_Single()
         {
-            var x = Variable("x");
+            var x = Symbol("x");
             var expression = Product(x ^ 2, x ^ 3);
             var simplifier = new CollectExponentsInProductSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
@@ -53,8 +53,8 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Product_CollectExponents_Double()
         {
-            var x = Variable("x");
-            var y = Variable("y");
+            var x = Symbol("x");
+            var y = Symbol("y");
             var expression = Product(x ^ 2, y ^ 3, x ^ 3, y ^ 1);
             var simplifier = new CollectExponentsInProductSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
@@ -65,8 +65,8 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Product_CollectExponents_WithOneExponent()
         {
-            var x = Variable("x");
-            var y = Variable("y");
+            var x = Symbol("x");
+            var y = Symbol("y");
             var expression = Product(5, x ^ 2, y ^ 0, x ^ 3, y ^ 1);
             var simplifier = new CollectExponentsInProductSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
@@ -85,7 +85,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Product_ToString()
         {
-            var x = Variable("x");
+            var x = Symbol("x");
             var expression = Product(2, x);
 
             Assert.AreEqual(2 * x, expression);

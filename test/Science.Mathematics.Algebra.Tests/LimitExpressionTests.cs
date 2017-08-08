@@ -12,7 +12,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             const int reference = 5;
 
-            var expression = Limit(reference, Variable("x"), Infinity());
+            var expression = Limit(reference, Symbol("x"), Infinity());
             var result = expression.GetConstantValue();
 
             Assert.AreEqual(reference, result);
@@ -23,7 +23,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             const int reference = 5;
 
-            var @var = Variable("x");
+            var @var = Symbol("x");
             var expression = Limit(@var, @var, reference);
             var result = expression.GetConstantValue();
 
@@ -35,7 +35,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             const int reference = 5;
 
-            var expression = Limit(reference, Variable("x"), Infinity());
+            var expression = Limit(reference, Symbol("x"), Infinity());
             var result = expression.Simplify();
 
             Assert.IsInstanceOfType(result, typeof(ConstantExpression));
@@ -47,7 +47,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             const int reference = 5;
 
-            var @var = Variable("x");
+            var @var = Symbol("x");
             var expression = Limit(@var, @var, reference);
             var result = expression.Simplify();
 
@@ -60,7 +60,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             const int reference = 5;
 
-            var x = Variable("x");
+            var x = Symbol("x");
             var fx = Invoke("f", x);
             var expression = Limit(reference + fx, x, Infinity());
             var result = expression.Simplify();
@@ -73,7 +73,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             const int reference = 5;
 
-            var x = Variable("x");
+            var x = Symbol("x");
             var fx = Invoke("f", x);
             var expression = Limit(reference * fx, x, Infinity());
             var result = expression.Simplify();
@@ -84,8 +84,8 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Limit_Simplify_SineWithConstant()
         {
-            var x = Variable("x");
-            var a = Variable("a");
+            var x = Symbol("x");
+            var a = Symbol("a");
             var expression = Limit(Sine(x), x, a);
             var result = expression.Simplify();
 
@@ -95,8 +95,8 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Limit_Simplify_CosineWithConstant()
         {
-            var x = Variable("x");
-            var a = Variable("a");
+            var x = Symbol("x");
+            var a = Symbol("a");
             var expression = Limit(Cosine(x), x, a);
             var result = expression.Simplify();
 

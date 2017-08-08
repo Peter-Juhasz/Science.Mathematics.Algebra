@@ -13,7 +13,7 @@ namespace Science.Mathematics.Algebra
     /// </summary>
     public class DifferentiationExpression : AlgebraExpression, IEquatable<DifferentiationExpression>
     {
-        public DifferentiationExpression(AlgebraExpression expression, VariableExpression respectTo)
+        public DifferentiationExpression(AlgebraExpression expression, SymbolExpression respectTo)
         {
             if (expression == null)
                 throw new ArgumentNullException(nameof(expression));
@@ -34,7 +34,7 @@ namespace Science.Mathematics.Algebra
         /// <summary>
         /// 
         /// </summary>
-        public VariableExpression RespectTo { get; private set; }
+        public SymbolExpression RespectTo { get; private set; }
 
 
         public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
@@ -47,7 +47,7 @@ namespace Science.Mathematics.Algebra
             return null;
         }
         
-        public override AlgebraExpression Substitute(VariableExpression variable, AlgebraExpression replacement)
+        public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement)
         {
             return this.WithExpression(this.Expression.Substitute(variable, replacement));
         }
@@ -61,13 +61,13 @@ namespace Science.Mathematics.Algebra
 
         public LimitExpression ToLimit()
         {
-            var delta = Variable("h");
+            var delta = Symbol("h");
             return Limit((this.Expression.Substitute(this.RespectTo, this.RespectTo + delta) - this.Expression) / delta, delta, 0);
         }
 
 
         #region Immutability
-        public DifferentiationExpression WithRespectTo(VariableExpression newVariable)
+        public DifferentiationExpression WithRespectTo(SymbolExpression newVariable)
         {
             return Differentiate(this.Expression, newVariable);
         }
@@ -105,17 +105,17 @@ namespace Science.Mathematics.Algebra
 
     public static partial class AlgebraExpressionExtensions
     {
-        public static DifferentiationExpression Differentiate(this AlgebraExpression expression, VariableExpression respectTo)
+        public static DifferentiationExpression Differentiate(this AlgebraExpression expression, SymbolExpression respectTo)
         {
             return ExpressionFactory.Differentiate(expression, respectTo);
         }
 
-        public static DifferentiationExpression PartialDerivative(this AlgebraExpression expression, VariableExpression respectTo)
+        public static DifferentiationExpression PartialDerivative(this AlgebraExpression expression, SymbolExpression respectTo)
         {
             return Differentiate(expression, respectTo);
         }
 
-        public static AlgebraExpression TotalDerivative(this AlgebraExpression function, IReadOnlyCollection<VariableExpression> parameters, VariableExpression respectTo)
+        public static AlgebraExpression TotalDerivative(this AlgebraExpression function, IReadOnlyCollection<SymbolExpression> parameters, SymbolExpression respectTo)
         {
             if (!parameters.Contains(respectTo))
                 throw new ArgumentException($"Parameter '{nameof(respectTo)}' must be one of the variables provided in parameter '{nameof(parameters)}'.", nameof(respectTo));
@@ -130,7 +130,7 @@ namespace Science.Mathematics.Algebra
 
     public static partial class ExpressionFactory
     {
-        public static DifferentiationExpression Differentiate(AlgebraExpression expression, VariableExpression respectTo)
+        public static DifferentiationExpression Differentiate(AlgebraExpression expression, SymbolExpression respectTo)
         {
             return new DifferentiationExpression(expression, respectTo);
         }

@@ -6,9 +6,9 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Represents a variable.
     /// </summary>
-    public class VariableExpression : AtomicExpression, IEquatable<VariableExpression>
+    public class SymbolExpression : AtomicExpression, IEquatable<SymbolExpression>
     {
-        public VariableExpression(string name)
+        public SymbolExpression(string name)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -21,7 +21,7 @@ namespace Science.Mathematics.Algebra
 
             this.Name = name;
         }
-        public VariableExpression(char name)
+        public SymbolExpression(char name)
             : this(name.ToString())
         { }
 
@@ -37,21 +37,21 @@ namespace Science.Mathematics.Algebra
         }
 
 
-        public override AlgebraExpression Substitute(VariableExpression variable, AlgebraExpression replacement)
+        public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement)
         {
             return this.Name == variable.Name ? replacement : this;
         }
 
 
         #region Conversions
-        public static implicit operator VariableExpression(char ch)
+        public static implicit operator SymbolExpression(char ch)
         {
-            return new VariableExpression(ch.ToString());
+            return new SymbolExpression(ch.ToString());
         }
 
-        public static implicit operator VariableExpression(string name)
+        public static implicit operator SymbolExpression(string name)
         {
-            return new VariableExpression(name);
+            return new SymbolExpression(name);
         }
         #endregion
 
@@ -61,7 +61,7 @@ namespace Science.Mathematics.Algebra
             return this.Name.GetHashCode();
         }
 
-        public bool Equals(VariableExpression other)
+        public bool Equals(SymbolExpression other)
         {
             if (Object.ReferenceEquals(other, null)) return false;
 
@@ -69,7 +69,7 @@ namespace Science.Mathematics.Algebra
         }
         public override bool Equals(object obj)
         {
-            return this.Equals(obj as VariableExpression);
+            return this.Equals(obj as SymbolExpression);
         }
 
         public override string ToString()
@@ -80,13 +80,13 @@ namespace Science.Mathematics.Algebra
 
     public static partial class ExpressionFactory
     {
-        public static VariableExpression Variable(string name)
+        public static SymbolExpression Symbol(string name)
         {
-            return new VariableExpression(name);
+            return new SymbolExpression(name);
         }
-        public static VariableExpression Variable(char name)
+        public static SymbolExpression Variable(char name)
         {
-            return new VariableExpression(name);
+            return new SymbolExpression(name);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Power_Simplify_WhenExponentEqualsOne()
         {
-            var @base = new VariableExpression("x");
+            var @base = new SymbolExpression("x");
 
             var expression = Exponentiate(@base, 1);
             var simplifier = new ExponentOneSimplifier();
@@ -45,7 +45,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Power_Simplify_WhenExponentEqualsZero()
         {
-            var @base = new VariableExpression("x");
+            var @base = new SymbolExpression("x");
 
             var expression = Exponentiate(@base, 0);
             var simplifier = new ExponentZeroSimplifier();
@@ -69,7 +69,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Power_Simplify_WhenBaseEqualsOne()
         {
-            var exponent = new VariableExpression("x");
+            var exponent = new SymbolExpression("x");
 
             var expression = Exponentiate(1, exponent);
             var simplifier = new BaseOneSimplifier();

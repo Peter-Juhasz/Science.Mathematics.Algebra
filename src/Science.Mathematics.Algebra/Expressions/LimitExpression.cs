@@ -11,7 +11,7 @@ namespace Science.Mathematics.Algebra
     /// </summary>
     public class LimitExpression : AlgebraExpression, IEquatable<LimitExpression>
     {
-        public LimitExpression(AlgebraExpression expression, VariableExpression respectTo, AlgebraExpression to)
+        public LimitExpression(AlgebraExpression expression, SymbolExpression respectTo, AlgebraExpression to)
         {
             if (expression == null)
                 throw new ArgumentNullException(nameof(expression));
@@ -31,7 +31,7 @@ namespace Science.Mathematics.Algebra
         /// <summary>
         /// 
         /// </summary>
-        public VariableExpression RespectTo { get; private set; }
+        public SymbolExpression RespectTo { get; private set; }
 
         public AlgebraExpression To { get; private set; }
 
@@ -51,7 +51,7 @@ namespace Science.Mathematics.Algebra
             return null;
         }
         
-        public override AlgebraExpression Substitute(VariableExpression variable, AlgebraExpression replacement)
+        public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement)
         {
             return this
                 .WithExpression(this.Expression.Substitute(variable, replacement))
@@ -68,7 +68,7 @@ namespace Science.Mathematics.Algebra
 
 
         #region Immutability
-        public LimitExpression WithRespectTo(VariableExpression newVariable)
+        public LimitExpression WithRespectTo(SymbolExpression newVariable)
         {
             return Limit(this.Expression, newVariable, this.To);
         }
@@ -112,7 +112,7 @@ namespace Science.Mathematics.Algebra
     
     public static partial class ExpressionFactory
     {
-        public static LimitExpression Limit(AlgebraExpression expression, VariableExpression respectTo, AlgebraExpression to)
+        public static LimitExpression Limit(AlgebraExpression expression, SymbolExpression respectTo, AlgebraExpression to)
         {
             return new LimitExpression(expression, respectTo, to);
         }

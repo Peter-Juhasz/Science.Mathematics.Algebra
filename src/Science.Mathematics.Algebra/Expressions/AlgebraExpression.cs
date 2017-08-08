@@ -24,7 +24,7 @@ namespace Science.Mathematics.Algebra
         /// <param name="variable"></param>
         /// <param name="replacement"></param>
         /// <returns></returns>
-        public abstract AlgebraExpression Substitute(VariableExpression variable, AlgebraExpression replacement);
+        public abstract AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement);
 
         public abstract IEnumerable<AlgebraExpression> Children();
 
@@ -136,7 +136,7 @@ namespace Science.Mathematics.Algebra
 
         public static implicit operator AlgebraExpression(string name)
         {
-            return ExpressionFactory.Variable(name);
+            return ExpressionFactory.Symbol(name);
         }
 
         public static implicit operator AlgebraExpression(char name)
@@ -148,7 +148,7 @@ namespace Science.Mathematics.Algebra
 
     public static partial class AlgebraExpressionExtensions
     {
-        public static bool IsConstant(this AlgebraExpression expression, VariableExpression respectTo)
+        public static bool IsConstant(this AlgebraExpression expression, SymbolExpression respectTo)
         {
             return !expression.DescendantsAndSelf().Contains(respectTo);
         }

@@ -42,7 +42,7 @@ namespace Science.Mathematics.Algebra
             return null;
         }
 
-        public override AlgebraExpression Substitute(VariableExpression variable, AlgebraExpression replacement)
+        public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement)
         {
             return this.WithArguments(this.Arguments.Select(a => a.Substitute(variable, replacement)).ToImmutableList());
         }

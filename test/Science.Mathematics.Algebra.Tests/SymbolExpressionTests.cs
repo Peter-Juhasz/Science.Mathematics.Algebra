@@ -2,49 +2,51 @@
 
 namespace Science.Mathematics.Algebra.Tests
 {
+    using static ExpressionFactory;
+
     [TestClass]
-    public class VariableExpressionTests
+    public class SymbolExpressionTests
     {
         [TestMethod]
-        public void Variable_Name()
+        public void Symbol_Name()
         {
             const string reference = "x";
 
-            var expression = ExpressionFactory.Variable(reference);
+            var expression = ExpressionFactory.Symbol(reference);
 
             Assert.AreEqual(reference, expression.Name);
         }
 
         [TestMethod]
-        public void Variable_Substitute()
+        public void Symbol_Substitute()
         {
             const string name = "x";
             const int referenceValue = 1;
-            var reference = ExpressionFactory.Constant(referenceValue);
+            var reference = Constant(referenceValue);
 
-            var variable = ExpressionFactory.Variable(name);
+            var variable = Symbol(name);
             var result = variable.Substitute("x", referenceValue);
 
             Assert.AreEqual(reference, result);
         }
 
         [TestMethod]
-        public void Variable_Equals()
+        public void Symbol_Equals()
         {
             const string reference = "x";
 
-            var expression1 = ExpressionFactory.Variable(reference);
-            var expression2 = ExpressionFactory.Variable(reference);
+            var expression1 = Symbol(reference);
+            var expression2 = Symbol(reference);
 
             Assert.AreEqual(expression1, expression2);
         }
 
         [TestMethod]
-        public void Variable_ToString()
+        public void Symbol_ToString()
         {
             const string reference = "x";
 
-            var expression = ExpressionFactory.Variable(reference);
+            var expression = Symbol(reference);
 
             Assert.AreEqual(reference, expression.ToString());
         }
