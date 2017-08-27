@@ -84,7 +84,7 @@ namespace Science.Mathematics.Algebra
         {
             return new SymbolExpression(name);
         }
-        public static SymbolExpression Variable(char name)
+        public static SymbolExpression Symbol(char name)
         {
             return new SymbolExpression(name);
         }

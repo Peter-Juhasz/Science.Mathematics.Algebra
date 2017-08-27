@@ -141,7 +141,7 @@ namespace Science.Mathematics.Algebra
 
         public static implicit operator AlgebraExpression(char name)
         {
-            return ExpressionFactory.Variable(name);
+            return ExpressionFactory.Symbol(name);
         }
         #endregion
     }
