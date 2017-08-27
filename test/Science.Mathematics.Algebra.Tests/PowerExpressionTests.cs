@@ -51,7 +51,7 @@ namespace Science.Mathematics.Algebra.Tests
             var simplifier = new ExponentZeroSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
-            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+            Assert.IsInstanceOfType(result, typeof(NumberExpression));
             Assert.AreEqual(1, result.GetConstantValue());
         }
 
@@ -62,7 +62,7 @@ namespace Science.Mathematics.Algebra.Tests
             var simplifier = new BaseZeroSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
-            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+            Assert.IsInstanceOfType(result, typeof(NumberExpression));
             Assert.AreEqual(0, result.GetConstantValue());
         }
 
@@ -75,7 +75,7 @@ namespace Science.Mathematics.Algebra.Tests
             var simplifier = new BaseOneSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
-            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+            Assert.IsInstanceOfType(result, typeof(NumberExpression));
             Assert.AreEqual(1, result.GetConstantValue());
         }
 
@@ -96,7 +96,7 @@ namespace Science.Mathematics.Algebra.Tests
             var simplifier = new ConstantPowerSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
-            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+            Assert.IsInstanceOfType(result, typeof(NumberExpression));
             Assert.AreEqual(8, result.GetConstantValue());
         }
 

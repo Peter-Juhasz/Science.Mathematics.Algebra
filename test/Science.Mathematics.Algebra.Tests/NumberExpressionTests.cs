@@ -3,10 +3,10 @@
 namespace Science.Mathematics.Algebra.Tests
 {
     [TestClass]
-    public class ConstantExpressionTests
+    public class NumberExpressionTests
     {
         [TestMethod]
-        public void Constant_ConstantValue()
+        public void Number_ConstantValue()
         {
             const int reference = 3;
 
@@ -17,7 +17,7 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
-        public void Constant_Substitute()
+        public void Number_Substitute()
         {
             const int reference = 5;
 
@@ -28,7 +28,7 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
-        public void Constant_Equals()
+        public void Number_Equals()
         {
             const int reference = 5;
 
@@ -39,7 +39,7 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
-        public void Constant_ToString()
+        public void Number_ToString()
         {
             const int reference = 3;
 

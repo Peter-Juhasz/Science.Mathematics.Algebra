@@ -38,7 +38,7 @@ namespace Science.Mathematics.Algebra.Tests
             var expression = Limit(reference, Symbol("x"), Infinity());
             var result = expression.Simplify();
 
-            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+            Assert.IsInstanceOfType(result, typeof(NumberExpression));
             Assert.AreEqual(reference, result);
         }
 
@@ -51,7 +51,7 @@ namespace Science.Mathematics.Algebra.Tests
             var expression = Limit(@var, @var, reference);
             var result = expression.Simplify();
 
-            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+            Assert.IsInstanceOfType(result, typeof(NumberExpression));
             Assert.AreEqual(reference, result);
         }
 

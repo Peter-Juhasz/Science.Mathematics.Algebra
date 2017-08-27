@@ -10,7 +10,7 @@ namespace Science.Mathematics.Algebra
         public AlgebraExpression Simplify(PowerExpression expression, CancellationToken cancellationToken)
         {
             if (expression.Base.GetConstantValue(cancellationToken) == 1)
-                return ConstantExpression.One;
+                return NumberExpression.One;
 
             return expression;
         }

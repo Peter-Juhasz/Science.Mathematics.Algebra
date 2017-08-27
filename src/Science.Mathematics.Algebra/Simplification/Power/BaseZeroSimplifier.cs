@@ -12,9 +12,9 @@ namespace Science.Mathematics.Algebra
             if (expression.Base.GetConstantValue(cancellationToken) == 0)
             {
                 if (expression.Exponent.GetConstantValue(cancellationToken) == 0)
-                    return ConstantExpression.One;
+                    return NumberExpression.One;
 
-                return ConstantExpression.Zero;
+                return NumberExpression.Zero;
             }
 
             return expression;

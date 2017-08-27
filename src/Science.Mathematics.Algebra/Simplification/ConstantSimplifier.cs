@@ -2,6 +2,8 @@
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Simplifies expressions to their constant value, if possible.
     /// </summary>
@@ -9,15 +11,15 @@ namespace Science.Mathematics.Algebra
     {
         public AlgebraExpression Simplify(AlgebraExpression expression, CancellationToken cancellationToken)
         {
-            if (expression is ConstantExpression)
+            if (expression is NumberExpression)
                 return expression;
 
             double? constantValue = expression.GetConstantValue(cancellationToken);
 
             if (constantValue != null)
-                return ExpressionFactory.Constant(constantValue.Value);
+                return Number(constantValue.Value);
 
-            return expression;            
+            return expression;
         }
     }
 }

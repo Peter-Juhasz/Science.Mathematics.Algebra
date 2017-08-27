@@ -90,7 +90,7 @@ namespace Science.Mathematics.Algebra
     {
         public static ProductExpressionList Negate(AlgebraExpression expression)
         {
-            return Multiply(ConstantExpression.MinusOne, expression);
+            return Multiply(NumberExpression.MinusOne, expression);
         }
 
         public static ProductExpressionList Multiply(AlgebraExpression left, AlgebraExpression right)
@@ -99,12 +99,12 @@ namespace Science.Mathematics.Algebra
         }
         public static ProductExpressionList Divide(AlgebraExpression left, AlgebraExpression right)
         {
-            return Multiply(left, Exponentiate(right, ConstantExpression.MinusOne));
+            return Multiply(left, Exponentiate(right, NumberExpression.MinusOne));
         }
 
         public static PowerExpression Reciprocal(AlgebraExpression expression)
         {
-            return Exponentiate(expression, ConstantExpression.MinusOne);
+            return Exponentiate(expression, NumberExpression.MinusOne);
         }
 
         public static ProductExpressionList Product(IReadOnlyCollection<AlgebraExpression> terms)

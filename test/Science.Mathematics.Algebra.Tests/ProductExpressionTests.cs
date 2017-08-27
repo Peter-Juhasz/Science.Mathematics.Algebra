@@ -33,7 +33,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             var x = Symbol("x");
             var expression = Product(2, 5, x, 6);
-            var simplifier = new CollectConstantsInProductSimplifier();
+            var simplifier = new CollectNumbersInProductSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
             Assert.AreEqual(60 * x, result);

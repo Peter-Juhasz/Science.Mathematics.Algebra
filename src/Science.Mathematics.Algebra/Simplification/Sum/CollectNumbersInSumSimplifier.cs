@@ -9,7 +9,7 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Collects constants in a sum expression.
     /// </summary>
-    internal sealed class CollectConstantsInSumSimplifier : ISimplifier<SumExpressionList>
+    internal sealed class CollectNumbersInSumSimplifier : ISimplifier<SumExpressionList>
     {
         public AlgebraExpression Simplify(SumExpressionList expression, CancellationToken cancellationToken)
         {

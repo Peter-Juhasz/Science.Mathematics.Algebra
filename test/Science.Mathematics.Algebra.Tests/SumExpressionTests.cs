@@ -24,7 +24,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             var x = Symbol("x");
             var expression = Sum(2, 5, x);
-            var simplifier = new CollectConstantsInSumSimplifier();
+            var simplifier = new CollectNumbersInSumSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
             Assert.AreEqual(x + 7, result);
@@ -34,10 +34,10 @@ namespace Science.Mathematics.Algebra.Tests
         public void Sum_CollectConstants_OnlyConstants()
         {
             var expression = Sum(2, 5, 7);
-            var simplifier = new CollectConstantsInSumSimplifier();
+            var simplifier = new CollectNumbersInSumSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
-            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+            Assert.IsInstanceOfType(result, typeof(NumberExpression));
             Assert.AreEqual(14, result.GetConstantValue());
         }
 
@@ -45,7 +45,7 @@ namespace Science.Mathematics.Algebra.Tests
         public void Sum_CollectConstants_SingleExpressionRemains()
         {
             var expression = Sum(2, 5, -7, "x");
-            var simplifier = new CollectConstantsInSumSimplifier();
+            var simplifier = new CollectNumbersInSumSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
             Assert.IsInstanceOfType(result, typeof(SymbolExpression));

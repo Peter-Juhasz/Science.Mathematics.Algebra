@@ -37,11 +37,11 @@ namespace Science.Mathematics.Algebra
         }
         public static SumExpressionList operator +(double left, AlgebraExpression right)
         {
-            return Add(Constant(left), right);
+            return Add(Number(left), right);
         }
         public static SumExpressionList operator +(AlgebraExpression left, double right)
         {
-            return Add(left, Constant(right));
+            return Add(left, Number(right));
         }
 
         public static SumExpressionList operator -(AlgebraExpression left, AlgebraExpression right)
@@ -50,11 +50,11 @@ namespace Science.Mathematics.Algebra
         }
         public static SumExpressionList operator -(double left, AlgebraExpression right)
         {
-            return Subtract(Constant(left), right);
+            return Subtract(Number(left), right);
         }
         public static SumExpressionList operator -(AlgebraExpression left, double right)
         {
-            return Subtract(left, Constant(right));
+            return Subtract(left, Number(right));
         }
 
         public static ProductExpressionList operator *(AlgebraExpression left, AlgebraExpression right)
@@ -63,11 +63,11 @@ namespace Science.Mathematics.Algebra
         }
         public static ProductExpressionList operator *(double left, AlgebraExpression right)
         {
-            return Multiply(Constant(left), right);
+            return Multiply(Number(left), right);
         }
         public static ProductExpressionList operator *(AlgebraExpression left, double right)
         {
-            return Multiply(left, Constant(right));
+            return Multiply(left, Number(right));
         }
 
         public static ProductExpressionList operator /(AlgebraExpression left, AlgebraExpression right)
@@ -76,11 +76,11 @@ namespace Science.Mathematics.Algebra
         }
         public static ProductExpressionList operator /(double left, AlgebraExpression right)
         {
-            return Divide(Constant(left), right);
+            return Divide(Number(left), right);
         }
         public static ProductExpressionList operator /(AlgebraExpression left, double right)
         {
-            return Divide(left, Constant(right));
+            return Divide(left, Number(right));
         }
 
         public static PowerExpression operator ^(AlgebraExpression left, AlgebraExpression right)
@@ -89,11 +89,11 @@ namespace Science.Mathematics.Algebra
         }
         public static PowerExpression operator ^(double left, AlgebraExpression right)
         {
-            return Exponentiate(Constant(left), right);
+            return Exponentiate(Number(left), right);
         }
         public static PowerExpression operator ^(AlgebraExpression left, double right)
         {
-            return Exponentiate(left, Constant(right));
+            return Exponentiate(left, Number(right));
         }
 
         public static ProductExpressionList operator -(AlgebraExpression expr)
@@ -131,7 +131,7 @@ namespace Science.Mathematics.Algebra
 
         public static implicit operator AlgebraExpression(double value)
         {
-            return Constant(value);
+            return Number(value);
         }
 
         public static implicit operator AlgebraExpression(string name)

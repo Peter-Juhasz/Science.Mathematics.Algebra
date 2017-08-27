@@ -138,7 +138,7 @@ namespace Science.Mathematics.Algebra
         }
         public static PowerExpression Root(AlgebraExpression @base, AlgebraExpression exponent)
         {
-            return Exponentiate(@base, Divide(ConstantExpression.One, exponent));
+            return Exponentiate(@base, Divide(NumberExpression.One, exponent));
         }
         public static PowerExpression Square(AlgebraExpression expression)
         {
@@ -146,7 +146,7 @@ namespace Science.Mathematics.Algebra
         }
         public static PowerExpression SquareRoot(AlgebraExpression expression)
         {
-            return Exponentiate(expression, Divide(ConstantExpression.One, Constant(2)));
+            return Exponentiate(expression, Divide(NumberExpression.One, Constant(2)));
         }
     }
 }

@@ -6,15 +6,15 @@ namespace Science.Mathematics.Algebra
     /// <summary>
     /// Represents a constant expression.
     /// </summary>
-    public class ConstantExpression : AtomicExpression,
-        IEquatable<ConstantExpression>,
-        IComparable<ConstantExpression>
+    public class NumberExpression : AtomicExpression,
+        IEquatable<NumberExpression>,
+        IComparable<NumberExpression>
     {
-        public ConstantExpression(int value)
+        public NumberExpression(int value)
         {
             this.Value = value;
         }
-        public ConstantExpression(double value)
+        public NumberExpression(double value)
         {
             this.Value = value;
         }
@@ -22,17 +22,17 @@ namespace Science.Mathematics.Algebra
         /// <summary>
         /// 
         /// </summary>
-        public static readonly ConstantExpression Zero = 0;
+        public static readonly NumberExpression Zero = 0;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly ConstantExpression One = 1;
+        public static readonly NumberExpression One = 1;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly ConstantExpression MinusOne = -1;
+        public static readonly NumberExpression MinusOne = -1;
 
 
         /// <summary>
@@ -54,9 +54,9 @@ namespace Science.Mathematics.Algebra
 
 
         #region Conversions
-        public static implicit operator ConstantExpression(double value)
+        public static implicit operator NumberExpression(double value)
         {
-            return ExpressionFactory.Constant(value);
+            return ExpressionFactory.Number(value);
         }
         #endregion
 
@@ -66,7 +66,7 @@ namespace Science.Mathematics.Algebra
             return this.Value.ToString();
         }
 
-        public bool Equals(ConstantExpression other)
+        public bool Equals(NumberExpression other)
         {
             if (Object.ReferenceEquals(other, null)) return false;
 
@@ -80,10 +80,10 @@ namespace Science.Mathematics.Algebra
 
         public override bool Equals(object obj)
         {
-            return this.Equals(obj as ConstantExpression);
+            return this.Equals(obj as NumberExpression);
         }
 
-        public int CompareTo(ConstantExpression other)
+        public int CompareTo(NumberExpression other)
         {
             return this.Value.CompareTo(other.Value);
         }
@@ -91,20 +91,20 @@ namespace Science.Mathematics.Algebra
 
     public static partial class ExpressionFactory
     {
-        public static ConstantExpression Zero => ConstantExpression.Zero;
+        public static NumberExpression Zero => NumberExpression.Zero;
 
-        public static ConstantExpression One => ConstantExpression.One;
+        public static NumberExpression One => NumberExpression.One;
 
-        public static ConstantExpression MinusOne => ConstantExpression.MinusOne;
+        public static NumberExpression MinusOne => NumberExpression.MinusOne;
 
 
-        public static ConstantExpression Constant(int value)
+        public static NumberExpression Constant(int value)
         {
-            return new ConstantExpression(value);
+            return new NumberExpression(value);
         }
-        public static ConstantExpression Constant(double value)
+        public static NumberExpression Number(double value)
         {
-            return new ConstantExpression(value);
+            return new NumberExpression(value);
         }
     }
 }
