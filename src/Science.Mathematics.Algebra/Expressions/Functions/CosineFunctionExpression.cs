@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.Linq;
 
 namespace Science.Mathematics.Algebra
 {
@@ -14,6 +13,8 @@ namespace Science.Mathematics.Algebra
         { }
 
         public const string PrimaryName = "cos";
+
+        public AlgebraExpression Argument => this.Arguments[0];
     }
 
     public static partial class WellKnownFunctionNames

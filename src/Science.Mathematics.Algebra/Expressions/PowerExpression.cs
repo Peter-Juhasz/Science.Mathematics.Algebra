@@ -5,6 +5,8 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Represents a power expression.
     /// </summary>
@@ -72,6 +74,15 @@ namespace Science.Mathematics.Algebra
         #endregion
 
 
+        internal AlgebraExpression Normalize()
+        {
+            if (this.Exponent == One)
+                return this.Base;
+
+            return this;
+        }
+
+
         public override bool Equals(object obj)
         {
             return this.Equals(obj as PowerExpression);
@@ -123,8 +134,8 @@ namespace Science.Mathematics.Algebra
     {
         public static PowerExpression AsPower(this AlgebraExpression expression)
         {
-            if (expression is PowerExpression)
-                return expression as PowerExpression;
+            if (expression is PowerExpression power)
+                return power;
 
             return ExpressionFactory.Exponentiate(expression, ExpressionFactory.One);
         }

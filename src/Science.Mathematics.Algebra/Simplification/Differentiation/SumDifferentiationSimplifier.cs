@@ -13,10 +13,8 @@ namespace Science.Mathematics.Algebra
     {
         public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken)
         {
-            if (expression.Expression is SumExpressionList)
+            if (expression.Expression is SumExpressionList sum)
             {
-                var sum = expression.Expression as SumExpressionList;
-
                 return Sum(
                     sum.Terms
                         .Select(t => t.Differentiate(expression.RespectTo))

@@ -75,6 +75,38 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
+        public void Product_Numerator_General()
+        {
+            var x = Symbol("x");
+            var expression = 2 * x;
+            var result = expression.GetNumerator();
+
+            Assert.AreEqual(expression, result);
+        }
+
+        [TestMethod]
+        public void Product_Numerator()
+        {
+            var a = Symbol("a");
+            var b = Symbol("b");
+            var expression = a / b;
+            var result = expression.GetNumerator();
+
+            Assert.AreEqual(a, result);
+        }
+
+        [TestMethod]
+        public void Product_Denominator()
+        {
+            var a = Symbol("a");
+            var b = Symbol("b");
+            var expression = a / b;
+            var result = expression.GetDenominator();
+
+            Assert.AreEqual(b, result);
+        }
+
+        [TestMethod]
         public void Product_IsInfinity()
         {
             var expression = 2 * Infinity();

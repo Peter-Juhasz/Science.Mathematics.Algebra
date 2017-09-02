@@ -19,7 +19,7 @@ namespace Science.Mathematics.Algebra
         {
             var groups = expression.Terms
                 .Where(t => t.GetConstantValue() == null)
-                .Select(t => AsProduct(t))
+                .Select(t => t.AsProduct())
                 .GroupBy(t =>
                     Product(
                         t.Terms
@@ -32,7 +32,7 @@ namespace Science.Mathematics.Algebra
             ;
 
             var newTerms = expression.Terms
-                .RemoveAll(e => groups.Any(g => g.Contains(AsProduct(e))))
+                .RemoveAll(e => groups.Any(g => g.Contains(e.AsProduct())))
                 .InsertRange(0, 
                     groups.Select(g =>
                         simplifier.Simplify(
@@ -57,14 +57,6 @@ namespace Science.Mathematics.Algebra
             return expression.WithTerms(newTerms);
         }
 
-
-        private static ProductExpressionList AsProduct(AlgebraExpression expression)
-        {
-            if (expression is ProductExpressionList)
-                return expression as ProductExpressionList;
-
-            return Product(expression);
-        }
 
         private static AlgebraExpression Normalize(ProductExpressionList expression)
         {

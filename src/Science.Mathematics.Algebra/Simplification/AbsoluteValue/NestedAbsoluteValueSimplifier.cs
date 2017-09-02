@@ -9,7 +9,10 @@ namespace Science.Mathematics.Algebra
     {
         public AlgebraExpression Simplify(AbsoluteValueExpression expression, CancellationToken cancellationToken)
         {
-            return expression.WithExpression(expression.Expression.Simplify());
+            if (expression.Expression is AbsoluteValueExpression)
+                return expression.Expression;
+
+            return expression;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Science.Mathematics.Algebra
     {
         public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken)
         {
-            if (expression.Expression.IsConstant(expression.RespectTo))
+            if (expression.Expression.IsConstant(expression))
                 return Zero;
 
             return expression;

@@ -11,10 +11,8 @@ namespace Science.Mathematics.Algebra
     {
         public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken)
         {
-            if (expression.Expression is LogarithmFunctionExpression)
+            if (expression.Expression is LogarithmFunctionExpression logarithm)
             {
-                var logarithm = expression.Expression as LogarithmFunctionExpression;
-
                 return (
                     (NaturalLogarithm(logarithm.Base) * Differentiate(logarithm.Argument, expression.RespectTo)) / logarithm.Argument -
                     (Differentiate(logarithm.Base, expression.RespectTo) * NaturalLogarithm(logarithm.Argument)) / logarithm.Base

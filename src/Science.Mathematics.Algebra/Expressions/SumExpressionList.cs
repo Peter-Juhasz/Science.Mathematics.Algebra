@@ -62,6 +62,15 @@ namespace Science.Mathematics.Algebra
         #endregion
 
 
+        internal AlgebraExpression Normalize()
+        {
+            if (this.Terms.Count == 1)
+                return this.Terms.Single();
+
+            return this;
+        }
+
+
         public bool Equals(SumExpressionList other)
         {
             if (Object.ReferenceEquals(other, null)) return false;

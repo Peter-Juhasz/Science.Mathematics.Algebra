@@ -123,6 +123,19 @@ namespace Science.Mathematics.Algebra
             return this.ToString().GetHashCode();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool IsEquivalentTo(AlgebraExpression other)
+        {
+            if (this.Equals(other))
+                return true;
+
+            return this.Simplify().Equals(other.Simplify());
+        }
+
         #region Conversions
         public static implicit operator AlgebraExpression(int value)
         {
@@ -150,7 +163,12 @@ namespace Science.Mathematics.Algebra
     {
         public static bool IsConstant(this AlgebraExpression expression, SymbolExpression respectTo)
         {
-            return !expression.DescendantsAndSelf().Contains(respectTo);
+            return !expression.DependsUpon(respectTo);
+        }
+
+        public static bool DependsUpon(this AlgebraExpression expression, SymbolExpression respectTo)
+        {
+            return expression.DescendantsAndSelf().Contains(respectTo);
         }
 
 

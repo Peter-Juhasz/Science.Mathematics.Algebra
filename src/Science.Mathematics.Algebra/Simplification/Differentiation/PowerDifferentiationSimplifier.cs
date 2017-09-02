@@ -11,10 +11,8 @@ namespace Science.Mathematics.Algebra
     {
         public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken)
         {
-            if (expression.Expression is PowerExpression)
+            if (expression.Expression is PowerExpression power)
             {
-                var power = expression.Expression as PowerExpression;
-                
                 return (power.Base ^ (power.Exponent - 1)) * (
                     power.Exponent * power.Base.Differentiate(expression.RespectTo) +
                     power.Base * NaturalLogarithm(power.Base) * power.Exponent.Differentiate(expression.RespectTo)

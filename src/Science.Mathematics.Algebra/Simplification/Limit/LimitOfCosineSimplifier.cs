@@ -9,17 +9,13 @@ namespace Science.Mathematics.Algebra.Simplification.Limit
     {
         public AlgebraExpression Simplify(LimitExpression expression, CancellationToken cancellationToken)
         {
-            var body = expression.Expression as FunctionInvocationExpression;
-            if (body == null)
-                return expression;
-
-            if (body.Name != WellKnownFunctionNames.Cosine)
-                return expression;
-
-            if (expression.To.IsConstant(expression.RespectTo) &&
-                !expression.To.IsInfinity() &&
-                body.Arguments.Single().Equals(expression.RespectTo))
-                return Cosine(expression.To);
+            if (expression.Expression is CosineFunctionExpression cosine)
+            {
+                if (expression.To.IsConstant(expression.RespectTo) &&
+                    !expression.To.IsInfinity() &&
+                    cosine.Argument.Equals(expression.RespectTo))
+                    return Cosine(expression.To);
+            }
 
             return expression;
         }

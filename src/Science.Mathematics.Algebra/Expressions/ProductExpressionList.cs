@@ -6,6 +6,8 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     public class ProductExpressionList : ExpressionList, IEquatable<ProductExpressionList>
     {
         public ProductExpressionList(IReadOnlyCollection<AlgebraExpression> terms)
@@ -54,6 +56,39 @@ namespace Science.Mathematics.Algebra
         #endregion
 
 
+        public AlgebraExpression GetNumerator()
+        {
+            return Product(
+                this.Terms
+                    .Where(t => t.AsPower().Exponent.AsProduct().Terms.OfType<NumberExpression>().Select(n => n.Value).Product() >= 0)
+                    .ToList()
+            ).Normalize();
+        }
+
+        public AlgebraExpression GetDenominator()
+        {
+            return Product((
+                from t in this.Terms
+                let pow = t.AsPower()
+                let prod = t.AsPower().Exponent.AsProduct()
+                let st = prod.Terms.OfType<NumberExpression>()
+                where st.Select(n => n.Value).Product() < 0
+                let negative = st.Where(n => n.Value < 0).First()
+                let index = prod.Terms.IndexOf(negative)
+                select pow.WithExponent(prod.WithTerms(prod.Terms.RemoveAt(index).Insert(index, -negative.Value)).Normalize()).Normalize()
+            ).ToList()).Normalize();
+        }
+
+
+        internal AlgebraExpression Normalize()
+        {
+            if (this.Terms.Count == 1)
+                return this.Terms.Single();
+
+            return this;
+        }
+        
+
         public bool Equals(ProductExpressionList other)
         {
             if (Object.ReferenceEquals(other, null)) return false;
@@ -83,6 +118,17 @@ namespace Science.Mathematics.Algebra
         private static bool NeedsParenthesis(AlgebraExpression expression)
         {
             return expression is SumExpressionList;
+        }
+    }
+
+    public static partial class AlgebraExpressionExtensions
+    {
+        internal static ProductExpressionList AsProduct(this AlgebraExpression expression)
+        {
+            if (expression is ProductExpressionList product)
+                return product;
+
+            return Product(expression);
         }
     }
 

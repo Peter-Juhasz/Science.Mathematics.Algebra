@@ -13,6 +13,8 @@ namespace Science.Mathematics.Algebra
         { }
 
         public const string PrimaryName = "sin";
+        
+        public AlgebraExpression Argument => this.Arguments[0];
     }
 
     public static partial class WellKnownFunctionNames

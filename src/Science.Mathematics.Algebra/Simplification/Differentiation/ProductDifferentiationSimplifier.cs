@@ -4,6 +4,8 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Simplifies expressions like d/dx (f(x) * g(x) * ...) to f'(x) * g(x) * ... + f(x) * g'(x) * ... + ....
     /// </summary>
@@ -11,11 +13,9 @@ namespace Science.Mathematics.Algebra
     {
         public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken)
         {
-            if (expression.Expression is ProductExpressionList)
+            if (expression.Expression is ProductExpressionList product)
             {
-                var product = expression.Expression as ProductExpressionList;
-
-                return ExpressionFactory.Sum(
+                return Sum(
                     product.Terms
                         .Select(t =>
                             ExpressionFactory.Product(

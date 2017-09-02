@@ -126,6 +126,12 @@ namespace Science.Mathematics.Algebra
                     .ToImmutableList()
             );
         }
+
+
+        public static bool IsConstant(this AlgebraExpression expression, DifferentiationExpression differentiation)
+        {
+            return expression.IsConstant(differentiation.RespectTo);
+        }
     }
 
     public static partial class ExpressionFactory
