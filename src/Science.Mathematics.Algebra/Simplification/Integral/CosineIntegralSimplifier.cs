@@ -11,10 +11,17 @@ namespace Science.Mathematics.Algebra
     {
         public AlgebraExpression Simplify(IntegralExpression expression, CancellationToken cancellationToken)
         {
-            if (expression.Expression is CosineFunctionExpression sine)
+            var power = expression.Expression.AsPower();
+            if (power.Base is CosineFunctionExpression cosine)
             {
-                if (sine.Argument == expression.RespectTo)
-                    return Sine(sine.Argument) + IntegralConstant;
+                if (cosine.Argument == expression.RespectTo &&
+                    power.Exponent.GetConstantValue(cancellationToken) != -1)
+                {
+                    var n = power.Exponent;
+                    var x = expression.RespectTo;
+                    var cosx = power.Base;
+                    return Exponentiate(cosx, n - 1) * Sine(x) / n + (n - 1) / n * Integrate(Exponentiate(cosx, n - 2), x) + IntegralConstant;
+                }
             }
 
             return expression;
