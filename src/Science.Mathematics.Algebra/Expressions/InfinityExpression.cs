@@ -15,7 +15,7 @@ namespace Science.Mathematics.Algebra
         }
         
         
-        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
+        public override double? GetConstantValue(CancellationToken cancellationToken = default)
         {
             return null;
         }

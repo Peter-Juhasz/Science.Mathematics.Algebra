@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Science.Mathematics.Algebra
@@ -31,7 +32,7 @@ namespace Science.Mathematics.Algebra
         public string Name { get; private set; }
 
 
-        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
+        public override double? GetConstantValue(CancellationToken cancellationToken = default)
         {
             return null;
         }
@@ -42,6 +43,10 @@ namespace Science.Mathematics.Algebra
             return this.Name == variable.Name ? replacement : this;
         }
 
+        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, CancellationToken cancellationToken = default)
+        {
+            yield return new PatternMatch(this, this, expression);
+        }
 
         #region Conversions
         public static implicit operator SymbolExpression(char ch)

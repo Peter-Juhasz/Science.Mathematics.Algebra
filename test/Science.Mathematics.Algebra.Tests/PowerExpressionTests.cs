@@ -3,6 +3,7 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra.Tests
 {
+    using System.Linq;
     using static ExpressionFactory;
 
     [TestClass]
@@ -121,6 +122,64 @@ namespace Science.Mathematics.Algebra.Tests
             var expression = Exponentiate(1, Infinity());
 
             Assert.IsTrue(expression.IsInfinity());
+        }
+
+        [TestMethod]
+        public void Power_Match_x2_To_a2()
+        {
+            var x = Symbol("x");
+            var expression = x ^ 2;
+
+            var a = Symbol("a");
+            var match = expression.Match(a ^ 2).First();
+            Assert.AreEqual(x, match[a]);
+        }
+
+        [TestMethod]
+        public void Power_Match_23_to_ab()
+        {
+            var expression = Number(2) ^ 3;
+
+            var a = Symbol("a");
+            var b = Symbol("b");
+            var match = expression.Match(a ^ b).First();
+            Assert.AreEqual(Number(2), match[a]);
+            Assert.AreEqual(Number(3), match[b]);
+        }
+
+        [TestMethod]
+        public void Power_Match_23_to_a3()
+        {
+            var expression = Number(2) ^ 3;
+
+            var a = Symbol("a");
+            var match = expression.Match(a ^ 3).First();
+            Assert.AreEqual(Number(2), match[a]);
+        }
+
+        [TestMethod]
+        public void Power_Match_xy_to_ab()
+        {
+            var x = Symbol("x");
+            var y = Symbol("y");
+            var expression = x ^ y;
+
+            var a = Symbol("a");
+            var b = Symbol("b");
+            var match = expression.Match(a ^ b).First();
+            Assert.AreEqual(x, match[a]);
+            Assert.AreEqual(y, match[b]);
+        }
+
+        [TestMethod]
+        public void Power_Match_33_to_aa()
+        {
+            var n = Number(3);
+            var expression = n ^ n;
+
+            var a = Symbol("a");
+            var match = expression.Match(a ^ a).First();
+            Assert.AreEqual(n, match[a]);
         }
 
         [TestMethod]

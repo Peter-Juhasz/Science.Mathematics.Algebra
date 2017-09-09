@@ -56,7 +56,7 @@ namespace Science.Mathematics.Algebra
         public AlgebraExpression To { get; private set; }
 
 
-        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
+        public override double? GetConstantValue(CancellationToken cancellationToken = default)
         {
             return null;
         }

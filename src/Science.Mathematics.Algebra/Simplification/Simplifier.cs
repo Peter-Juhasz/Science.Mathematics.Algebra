@@ -2,23 +2,63 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using static ExpressionFactory;
+
     /// <summary>
     /// Simplifies <see cref="AlgebraExpression"/>s using all the simplifiers found in the library.
     /// </summary>
     public static class Simplifier
     {
+        static Simplifier()
+        {
+            Simplifier.AddRule(x => x ^ 0, x => 1);
+            Simplifier.AddRule(x => x ^ 1, x => x);
+            Simplifier.AddRule(x => 1 ^ x, x => 1);
+            Simplifier.AddRule(x => 0 ^ x, x => 0);
+
+            Simplifier.AddRule(x => x + 0, x => x);
+            Simplifier.AddRule(x => x - 0, x => x);
+            Simplifier.AddRule(x => x * 1, x => x);
+            Simplifier.AddRule(x => x / 1, x => x);
+        }
+
+        public static ICollection<ExpressionTransformationRule> Rules { get; } = new HashSet<ExpressionTransformationRule>();
+
+        public static void AddRule(
+            Expression<Func<SymbolExpression, AlgebraExpression>> pattern,
+            Expression<Func<SymbolExpression, AlgebraExpression>> result
+        )
+        {
+            var p1 = Symbol(pattern.Parameters[0].Name);
+            var r1 = Symbol(result.Parameters[0].Name);
+            Rules.Add(new ExpressionTransformationRule(pattern.Compile()(p1), result.Compile()(r1)));
+        }
+
+        public static void AddRule(
+            Expression<Func<SymbolExpression, SymbolExpression, AlgebraExpression>> pattern,
+            Expression<Func<SymbolExpression, SymbolExpression, AlgebraExpression>> result
+        )
+        {
+            var p1 = Symbol(pattern.Parameters[0].Name);
+            var p2 = Symbol(pattern.Parameters[1].Name);
+            var r1 = Symbol(result.Parameters[0].Name);
+            var r2 = Symbol(result.Parameters[2].Name);
+            Rules.Add(new ExpressionTransformationRule(pattern.Compile()(p1, p2), result.Compile()(r1, r2)));
+        }
+
         /// <summary>
         /// Simplifies an <see cref="AlgebraExpression"/> as much as it can.
         /// </summary>
         /// <param name="expression"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static AlgebraExpression Simplify(this AlgebraExpression expression, CancellationToken cancellationToken = default(CancellationToken))
+        public static AlgebraExpression Simplify(this AlgebraExpression expression, CancellationToken cancellationToken = default)
         {
             AlgebraExpression simplified = expression;
             AlgebraExpression lastResult;

@@ -16,7 +16,7 @@ namespace Science.Mathematics.Algebra
         { }
         
         
-        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
+        public override double? GetConstantValue(CancellationToken cancellationToken = default)
         {
             var values = this.Terms.Select(t => t.GetConstantValue()).Memoize();
 

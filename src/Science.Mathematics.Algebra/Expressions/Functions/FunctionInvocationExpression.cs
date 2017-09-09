@@ -37,7 +37,7 @@ namespace Science.Mathematics.Algebra
         public IImmutableList<AlgebraExpression> Arguments { get; private set; }
 
 
-        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
+        public override double? GetConstantValue(CancellationToken cancellationToken = default)
         {
             return null;
         }

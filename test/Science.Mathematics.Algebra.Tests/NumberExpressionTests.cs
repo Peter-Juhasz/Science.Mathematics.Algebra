@@ -2,6 +2,9 @@
 
 namespace Science.Mathematics.Algebra.Tests
 {
+    using System.Linq;
+    using static ExpressionFactory;
+
     [TestClass]
     public class NumberExpressionTests
     {
@@ -14,6 +17,20 @@ namespace Science.Mathematics.Algebra.Tests
             
             Assert.AreEqual(reference, expression.Value);
             Assert.AreEqual(reference, expression.GetConstantValue());
+        }
+
+        [TestMethod]
+        public void Number_Match()
+        {
+            var expression = Number(3);
+            Assert.IsTrue(expression.Match(3).Any());
+        }
+
+        [TestMethod]
+        public void Number_Match_Sum()
+        {
+            var expression = Number(3) + Number(5);
+            Assert.IsTrue(expression.Match(8).Any());
         }
 
         [TestMethod]

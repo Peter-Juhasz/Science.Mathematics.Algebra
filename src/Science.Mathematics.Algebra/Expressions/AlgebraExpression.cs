@@ -5,6 +5,7 @@ using System.Threading;
 
 namespace Science.Mathematics.Algebra
 {
+    using System.Linq.Expressions;
     using static ExpressionFactory;
 
     /// <summary>
@@ -16,7 +17,7 @@ namespace Science.Mathematics.Algebra
         /// Computes the constant value of the expression.
         /// </summary>
         /// <returns></returns>
-        public abstract double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken));
+        public abstract double? GetConstantValue(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replaces every occurrences of <paramref name="subject"/> to <paramref name="replacement"/>.
@@ -29,6 +30,12 @@ namespace Science.Mathematics.Algebra
         public abstract IEnumerable<AlgebraExpression> Children();
 
         public virtual bool IsInfinity() => this.DescendantsAndSelf().OfType<InfinityExpression>().Any();
+
+        public virtual IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, CancellationToken cancellationToken = default)
+        {
+            yield break;
+        }
+
 
         #region Operators
         public static SumExpressionList operator +(AlgebraExpression left, AlgebraExpression right)
@@ -187,6 +194,29 @@ namespace Science.Mathematics.Algebra
 
             foreach (var descendant in expression.Descendants())
                 yield return descendant;
+        }
+
+        public static IEnumerable<PatternMatch> Match(this AlgebraExpression subject, AlgebraExpression pattern, CancellationToken cancellationToken = default)
+        {
+            return pattern.MatchTo(subject, cancellationToken);
+        }
+        public static IEnumerable<PatternMatch> Match(
+            this AlgebraExpression subject,
+            Expression<Func<SymbolExpression, AlgebraExpression>> pattern,
+            CancellationToken cancellationToken = default)
+        {
+            var p1 = Symbol(pattern.Parameters[0].Name);
+            return subject.MatchTo(pattern.Compile()(p1), cancellationToken);
+        }
+
+
+        public static AlgebraExpression Substitute(this AlgebraExpression expression, IReadOnlyDictionary<SymbolExpression, AlgebraExpression> map)
+        {
+            return map.Aggregate(expression, (r, kv) => r.Substitute(kv.Key, kv.Value));
+        }
+        public static AlgebraExpression Substitute(this AlgebraExpression expression, IReadOnlyDictionary<string, AlgebraExpression> map)
+        {
+            return map.Aggregate(expression, (r, kv) => r.Substitute(kv.Key, kv.Value));
         }
     }
 }

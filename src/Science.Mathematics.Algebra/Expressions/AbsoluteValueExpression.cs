@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Science.Mathematics.Algebra
@@ -11,10 +12,7 @@ namespace Science.Mathematics.Algebra
     {
         public AbsoluteValueExpression(AlgebraExpression expression)
         {
-            if (expression == null)
-                throw new ArgumentNullException(nameof(expression));
-
-            this.Expression = expression;
+            this.Expression = expression ?? throw new ArgumentNullException(nameof(expression));
         }
         
 
@@ -24,7 +22,7 @@ namespace Science.Mathematics.Algebra
         public AlgebraExpression Expression { get; private set; }
 
 
-        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
+        public override double? GetConstantValue(CancellationToken cancellationToken = default)
         {
             double? value = this.Expression.GetConstantValue(cancellationToken);
 
@@ -45,6 +43,13 @@ namespace Science.Mathematics.Algebra
             yield return this.Expression;
         }
 
+        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, CancellationToken cancellationToken = default)
+        {
+            if (expression is AbsoluteValueExpression absoluteValue)
+                return absoluteValue.Expression.Match(this.Expression, cancellationToken);
+
+            return Enumerable.Empty<PatternMatch>();
+        }
 
         #region Immutability
         public AbsoluteValueExpression WithExpression(AlgebraExpression newExpression)

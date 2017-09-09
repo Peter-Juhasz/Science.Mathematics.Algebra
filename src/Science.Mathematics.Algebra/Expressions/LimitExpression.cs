@@ -41,7 +41,7 @@ namespace Science.Mathematics.Algebra
         public AlgebraExpression Expression { get; private set; }
 
 
-        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
+        public override double? GetConstantValue(CancellationToken cancellationToken = default)
         {
             double? value = this.Expression.Substitute(this.RespectTo, this.To).GetConstantValue(cancellationToken);
 

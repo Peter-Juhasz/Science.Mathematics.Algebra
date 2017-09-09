@@ -35,7 +35,7 @@ namespace Science.Mathematics.Algebra
         public AlgebraExpression Exponent { get; private set; }
 
         
-        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
+        public override double? GetConstantValue(CancellationToken cancellationToken = default)
         {
             double? @base = this.Base.GetConstantValue(cancellationToken),
                 exponent = this.Exponent.GetConstantValue(cancellationToken);
@@ -62,6 +62,21 @@ namespace Science.Mathematics.Algebra
         }
 
 
+        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, CancellationToken cancellationToken = default)
+        {
+            if (expression is PowerExpression power)
+            {
+                foreach (var exponentMatch in power.Exponent.Match(this.Exponent, cancellationToken))
+                {
+                    var newBase = power.Base.Substitute(exponentMatch.Values);
+
+                    foreach (var baseMatch in power.Base.Match(this.Base, cancellationToken))
+                        yield return exponentMatch.AddValues(baseMatch.Values);
+                }
+            }
+        }
+
+
         #region Immutability
         public PowerExpression WithBase(AlgebraExpression newBase)
         {
@@ -83,10 +98,7 @@ namespace Science.Mathematics.Algebra
         }
 
 
-        public override bool Equals(object obj)
-        {
-            return this.Equals(obj as PowerExpression);
-        }
+        public override bool Equals(object obj) => this.Equals(obj as PowerExpression);
 
         public bool Equals(PowerExpression other)
         {
@@ -95,10 +107,7 @@ namespace Science.Mathematics.Algebra
             return this.Base == other.Base && this.Exponent == other.Exponent;
         }
 
-        public override int GetHashCode()
-        {
-            return this.Base.GetHashCode() ^ this.Exponent.GetHashCode();
-        }
+        public override int GetHashCode() => this.Base.GetHashCode() ^ this.Exponent.GetHashCode();
 
         public override string ToString()
         {
