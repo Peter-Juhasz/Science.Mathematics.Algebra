@@ -92,15 +92,15 @@ namespace Science.Mathematics.Algebra
 
         public static PowerExpression operator ^(AlgebraExpression left, AlgebraExpression right)
         {
-            return Exponentiate(left, right);
+            return Exponentiation(left, right);
         }
         public static PowerExpression operator ^(double left, AlgebraExpression right)
         {
-            return Exponentiate(Number(left), right);
+            return Exponentiation(Number(left), right);
         }
         public static PowerExpression operator ^(AlgebraExpression left, double right)
         {
-            return Exponentiate(left, Number(right));
+            return Exponentiation(left, Number(right));
         }
 
         public static ProductExpressionList operator -(AlgebraExpression expr)

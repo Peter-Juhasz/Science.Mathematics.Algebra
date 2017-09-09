@@ -14,7 +14,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             const int reference = 3;
 
-            var expression = Exponentiate(1, 2);
+            var expression = Exponentiation(1, 2);
             var result = expression.WithBase(reference);
             
             Assert.AreEqual(reference, result.Base.GetConstantValue());
@@ -25,7 +25,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             const int reference = 3;
 
-            var expression = Exponentiate(1, 2);
+            var expression = Exponentiation(1, 2);
             var result = expression.WithExponent(reference);
 
             Assert.AreEqual(reference, result.Exponent.GetConstantValue());
@@ -36,7 +36,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             var @base = new SymbolExpression("x");
 
-            var expression = Exponentiate(@base, 1);
+            var expression = Exponentiation(@base, 1);
             var simplifier = new ExponentOneSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -48,7 +48,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             var @base = new SymbolExpression("x");
 
-            var expression = Exponentiate(@base, 0);
+            var expression = Exponentiation(@base, 0);
             var simplifier = new ExponentZeroSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -59,7 +59,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Power_Simplify_WhenBaseEqualsZero()
         {
-            var expression = Exponentiate(0, 2);
+            var expression = Exponentiation(0, 2);
             var simplifier = new BaseZeroSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -72,7 +72,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             var exponent = new SymbolExpression("x");
 
-            var expression = Exponentiate(1, exponent);
+            var expression = Exponentiation(1, exponent);
             var simplifier = new BaseOneSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -83,7 +83,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Power_Simplify_Nested()
         {
-            var expression = Exponentiate(Exponentiate("x", "y"), "z");
+            var expression = Exponentiation(Exponentiation("x", "y"), "z");
             var simplifier = new NestedPowerSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -93,7 +93,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Power_Simplify_Constant()
         {
-            var expression = Exponentiate(2, 3);
+            var expression = Exponentiation(2, 3);
             var simplifier = new ConstantPowerSimplifier();
             var result = simplifier.Simplify(expression, CancellationToken.None);
 
@@ -104,14 +104,14 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Power_GetConstantValue()
         {
-            var expression = Exponentiate(3, 5);
+            var expression = Exponentiation(3, 5);
             Assert.AreEqual(243, expression.GetConstantValue());
         }
 
         [TestMethod]
         public void Power_Base_IsInfinity()
         {
-            var expression = Exponentiate(Infinity(), 1);
+            var expression = Exponentiation(Infinity(), 1);
 
             Assert.IsTrue(expression.IsInfinity());
         }
@@ -119,7 +119,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Power_Exponent_IsInfinity()
         {
-            var expression = Exponentiate(1, Infinity());
+            var expression = Exponentiation(1, Infinity());
 
             Assert.IsTrue(expression.IsInfinity());
         }
@@ -185,7 +185,7 @@ namespace Science.Mathematics.Algebra.Tests
         [TestMethod]
         public void Power_ToString_Constants()
         {
-            var expression = Exponentiate(3, 5);
+            var expression = Exponentiation(3, 5);
             Assert.AreEqual("3 ^ 5", expression.ToString());
         }
     }

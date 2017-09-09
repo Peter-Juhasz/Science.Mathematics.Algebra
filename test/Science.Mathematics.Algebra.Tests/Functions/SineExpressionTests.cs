@@ -16,7 +16,7 @@ namespace Science.Mathematics.Algebra.Tests
         public void Sine_Differentiate_Variable()
         {
             var expression = ExpressionFactory.Sine("x");
-            var result = expression.Differentiate("x").Simplify();
+            var result = expression.Differentiation("x").Simplify();
 
             Assert.AreEqual("cos(x)", result.ToString());
         }

@@ -105,14 +105,14 @@ namespace Science.Mathematics.Algebra
 
     public static partial class AlgebraExpressionExtensions
     {
-        public static DifferentiationExpression Differentiate(this AlgebraExpression expression, SymbolExpression respectTo)
+        public static DifferentiationExpression Differentiation(this AlgebraExpression expression, SymbolExpression respectTo)
         {
             return ExpressionFactory.Differentiate(expression, respectTo);
         }
 
         public static DifferentiationExpression PartialDerivative(this AlgebraExpression expression, SymbolExpression respectTo)
         {
-            return Differentiate(expression, respectTo);
+            return Differentiation(expression, respectTo);
         }
 
         public static AlgebraExpression TotalDerivative(this AlgebraExpression function, IReadOnlyCollection<SymbolExpression> parameters, SymbolExpression respectTo)
@@ -122,7 +122,7 @@ namespace Science.Mathematics.Algebra
 
             return Sum(
                 parameters
-                    .Select(p => function.PartialDerivative(p) * p.Differentiate(respectTo))
+                    .Select(p => function.PartialDerivative(p) * p.Differentiation(respectTo))
                     .ToImmutableList()
             );
         }

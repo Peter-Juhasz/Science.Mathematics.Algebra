@@ -16,7 +16,7 @@ namespace Science.Mathematics.Algebra
             if (invocation?.Name == CosineFunctionExpression.PrimaryName)
             {
                 var arg = invocation.Arguments.Single();
-                return arg.Differentiate(expression.RespectTo) * -Sine(arg);
+                return arg.Differentiation(expression.RespectTo) * -Sine(arg);
             }
 
             return expression;

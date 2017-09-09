@@ -80,11 +80,11 @@ namespace Science.Mathematics.Algebra
         #region Immutability
         public PowerExpression WithBase(AlgebraExpression newBase)
         {
-            return ExpressionFactory.Exponentiate(newBase, this.Exponent);
+            return ExpressionFactory.Exponentiation(newBase, this.Exponent);
         }
         public PowerExpression WithExponent(AlgebraExpression newExponent)
         {
-            return ExpressionFactory.Exponentiate(this.Base, newExponent);
+            return ExpressionFactory.Exponentiation(this.Base, newExponent);
         }
         #endregion
 
@@ -146,27 +146,27 @@ namespace Science.Mathematics.Algebra
             if (expression is PowerExpression power)
                 return power;
 
-            return ExpressionFactory.Exponentiate(expression, ExpressionFactory.One);
+            return ExpressionFactory.Exponentiation(expression, ExpressionFactory.One);
         }
     }
 
     public static partial class ExpressionFactory
     {
-        public static PowerExpression Exponentiate(AlgebraExpression @base, AlgebraExpression exponent)
+        public static PowerExpression Exponentiation(AlgebraExpression @base, AlgebraExpression exponent)
         {
             return new PowerExpression(@base, exponent);
         }
         public static PowerExpression Root(AlgebraExpression @base, AlgebraExpression exponent)
         {
-            return Exponentiate(@base, Divide(NumberExpression.One, exponent));
+            return Exponentiation(@base, Divide(NumberExpression.One, exponent));
         }
         public static PowerExpression Square(AlgebraExpression expression)
         {
-            return Exponentiate(expression, Constant(2));
+            return Exponentiation(expression, Constant(2));
         }
         public static PowerExpression SquareRoot(AlgebraExpression expression)
         {
-            return Exponentiate(expression, Divide(NumberExpression.One, Constant(2)));
+            return Exponentiation(expression, Divide(NumberExpression.One, Constant(2)));
         }
     }
 }

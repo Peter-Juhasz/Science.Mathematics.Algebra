@@ -17,7 +17,7 @@ namespace Science.Mathematics.Algebra
             {
                 return Sum(
                     sum.Terms
-                        .Select(t => t.Differentiate(expression.RespectTo))
+                        .Select(t => t.Differentiation(expression.RespectTo))
                         .ToImmutableList()
                 );
             }

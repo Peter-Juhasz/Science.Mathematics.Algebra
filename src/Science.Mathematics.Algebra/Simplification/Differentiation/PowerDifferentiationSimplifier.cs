@@ -14,8 +14,8 @@ namespace Science.Mathematics.Algebra
             if (expression.Expression is PowerExpression power)
             {
                 return (power.Base ^ (power.Exponent - 1)) * (
-                    power.Exponent * power.Base.Differentiate(expression.RespectTo) +
-                    power.Base * NaturalLogarithm(power.Base) * power.Exponent.Differentiate(expression.RespectTo)
+                    power.Exponent * power.Base.Differentiation(expression.RespectTo) +
+                    power.Base * NaturalLogarithm(power.Base) * power.Exponent.Differentiation(expression.RespectTo)
                 );
             }
 

@@ -20,7 +20,7 @@ namespace Science.Mathematics.Algebra
                     var n = power.Exponent;
                     var x = expression.RespectTo;
                     var sinx = power.Base;
-                    return -(Exponentiate(sinx, n - 1) * Cosine(x)) / n + (n - 1) / n * Integrate(Exponentiate(sinx, n - 2), x) + IntegralConstant;
+                    return -(Exponentiation(sinx, n - 1) * Cosine(x)) / n + (n - 1) / n * IndefiniteIntegral(Exponentiation(sinx, n - 2), x) + IntegralConstant;
                 }
             }
 

@@ -19,7 +19,7 @@ namespace Science.Mathematics.Algebra
                     product.Terms
                         .Select(t =>
                             ExpressionFactory.Product(
-                                new[] { t.Differentiate(expression.RespectTo) }
+                                new[] { t.Differentiation(expression.RespectTo) }
                                     .Concat(product.Terms.Except(new[] { t }))
                                     .ToImmutableList()
                             )

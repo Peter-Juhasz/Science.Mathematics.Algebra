@@ -14,7 +14,7 @@ namespace Science.Mathematics.Algebra
             if (expression.Base is PowerExpression)
             {
                 var @base = expression.Base as PowerExpression;
-                return Exponentiate(@base.Base, @base.Exponent * expression.Exponent);
+                return Exponentiation(@base.Base, @base.Exponent * expression.Exponent);
             }
 
             return expression;

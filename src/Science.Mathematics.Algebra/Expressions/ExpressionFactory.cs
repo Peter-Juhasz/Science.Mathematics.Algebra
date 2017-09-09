@@ -25,7 +25,7 @@ namespace Science.Mathematics.Algebra
         {
             return Sum(
                 coefficients
-                    .Select((c, i) => Multiply(c, Exponentiate(variable, coefficients.Count - i)))
+                    .Select((c, i) => Multiply(c, Exponentiation(variable, coefficients.Count - i)))
                     .ToImmutableList()
             );
         }

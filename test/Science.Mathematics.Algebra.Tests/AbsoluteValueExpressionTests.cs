@@ -13,7 +13,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             const int reference = 5;
 
-            var expression = ExpressionFactory.AbsoluteValue(reference);
+            var expression = AbsoluteValue(reference);
             var result = expression.GetConstantValue();
 
             Assert.AreEqual(reference, result);
@@ -24,7 +24,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             const int reference = -5;
 
-            var expression = ExpressionFactory.AbsoluteValue(reference);
+            var expression = AbsoluteValue(reference);
             var result = expression.GetConstantValue();
 
             Assert.AreEqual(5, result);
@@ -47,7 +47,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             const int reference = 3;
 
-            var expression = ExpressionFactory.AbsoluteValue(reference);
+            var expression = AbsoluteValue(reference);
 
             Assert.AreEqual("|3|", expression.ToString());
         }

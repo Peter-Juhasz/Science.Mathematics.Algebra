@@ -15,7 +15,7 @@ namespace Science.Mathematics.Algebra
             {
                 var value = body.Exponent.GetConstantValue(cancellationToken);
                 if (body.Base == expression.RespectTo && value != null && value != -1)
-                    return Exponentiate(body.Base, body.Exponent + 1) / (body.Exponent + 1) + IntegralConstant;
+                    return Exponentiation(body.Base, body.Exponent + 1) / (body.Exponent + 1) + IntegralConstant;
             }
 
             return expression;

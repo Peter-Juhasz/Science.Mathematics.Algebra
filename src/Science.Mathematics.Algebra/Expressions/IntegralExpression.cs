@@ -76,22 +76,22 @@ namespace Science.Mathematics.Algebra
         #region Immutability
         public IntegralExpression WithRespectTo(SymbolExpression newVariable)
         {
-            return Integrate(this.Expression, newVariable, this.From, this.To);
+            return DefiniteIntegral(this.Expression, newVariable, this.From, this.To);
         }
 
         public IntegralExpression WithExpression(AlgebraExpression newExpression)
         {
-            return Integrate(newExpression, this.RespectTo, this.From, this.To);
+            return DefiniteIntegral(newExpression, this.RespectTo, this.From, this.To);
         }
 
         public IntegralExpression WithFrom(AlgebraExpression newExpression)
         {
-            return Integrate(this.Expression, this.RespectTo, newExpression, this.To);
+            return DefiniteIntegral(this.Expression, this.RespectTo, newExpression, this.To);
         }
 
         public IntegralExpression WithTo(AlgebraExpression newExpression)
         {
-            return Integrate(this.Expression, this.RespectTo, this.From, newExpression);
+            return DefiniteIntegral(this.Expression, this.RespectTo, this.From, newExpression);
         }
         #endregion
 
@@ -124,12 +124,12 @@ namespace Science.Mathematics.Algebra
     {
         public static IntegralExpression Integrate(this AlgebraExpression expression, SymbolExpression respectTo)
         {
-            return ExpressionFactory.Integrate(expression, respectTo);
+            return IndefiniteIntegral(expression, respectTo);
         }
 
         public static IntegralExpression Integrate(this AlgebraExpression expression, SymbolExpression respectTo, AlgebraExpression from, AlgebraExpression to)
         {
-            return ExpressionFactory.Integrate(expression, respectTo, from, to);
+            return DefiniteIntegral(expression, respectTo, from, to);
         }
 
 
@@ -143,12 +143,12 @@ namespace Science.Mathematics.Algebra
     {
         public static SymbolExpression IntegralConstant = Symbol("C");
         
-        public static IntegralExpression Integrate(AlgebraExpression expression, SymbolExpression respectTo)
+        public static IntegralExpression IndefiniteIntegral(AlgebraExpression expression, SymbolExpression respectTo)
         {
             return new IntegralExpression(expression, respectTo);
         }
 
-        public static IntegralExpression Integrate(AlgebraExpression expression, SymbolExpression respectTo, AlgebraExpression from, AlgebraExpression to)
+        public static IntegralExpression DefiniteIntegral(AlgebraExpression expression, SymbolExpression respectTo, AlgebraExpression from, AlgebraExpression to)
         {
             return new IntegralExpression(expression, respectTo, from, to);
         }

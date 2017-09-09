@@ -145,12 +145,12 @@ namespace Science.Mathematics.Algebra
         }
         public static ProductExpressionList Divide(AlgebraExpression left, AlgebraExpression right)
         {
-            return Multiply(left, Exponentiate(right, NumberExpression.MinusOne));
+            return Multiply(left, Exponentiation(right, NumberExpression.MinusOne));
         }
 
         public static PowerExpression Reciprocal(AlgebraExpression expression)
         {
-            return Exponentiate(expression, NumberExpression.MinusOne);
+            return Exponentiation(expression, NumberExpression.MinusOne);
         }
 
         public static ProductExpressionList Product(IReadOnlyCollection<AlgebraExpression> terms)

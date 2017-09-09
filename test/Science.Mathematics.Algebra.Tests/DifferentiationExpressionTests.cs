@@ -12,7 +12,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             var x = Symbol("x");
             var expression = x ^ 2;
-            var result = expression.Differentiate(x).Simplify();
+            var result = expression.Differentiation(x).Simplify();
 
             Assert.AreEqual(2 * x, result);
         }
@@ -22,7 +22,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             var x = Symbol("x");
             var expression = e ^ x;
-            var result = expression.Differentiate(x).Simplify();
+            var result = expression.Differentiation(x).Simplify();
 
             Assert.AreEqual(expression, result);
         }
@@ -33,7 +33,7 @@ namespace Science.Mathematics.Algebra.Tests
             var x = Symbol("x");
             var b = Symbol("b");
             var expression = Logarithm(x, b);
-            var result = expression.Differentiate(x).Simplify();
+            var result = expression.Differentiation(x).Simplify();
 
             Assert.AreEqual(Reciprocal(NaturalLogarithm(b) * x), result);
         }
@@ -43,7 +43,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             var x = Symbol("x");
             var expression = NaturalLogarithm(x);
-            var result = expression.Differentiate(x).Simplify();
+            var result = expression.Differentiation(x).Simplify();
             
             Assert.AreEqual(Reciprocal(x), result);
         }
@@ -54,7 +54,7 @@ namespace Science.Mathematics.Algebra.Tests
         {
             var x = Symbol("x");
             var body = (x ^ 2);
-            var expression = body.Differentiate(x);
+            var expression = body.Differentiation(x);
             var limit = expression.ToLimit();
 
             Assert.AreEqual(Limit((((x + limit.RespectTo) ^ 2) - body) / limit.RespectTo, limit.RespectTo, 0), limit);

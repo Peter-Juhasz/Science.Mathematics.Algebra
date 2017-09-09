@@ -14,7 +14,7 @@ namespace Science.Mathematics.Algebra
             if (expression.Expression is ProductExpressionList product)
             {
                 var denominator = product.GetDenominator();
-                if (product.GetNumerator().IsEquivalentTo(denominator.Differentiate(expression.RespectTo)))
+                if (product.GetNumerator().IsEquivalentTo(denominator.Differentiation(expression.RespectTo)))
                     return NaturalLogarithm(AbsoluteValue(denominator)) + IntegralConstant;
             }
 

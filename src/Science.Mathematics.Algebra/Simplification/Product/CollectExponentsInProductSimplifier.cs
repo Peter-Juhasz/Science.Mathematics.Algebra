@@ -23,7 +23,7 @@ namespace Science.Mathematics.Algebra
                 return expression.WithTerms(
                     results
                         .Select(g =>
-                            ExpressionFactory.Exponentiate(g.Key, ExpressionFactory.Sum(g.Select(p => p.Exponent).ToImmutableList()))
+                            ExpressionFactory.Exponentiation(g.Key, ExpressionFactory.Sum(g.Select(p => p.Exponent).ToImmutableList()))
                         )
                         .Select(p => exponentSimplifier.Simplify(p, cancellationToken))
                         .ToImmutableList()
