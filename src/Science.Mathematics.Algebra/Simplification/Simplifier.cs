@@ -118,7 +118,7 @@ namespace Science.Mathematics.Algebra
             var p1 = Symbol(pattern.Parameters[0].Name);
             var p2 = Symbol(pattern.Parameters[1].Name);
             var r1 = Symbol(result.Parameters[0].Name);
-            var r2 = Symbol(result.Parameters[2].Name);
+            var r2 = Symbol(result.Parameters[1].Name);
             Rules.Add(new ExpressionTransformationRule(pattern.Compile()(p1, p2), result.Compile()(r1, r2)));
         }
 
