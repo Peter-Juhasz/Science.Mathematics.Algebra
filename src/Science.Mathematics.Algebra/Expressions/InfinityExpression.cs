@@ -3,69 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace Science.Mathematics.Algebra
+namespace Science.Mathematics.Algebra;
+
+/// <summary>
+/// Represents an absolute value expression.
+/// </summary>
+public class InfinityExpression : AlgebraExpression, IEquatable<InfinityExpression>
 {
-    /// <summary>
-    /// Represents an absolute value expression.
-    /// </summary>
-    public class InfinityExpression : AlgebraExpression, IEquatable<InfinityExpression>
-    {
-        public InfinityExpression()
-        {
-        }
-        
-        
-        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
-        }
+	public InfinityExpression()
+	{
+	}
 
 
-        public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement)
-        {
-            return this;
-        }
-
-        public override IEnumerable<AlgebraExpression> Children()
-        {
-            yield break;
-        }
+	public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken)) => null;
 
 
-        #region Immutability
-        public AbsoluteValueExpression WithExpression(AlgebraExpression newExpression)
-        {
-            return ExpressionFactory.AbsoluteValue(newExpression);
-        }
-        #endregion
+	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this;
+
+	public override IEnumerable<AlgebraExpression> Children()
+	{
+		yield break;
+	}
 
 
-        public override string ToString()
-        {
-            return $"∞";
-        }
+	#region Immutability
+	public AbsoluteValueExpression WithExpression(AlgebraExpression newExpression) => ExpressionFactory.AbsoluteValue(newExpression);
+	#endregion
 
-        public bool Equals(InfinityExpression other)
-        {
-            return other != null;
-        }
 
-        public override int GetHashCode()
-        {
-            return Int32.MaxValue;
-        }
+	public override string ToString() => $"∞";
 
-        public override bool Equals(object obj)
-        {
-            return obj is InfinityExpression;
-        }
-    }
-    
-    public static partial class ExpressionFactory
-    {
-        public static InfinityExpression Infinity()
-        {
-            return new InfinityExpression();
-        }
-    }
+	public bool Equals(InfinityExpression other) => other != null;
+
+	public override int GetHashCode() => Int32.MaxValue;
+
+	public override bool Equals(object obj) => obj is InfinityExpression;
+}
+
+public static partial class ExpressionFactory
+{
+	public static InfinityExpression Infinity() => new InfinityExpression();
 }

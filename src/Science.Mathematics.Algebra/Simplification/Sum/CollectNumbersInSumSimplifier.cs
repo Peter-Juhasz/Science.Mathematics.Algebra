@@ -2,36 +2,35 @@
 using System.Linq;
 using System.Threading;
 
-namespace Science.Mathematics.Algebra
+namespace Science.Mathematics.Algebra;
+
+using static ExpressionFactory;
+
+/// <summary>
+/// Collects constants in a sum expression.
+/// </summary>
+internal sealed class CollectNumbersInSumSimplifier : ISimplifier<SumExpressionList>
 {
-    using static ExpressionFactory;
+	public AlgebraExpression Simplify(SumExpressionList expression, CancellationToken cancellationToken)
+	{
+		// collect constants
+		var constants = expression.Terms.ToDictionary(e => e, e => e.GetConstantValue());
 
-    /// <summary>
-    /// Collects constants in a sum expression.
-    /// </summary>
-    internal sealed class CollectNumbersInSumSimplifier : ISimplifier<SumExpressionList>
-    {
-        public AlgebraExpression Simplify(SumExpressionList expression, CancellationToken cancellationToken)
-        {
-            // collect constants
-            var constants = expression.Terms.ToDictionary(e => e, e => e.GetConstantValue());
+		// all constant: 1 + 2 + 3  =>  6
+		if (constants.Values.All(v => v != null))
+			return Number(constants.Values.Cast<double>().Sum(v => v));
 
-            // all constant: 1 + 2 + 3  =>  6
-            if (constants.Values.All(v => v != null))
-                return Number(constants.Values.Cast<double>().Sum(v => v));
-            
-            // collect constants: 1 + ? + 3  =>  (1 + 3) + ?  =>  4 + ?
-            double sum = constants.Values.Where(v => v != null).Cast<double>().Sum(v => v);
-            var newTerms = expression.Terms.RemoveAll(e => constants[e].HasValue);
+		// collect constants: 1 + ? + 3  =>  (1 + 3) + ?  =>  4 + ?
+		double sum = constants.Values.Where(v => v != null).Cast<double>().Sum(v => v);
+		var newTerms = expression.Terms.RemoveAll(e => constants[e].HasValue);
 
-            // do not add if zero
-            if (sum != 0)
-                newTerms = newTerms.Add(Number(sum));
+		// do not add if zero
+		if (sum != 0)
+			newTerms = newTerms.Add(Number(sum));
 
-            if (newTerms.Count == 1)
-                return newTerms.Single();
-            
-            return expression.WithTerms(newTerms);
-        }
-    }
+		if (newTerms.Count == 1)
+			return newTerms.Single();
+
+		return expression.WithTerms(newTerms);
+	}
 }

@@ -1,24 +1,23 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Science.Mathematics.Algebra.Tests
+namespace Science.Mathematics.Algebra.Tests;
+
+[TestClass]
+public class SineExpressionTests
 {
-    [TestClass]
-    public class SineExpressionTests
-    {
-        [TestMethod]
-        public void Sine_Factory()
-        {
-            var expression = ExpressionFactory.Sine(0);
-            Assert.IsInstanceOfType(expression, typeof(SineFunctionExpression));
-        }
+	[TestMethod]
+	public void Sine_Factory()
+	{
+		var expression = ExpressionFactory.Sine(0);
+		Assert.IsInstanceOfType(expression, typeof(SineFunctionExpression));
+	}
 
-        [TestMethod]
-        public void Sine_Differentiate_Variable()
-        {
-            var expression = ExpressionFactory.Sine("x");
-            var result = expression.Differentiate("x").Simplify();
+	[TestMethod]
+	public void Sine_Differentiate_Variable()
+	{
+		var expression = ExpressionFactory.Sine("x");
+		var result = expression.Differentiate("x").Simplify();
 
-            Assert.AreEqual("cos(x)", result.ToString());
-        }
-    }
+		Assert.AreEqual("cos(x)", result.ToString());
+	}
 }

@@ -2,27 +2,26 @@
 using System.Linq;
 using System.Threading;
 
-namespace Science.Mathematics.Algebra
+namespace Science.Mathematics.Algebra;
+
+using static ExpressionFactory;
+
+/// <summary>
+/// Simplifies expressions like d/dx (f(x) + g(x) + ...) to d/dx f(x) + d/dx g(x) + ....
+/// </summary>
+internal sealed class SumDifferentiationSimplifier : ISimplifier<DifferentiationExpression>
 {
-    using static ExpressionFactory;
+	public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken)
+	{
+		if (expression.Expression is SumExpressionList sum)
+		{
+			return Sum(
+				sum.Terms
+					.Select(t => t.Differentiate(expression.RespectTo))
+					.ToImmutableList()
+			);
+		}
 
-    /// <summary>
-    /// Simplifies expressions like d/dx (f(x) + g(x) + ...) to d/dx f(x) + d/dx g(x) + ....
-    /// </summary>
-    internal sealed class SumDifferentiationSimplifier : ISimplifier<DifferentiationExpression>
-    {
-        public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken)
-        {
-            if (expression.Expression is SumExpressionList sum)
-            {
-                return Sum(
-                    sum.Terms
-                        .Select(t => t.Differentiate(expression.RespectTo))
-                        .ToImmutableList()
-                );
-            }
-
-            return expression;
-        }
-    }
+		return expression;
+	}
 }

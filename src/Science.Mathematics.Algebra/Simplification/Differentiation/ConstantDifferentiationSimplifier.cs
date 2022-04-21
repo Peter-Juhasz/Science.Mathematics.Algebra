@@ -1,20 +1,19 @@
 ﻿using System.Threading;
 
-namespace Science.Mathematics.Algebra
+namespace Science.Mathematics.Algebra;
+
+using static ExpressionFactory;
+
+/// <summary>
+/// Simplifies expressions like d/dx c to 0.
+/// </summary>
+internal sealed class ConstantDifferentiationSimplifier : ISimplifier<DifferentiationExpression>
 {
-    using static ExpressionFactory;
+	public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken)
+	{
+		if (expression.Expression.IsConstant(expression))
+			return Zero;
 
-    /// <summary>
-    /// Simplifies expressions like d/dx c to 0.
-    /// </summary>
-    internal sealed class ConstantDifferentiationSimplifier : ISimplifier<DifferentiationExpression>
-    {
-        public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken)
-        {
-            if (expression.Expression.IsConstant(expression))
-                return Zero;
-
-            return expression;
-        }
-    }
+		return expression;
+	}
 }

@@ -1,26 +1,25 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Science.Mathematics.Algebra.Tests
+namespace Science.Mathematics.Algebra.Tests;
+
+using static ExpressionFactory;
+
+[TestClass]
+public class InfinityExpressionTests
 {
-    using static ExpressionFactory;
+	[TestMethod]
+	public void Infinity_ToString()
+	{
+		var expression = Infinity();
 
-    [TestClass]
-    public class InfinityExpressionTests
-    {
-        [TestMethod]
-        public void Infinity_ToString()
-        {
-            var expression = Infinity();
+		Assert.AreEqual("∞", expression.ToString());
+	}
 
-            Assert.AreEqual("∞", expression.ToString());
-        }
+	[TestMethod]
+	public void Infinity_IsInfinity()
+	{
+		var expression = Infinity();
 
-        [TestMethod]
-        public void Infinity_IsInfinity()
-        {
-            var expression = Infinity();
-
-            Assert.IsTrue(expression.IsInfinity());
-        }
-    }
+		Assert.IsTrue(expression.IsInfinity());
+	}
 }

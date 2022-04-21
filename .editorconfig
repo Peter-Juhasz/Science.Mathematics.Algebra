@@ -1,0 +1,10 @@
+﻿[*.cs]
+end_of_line = crlf
+indent_style = tab
+indent_size = 4
+
+csharp_style_namespace_declarations = file_scoped:warning
+
+csharp_style_expression_bodied_methods = true:warning
+csharp_style_expression_bodied_properties = true:warning
+csharp_style_expression_bodied_accessors = true:warning

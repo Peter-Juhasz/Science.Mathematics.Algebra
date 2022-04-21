@@ -2,18 +2,14 @@
 using System.Linq;
 using System.Threading;
 
-namespace Science.Mathematics.Algebra
+namespace Science.Mathematics.Algebra;
+
+/// <summary>
+/// Simplifies expressions.
+/// </summary>
+internal sealed class GenericProductSimplifier : ISimplifier<ProductExpressionList>
 {
-    /// <summary>
-    /// Simplifies expressions.
-    /// </summary>
-    internal sealed class GenericProductSimplifier : ISimplifier<ProductExpressionList>
-    {
-        public AlgebraExpression Simplify(ProductExpressionList expression, CancellationToken cancellationToken)
-        {
-            return expression
-                .WithTerms(expression.Terms.Select(t => t.Simplify()).ToImmutableList())
-            ;
-        }
-    }
+	public AlgebraExpression Simplify(ProductExpressionList expression, CancellationToken cancellationToken) => expression
+			.WithTerms(expression.Terms.Select(t => t.Simplify()).ToImmutableList())
+		;
 }

@@ -1,51 +1,50 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Science.Mathematics.Algebra.Tests
+namespace Science.Mathematics.Algebra.Tests;
+
+[TestClass]
+public class NumberExpressionTests
 {
-    [TestClass]
-    public class NumberExpressionTests
-    {
-        [TestMethod]
-        public void Number_ConstantValue()
-        {
-            const int reference = 3;
+	[TestMethod]
+	public void Number_ConstantValue()
+	{
+		const int reference = 3;
 
-            var expression = ExpressionFactory.Constant(reference);
-            
-            Assert.AreEqual(reference, expression.Value);
-            Assert.AreEqual(reference, expression.GetConstantValue());
-        }
+		var expression = ExpressionFactory.Constant(reference);
 
-        [TestMethod]
-        public void Number_Substitute()
-        {
-            const int reference = 5;
+		Assert.AreEqual(reference, expression.Value);
+		Assert.AreEqual(reference, expression.GetConstantValue());
+	}
 
-            var constant = ExpressionFactory.Constant(reference);
-            var result = constant.Substitute("x", 1);
+	[TestMethod]
+	public void Number_Substitute()
+	{
+		const int reference = 5;
 
-            Assert.AreEqual(constant, result);
-        }
+		var constant = ExpressionFactory.Constant(reference);
+		var result = constant.Substitute("x", 1);
 
-        [TestMethod]
-        public void Number_Equals()
-        {
-            const int reference = 5;
+		Assert.AreEqual(constant, result);
+	}
 
-            var expression1 = ExpressionFactory.Constant(reference);
-            var expression2 = ExpressionFactory.Constant(reference);
+	[TestMethod]
+	public void Number_Equals()
+	{
+		const int reference = 5;
 
-            Assert.AreEqual(expression1, expression2);
-        }
+		var expression1 = ExpressionFactory.Constant(reference);
+		var expression2 = ExpressionFactory.Constant(reference);
 
-        [TestMethod]
-        public void Number_ToString()
-        {
-            const int reference = 3;
+		Assert.AreEqual(expression1, expression2);
+	}
 
-            var expression = ExpressionFactory.Constant(reference);
+	[TestMethod]
+	public void Number_ToString()
+	{
+		const int reference = 3;
 
-            Assert.AreEqual("3", expression.ToString());
-        }
-    }
+		var expression = ExpressionFactory.Constant(reference);
+
+		Assert.AreEqual("3", expression.ToString());
+	}
 }

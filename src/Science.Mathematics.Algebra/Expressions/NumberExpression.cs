@@ -1,110 +1,85 @@
 ﻿using System;
 using System.Threading;
 
-namespace Science.Mathematics.Algebra
+namespace Science.Mathematics.Algebra;
+
+/// <summary>
+/// Represents a constant expression.
+/// </summary>
+public class NumberExpression : AtomicExpression,
+	IEquatable<NumberExpression>,
+	IComparable<NumberExpression>
 {
-    /// <summary>
-    /// Represents a constant expression.
-    /// </summary>
-    public class NumberExpression : AtomicExpression,
-        IEquatable<NumberExpression>,
-        IComparable<NumberExpression>
-    {
-        public NumberExpression(int value)
-        {
-            this.Value = value;
-        }
-        public NumberExpression(double value)
-        {
-            this.Value = value;
-        }
+	public NumberExpression(int value)
+	{
+		this.Value = value;
+	}
+	public NumberExpression(double value)
+	{
+		this.Value = value;
+	}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly NumberExpression Zero = 0;
+	/// <summary>
+	/// 
+	/// </summary>
+	public static readonly NumberExpression Zero = 0;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly NumberExpression One = 1;
+	/// <summary>
+	/// 
+	/// </summary>
+	public static readonly NumberExpression One = 1;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly NumberExpression MinusOne = -1;
+	/// <summary>
+	/// 
+	/// </summary>
+	public static readonly NumberExpression MinusOne = -1;
 
 
-        /// <summary>
-        /// Gets the value of the expression.
-        /// </summary>
-        public double Value { get; private set; }
+	/// <summary>
+	/// Gets the value of the expression.
+	/// </summary>
+	public double Value { get; private set; }
 
 
-        public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return this.Value;
-        }
+	public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken)) => this.Value;
 
 
-        public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement)
-        {
-            return this;
-        }
+	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this;
 
 
-        #region Conversions
-        public static implicit operator NumberExpression(double value)
-        {
-            return ExpressionFactory.Number(value);
-        }
-        #endregion
+	#region Conversions
+	public static implicit operator NumberExpression(double value)
+	{
+		return ExpressionFactory.Number(value);
+	}
+	#endregion
 
 
-        public override string ToString()
-        {
-            return this.Value.ToString();
-        }
+	public override string ToString() => this.Value.ToString();
 
-        public bool Equals(NumberExpression other)
-        {
-            if (Object.ReferenceEquals(other, null)) return false;
+	public bool Equals(NumberExpression other)
+	{
+		if (Object.ReferenceEquals(other, null)) return false;
 
-            return this.Value == other.Value;
-        }
+		return this.Value == other.Value;
+	}
 
-        public override int GetHashCode()
-        {
-            return this.Value.GetHashCode();
-        }
+	public override int GetHashCode() => this.Value.GetHashCode();
 
-        public override bool Equals(object obj)
-        {
-            return this.Equals(obj as NumberExpression);
-        }
+	public override bool Equals(object obj) => this.Equals(obj as NumberExpression);
 
-        public int CompareTo(NumberExpression other)
-        {
-            return this.Value.CompareTo(other.Value);
-        }
-    }
+	public int CompareTo(NumberExpression other) => this.Value.CompareTo(other.Value);
+}
 
-    public static partial class ExpressionFactory
-    {
-        public static NumberExpression Zero => NumberExpression.Zero;
+public static partial class ExpressionFactory
+{
+	public static NumberExpression Zero => NumberExpression.Zero;
 
-        public static NumberExpression One => NumberExpression.One;
+	public static NumberExpression One => NumberExpression.One;
 
-        public static NumberExpression MinusOne => NumberExpression.MinusOne;
+	public static NumberExpression MinusOne => NumberExpression.MinusOne;
 
 
-        public static NumberExpression Constant(int value)
-        {
-            return new NumberExpression(value);
-        }
-        public static NumberExpression Number(double value)
-        {
-            return new NumberExpression(value);
-        }
-    }
+	public static NumberExpression Constant(int value) => new NumberExpression(value);
+	public static NumberExpression Number(double value) => new NumberExpression(value);
 }
