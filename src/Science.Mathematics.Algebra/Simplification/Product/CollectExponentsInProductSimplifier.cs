@@ -20,14 +20,15 @@ internal sealed class CollectExponentsInProductSimplifier : ISimplifier<ProductE
 
 		if (results.Count != expression.Terms.Count)
 		{
-			return expression.WithTerms(
-				results
+			return expression with
+			{
+				Terms = results
 					.Select(g =>
 						ExpressionFactory.Exponentiate(g.Key, ExpressionFactory.Sum(g.Select(p => p.Exponent).ToImmutableList()))
 					)
 					.Select(p => exponentSimplifier.Simplify(p, cancellationToken))
 					.ToImmutableList()
-			);
+			};
 		}
 
 		return expression;

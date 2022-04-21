@@ -6,19 +6,10 @@ namespace Science.Mathematics.Algebra;
 /// <summary>
 /// Represents a constant expression.
 /// </summary>
-public class NumberExpression : AtomicExpression,
+public record class NumberExpression(decimal Value) : AtomicExpression,
 	IEquatable<NumberExpression>,
 	IComparable<NumberExpression>
 {
-	public NumberExpression(int value)
-	{
-		this.Value = value;
-	}
-	public NumberExpression(double value)
-	{
-		this.Value = value;
-	}
-
 	/// <summary>
 	/// 
 	/// </summary>
@@ -35,40 +26,23 @@ public class NumberExpression : AtomicExpression,
 	public static readonly NumberExpression MinusOne = -1;
 
 
-	/// <summary>
-	/// Gets the value of the expression.
-	/// </summary>
-	public double Value { get; private set; }
-
-
-	public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken)) => this.Value;
+	public override decimal? GetConstantValue(CancellationToken cancellationToken = default) => Value;
 
 
 	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this;
 
 
 	#region Conversions
-	public static implicit operator NumberExpression(double value)
-	{
-		return ExpressionFactory.Number(value);
-	}
+	public static implicit operator NumberExpression(double value) => ExpressionFactory.Number(value);
+	public static implicit operator NumberExpression(int value) => ExpressionFactory.Number(value);
 	#endregion
 
 
-	public override string ToString() => this.Value.ToString();
+	public override string ToString() => Value.ToString();
 
-	public bool Equals(NumberExpression other)
-	{
-		if (Object.ReferenceEquals(other, null)) return false;
+	public override int GetHashCode() => Value.GetHashCode();
 
-		return this.Value == other.Value;
-	}
-
-	public override int GetHashCode() => this.Value.GetHashCode();
-
-	public override bool Equals(object obj) => this.Equals(obj as NumberExpression);
-
-	public int CompareTo(NumberExpression other) => this.Value.CompareTo(other.Value);
+	public int CompareTo(NumberExpression other) => Value.CompareTo(other.Value);
 }
 
 public static partial class ExpressionFactory
@@ -80,6 +54,7 @@ public static partial class ExpressionFactory
 	public static NumberExpression MinusOne => NumberExpression.MinusOne;
 
 
-	public static NumberExpression Constant(int value) => new NumberExpression(value);
-	public static NumberExpression Number(double value) => new NumberExpression(value);
+	public static NumberExpression Number(int value) => new(value);
+	public static NumberExpression Number(decimal value) => new(value);
+	public static NumberExpression Number(double value) => Number((decimal)value);
 }

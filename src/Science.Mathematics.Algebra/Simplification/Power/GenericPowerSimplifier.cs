@@ -7,8 +7,9 @@ namespace Science.Mathematics.Algebra;
 /// </summary>
 internal sealed class GenericPowerSimplifier : ISimplifier<PowerExpression>
 {
-	public AlgebraExpression Simplify(PowerExpression expression, CancellationToken cancellationToken) => expression
-			.WithBase(expression.Base.Simplify())
-			.WithExponent(expression.Exponent.Simplify())
-		;
+	public AlgebraExpression Simplify(PowerExpression expression, CancellationToken cancellationToken) => expression with
+	{
+		Base = expression.Base.Simplify(cancellationToken),
+		Exponent = expression.Exponent.Simplify(cancellationToken)
+	};
 }

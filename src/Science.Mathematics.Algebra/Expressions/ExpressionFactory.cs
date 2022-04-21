@@ -25,9 +25,9 @@ public static partial class ExpressionFactory
 
 
 	public static SumExpressionList Polynomial(SymbolExpression variable, IReadOnlyList<AlgebraExpression> coefficients) => Sum(
-			coefficients
-				.Select((c, i) => Multiply(c, Exponentiate(variable, coefficients.Count - i)))
-				.ToImmutableList()
-		);
+		coefficients
+			.Select((c, i) => Multiply(c, Exponentiate(variable, coefficients.Count - i)))
+			.ToImmutableList()
+	);
 	public static SumExpressionList Polynomial(SymbolExpression variable, params AlgebraExpression[] coefficients) => Polynomial(variable, coefficients as IReadOnlyList<AlgebraExpression>);
 }

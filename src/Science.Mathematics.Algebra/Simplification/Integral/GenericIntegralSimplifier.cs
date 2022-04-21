@@ -7,7 +7,6 @@ namespace Science.Mathematics.Algebra;
 /// </summary>
 internal sealed class GenericIntegralSimplifier : ISimplifier<IntegralExpression>
 {
-	public AlgebraExpression Simplify(IntegralExpression expression, CancellationToken cancellationToken) => expression
-			.WithExpression(expression.Expression.Simplify())
-		;
+	public AlgebraExpression Simplify(IntegralExpression expression, CancellationToken cancellationToken) =>
+		expression with { Expression = expression.Expression.Simplify(cancellationToken) };
 }

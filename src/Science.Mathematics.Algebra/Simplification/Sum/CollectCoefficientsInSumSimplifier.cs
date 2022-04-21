@@ -54,7 +54,7 @@ internal sealed class CollectCoefficientsInSumSimplifier : ISimplifier<SumExpres
 		if (newTerms.Count == 1)
 			return newTerms.Single();
 
-		return expression.WithTerms(newTerms);
+		return expression with { Terms = newTerms };
 	}
 
 

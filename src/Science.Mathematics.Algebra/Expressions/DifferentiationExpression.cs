@@ -11,78 +11,35 @@ using static ExpressionFactory;
 /// <summary>
 /// Represents a differentiation expression.
 /// </summary>
-public class DifferentiationExpression : AlgebraExpression, IEquatable<DifferentiationExpression>
+public record class DifferentiationExpression(AlgebraExpression Expression, SymbolExpression RespectTo) : AlgebraExpression, IEquatable<DifferentiationExpression>
 {
-	public DifferentiationExpression(AlgebraExpression expression, SymbolExpression respectTo)
+	public override decimal? GetConstantValue(CancellationToken cancellationToken = default) => Expression.GetConstantValue(cancellationToken) switch
 	{
-		if (expression == null)
-			throw new ArgumentNullException(nameof(expression));
+		decimal => 0,
+		_ => null
+	};
 
-		if (respectTo == null)
-			throw new ArgumentNullException(nameof(respectTo));
-
-		this.Expression = expression;
-		this.RespectTo = respectTo;
-	}
-
-
-	/// <summary>
-	/// Gets the expression to differentiate.
-	/// </summary>
-	public AlgebraExpression Expression { get; private set; }
-
-	/// <summary>
-	/// 
-	/// </summary>
-	public SymbolExpression RespectTo { get; private set; }
-
-
-	public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
+	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this with
 	{
-		double? value = this.Expression.GetConstantValue(cancellationToken);
-
-		if (value != null)
-			return 0;
-
-		return null;
-	}
-
-	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this.WithExpression(this.Expression.Substitute(variable, replacement));
+		Expression = Expression.Substitute(variable, replacement)
+	};
 
 	public override IEnumerable<AlgebraExpression> Children()
 	{
-		yield return this.Expression;
-		yield return this.RespectTo;
+		yield return Expression;
+		yield return RespectTo;
 	}
 
 
 	public LimitExpression ToLimit()
 	{
 		var delta = Symbol("h");
-		return Limit((this.Expression.Substitute(this.RespectTo, this.RespectTo + delta) - this.Expression) / delta, delta, 0);
+		return Limit((Expression.Substitute(RespectTo, RespectTo + delta) - Expression) / delta, delta, 0);
 	}
-
-
-	#region Immutability
-	public DifferentiationExpression WithRespectTo(SymbolExpression newVariable) => Differentiate(this.Expression, newVariable);
-
-	public DifferentiationExpression WithExpression(AlgebraExpression newExpression) => Differentiate(newExpression, this.RespectTo);
-	#endregion
-
 
 	public override string ToString() => $"d/d{RespectTo} {Expression}";
 
-	public bool Equals(DifferentiationExpression other)
-	{
-		if (Object.ReferenceEquals(other, null)) return false;
-
-		return this.Expression.Equals(other.Expression)
-			&& this.RespectTo.Equals(other.RespectTo);
-	}
-
-	public override int GetHashCode() => this.Expression.GetHashCode();
-
-	public override bool Equals(object obj) => this.Equals(obj as DifferentiationExpression);
+	public override int GetHashCode() => Expression.GetHashCode();
 }
 
 public static partial class AlgebraExpressionExtensions

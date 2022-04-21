@@ -14,7 +14,7 @@ internal sealed class ConstantSimplifier : ISimplifier<AlgebraExpression>
 		if (expression is NumberExpression)
 			return expression;
 
-		double? constantValue = expression.GetConstantValue(cancellationToken);
+		var constantValue = expression.GetConstantValue(cancellationToken);
 
 		if (constantValue != null)
 			return Number(constantValue.Value);

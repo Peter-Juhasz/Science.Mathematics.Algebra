@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>Science.Mathematics.Algebra.Tests</AssemblyName>
-    <PackageId>Science.Mathematics.Algebra.Tests</PackageId>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<AssemblyName>Science.Mathematics.Algebra.Tests</AssemblyName>
+		<PackageId>Science.Mathematics.Algebra.Tests</PackageId>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Science.Mathematics.Algebra\Science.Mathematics.Algebra.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Science.Mathematics.Algebra\Science.Mathematics.Algebra.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
-    <PackageReference Include="MSTest.TestAdapter" Version="*" />
-    <PackageReference Include="MSTest.TestFramework" Version="*" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
+		<PackageReference Include="MSTest.TestAdapter" Version="*" />
+		<PackageReference Include="MSTest.TestFramework" Version="*" />
+	</ItemGroup>
 
 </Project>

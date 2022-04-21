@@ -9,7 +9,8 @@ namespace Science.Mathematics.Algebra;
 /// </summary>
 internal sealed class GenericProductSimplifier : ISimplifier<ProductExpressionList>
 {
-	public AlgebraExpression Simplify(ProductExpressionList expression, CancellationToken cancellationToken) => expression
-			.WithTerms(expression.Terms.Select(t => t.Simplify()).ToImmutableList())
-		;
+	public AlgebraExpression Simplify(ProductExpressionList expression, CancellationToken cancellationToken) => expression with
+	{
+		Terms = expression.Terms.Select(t => t.Simplify(cancellationToken)).ToImmutableList()
+	};
 }

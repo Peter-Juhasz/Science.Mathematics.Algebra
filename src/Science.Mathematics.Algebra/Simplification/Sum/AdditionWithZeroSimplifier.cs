@@ -16,7 +16,7 @@ internal sealed class AdditionWithZeroSimplifier : ISimplifier<SumExpressionList
 			.ToImmutableList();
 
 		if (otherTerms.Count != expression.Terms.Count)
-			return expression.WithTerms(otherTerms);
+			return expression with { Terms = otherTerms };
 
 		return expression;
 	}

@@ -14,7 +14,7 @@ public class PowerExpressionTests
 		const int reference = 3;
 
 		var expression = Exponentiate(1, 2);
-		var result = expression.WithBase(reference);
+		var result = expression with { Base = reference };
 
 		Assert.AreEqual(reference, result.Base.GetConstantValue());
 	}
@@ -25,7 +25,7 @@ public class PowerExpressionTests
 		const int reference = 3;
 
 		var expression = Exponentiate(1, 2);
-		var result = expression.WithExponent(reference);
+		var result = expression with { Exponent = reference };
 
 		Assert.AreEqual(reference, result.Exponent.GetConstantValue());
 	}

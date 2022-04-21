@@ -7,7 +7,8 @@ namespace Science.Mathematics.Algebra;
 /// </summary>
 internal sealed class GenericDifferentiationSimplifier : ISimplifier<DifferentiationExpression>
 {
-	public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken) => expression
-			.WithExpression(expression.Expression.Simplify())
-		;
+	public AlgebraExpression Simplify(DifferentiationExpression expression, CancellationToken cancellationToken) => expression with
+	{
+		Expression = expression.Expression.Simplify(cancellationToken)
+	};
 }

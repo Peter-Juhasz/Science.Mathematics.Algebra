@@ -22,7 +22,7 @@ public class SymbolExpressionTests
 	{
 		const string name = "x";
 		const int referenceValue = 1;
-		var reference = Constant(referenceValue);
+		var reference = Number(referenceValue);
 
 		var variable = Symbol(name);
 		var result = variable.Substitute("x", referenceValue);

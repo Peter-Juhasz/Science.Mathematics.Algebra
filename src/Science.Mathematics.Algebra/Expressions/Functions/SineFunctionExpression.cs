@@ -6,7 +6,7 @@ namespace Science.Mathematics.Algebra;
 /// Represents the sine function.
 /// </summary>
 [FunctionName(PrimaryName)]
-public class SineFunctionExpression : FunctionInvocationExpression
+public record class SineFunctionExpression : FunctionInvocationExpression
 {
 	public SineFunctionExpression(AlgebraExpression argument)
 		: base(PrimaryName, ImmutableList<AlgebraExpression>.Empty.Add(argument))
@@ -14,7 +14,7 @@ public class SineFunctionExpression : FunctionInvocationExpression
 
 	public const string PrimaryName = "sin";
 
-	public AlgebraExpression Argument => this.Arguments[0];
+	public AlgebraExpression Argument => Arguments[0];
 }
 
 public static partial class WellKnownFunctionNames

@@ -10,7 +10,7 @@ public class NumberExpressionTests
 	{
 		const int reference = 3;
 
-		var expression = ExpressionFactory.Constant(reference);
+		var expression = ExpressionFactory.Number(reference);
 
 		Assert.AreEqual(reference, expression.Value);
 		Assert.AreEqual(reference, expression.GetConstantValue());
@@ -21,7 +21,7 @@ public class NumberExpressionTests
 	{
 		const int reference = 5;
 
-		var constant = ExpressionFactory.Constant(reference);
+		var constant = ExpressionFactory.Number(reference);
 		var result = constant.Substitute("x", 1);
 
 		Assert.AreEqual(constant, result);
@@ -32,8 +32,8 @@ public class NumberExpressionTests
 	{
 		const int reference = 5;
 
-		var expression1 = ExpressionFactory.Constant(reference);
-		var expression2 = ExpressionFactory.Constant(reference);
+		var expression1 = ExpressionFactory.Number(reference);
+		var expression2 = ExpressionFactory.Number(reference);
 
 		Assert.AreEqual(expression1, expression2);
 	}
@@ -43,7 +43,7 @@ public class NumberExpressionTests
 	{
 		const int reference = 3;
 
-		var expression = ExpressionFactory.Constant(reference);
+		var expression = ExpressionFactory.Number(reference);
 
 		Assert.AreEqual("3", expression.ToString());
 	}

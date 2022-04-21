@@ -9,16 +9,16 @@ namespace Science.Mathematics.Algebra;
 /// <summary>
 /// Represents the sum of multiple terms.
 /// </summary>
-public class SumExpressionList : ExpressionList, IEquatable<SumExpressionList>
+public record class SumExpressionList : ExpressionList, IEquatable<SumExpressionList>
 {
-	public SumExpressionList(IReadOnlyCollection<AlgebraExpression> terms)
-		: base(terms)
-	{ }
-
-
-	public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
+	public SumExpressionList(IImmutableList<AlgebraExpression> Terms)
+		: base(Terms)
 	{
-		var values = this.Terms.Select(t => t.GetConstantValue()).Memoize();
+	}
+
+	public override decimal? GetConstantValue(CancellationToken cancellationToken = default)
+	{
+		var values = Terms.Select(t => t.GetConstantValue()).Memoize();
 
 		if (values.Contains(null))
 			return null;
@@ -27,54 +27,29 @@ public class SumExpressionList : ExpressionList, IEquatable<SumExpressionList>
 	}
 
 
-	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this.WithTerms(
-			this.Terms
-				.Select(t => t == variable ? replacement : variable)
-				.Select(t => t.Substitute(variable, replacement))
-				.ToImmutableList()
-		);
-
-
-	#region Immutability
-	public SumExpressionList Add(AlgebraExpression expression) => expression is SumExpressionList
-			? ExpressionFactory.Sum(this.Terms.Concat((expression as SumExpressionList).Terms).ToImmutableList())
-			: ExpressionFactory.Add(this, expression)
-		;
-
-	public SumExpressionList Subtract(AlgebraExpression expression) => expression is SumExpressionList
-			? ExpressionFactory.Sum(this.Terms.Concat((expression as SumExpressionList).Terms.Select(ExpressionFactory.Negate)).ToImmutableList())
-			: ExpressionFactory.Subtract(this, expression)
-		;
-
-	public SumExpressionList WithTerms(IImmutableList<AlgebraExpression> newTerms) => ExpressionFactory.Sum(newTerms);
-	#endregion
-
+	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this with
+	{
+		Terms = Terms
+			.Select(t => t == variable ? replacement : variable)
+			.Select(t => t.Substitute(variable, replacement))
+			.ToImmutableList()
+	};
 
 	internal AlgebraExpression Normalize()
 	{
-		if (this.Terms.Count == 1)
-			return this.Terms.Single();
+		if (Terms.Count == 1)
+			return Terms.Single();
 
 		return this;
 	}
 
+	public virtual bool Equals(SumExpressionList? other) => other != null && Terms.Zip(other.Terms, (x, y) => x.Equals(y)).All(i => i);
 
-	public bool Equals(SumExpressionList other)
-	{
-		if (Object.ReferenceEquals(other, null)) return false;
+	public override int GetHashCode() => Terms.Select(o => o.GetHashCode()).Aggregate((x, y) => x ^ y);
 
-		if (this.Terms.Count != other.Terms.Count)
-			return false;
-
-		return this.Terms.Zip(other.Terms, (x, y) => x.Equals(y)).All(b => b);
-	}
-	public override bool Equals(object obj) => this.Equals(obj as SumExpressionList);
-
-	public override int GetHashCode() => this.Terms.Select(o => o.GetHashCode()).Aggregate((x, y) => x ^ y);
-
-	public override string ToString() => String.Join(" + ", this.Terms
-			.Select(t => NeedsParenthesis(t) ? $"({t})" : t.ToString())
-		);
+	public override string ToString() => String.Join(" + ", Terms
+		.Select(t => NeedsParenthesis(t) ? $"({t})" : t.ToString())
+	);
 
 	private static bool NeedsParenthesis(AlgebraExpression expression) => expression is SumExpressionList;
 }

@@ -18,10 +18,10 @@ internal sealed class CollectNumbersInSumSimplifier : ISimplifier<SumExpressionL
 
 		// all constant: 1 + 2 + 3  =>  6
 		if (constants.Values.All(v => v != null))
-			return Number(constants.Values.Cast<double>().Sum(v => v));
+			return Number(constants.Values.Cast<decimal>().Sum(v => v));
 
 		// collect constants: 1 + ? + 3  =>  (1 + 3) + ?  =>  4 + ?
-		double sum = constants.Values.Where(v => v != null).Cast<double>().Sum(v => v);
+		var sum = constants.Values.Where(v => v != null).Cast<decimal>().Sum(v => v);
 		var newTerms = expression.Terms.RemoveAll(e => constants[e].HasValue);
 
 		// do not add if zero
@@ -31,6 +31,6 @@ internal sealed class CollectNumbersInSumSimplifier : ISimplifier<SumExpressionL
 		if (newTerms.Count == 1)
 			return newTerms.Single();
 
-		return expression.WithTerms(newTerms);
+		return expression with { Terms = newTerms };
 	}
 }

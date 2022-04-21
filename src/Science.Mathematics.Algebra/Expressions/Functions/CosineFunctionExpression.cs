@@ -6,7 +6,7 @@ namespace Science.Mathematics.Algebra;
 /// Represents the cosine function.
 /// </summary>
 [FunctionName(PrimaryName)]
-public class CosineFunctionExpression : FunctionInvocationExpression
+public record class CosineFunctionExpression : FunctionInvocationExpression
 {
 	public CosineFunctionExpression(AlgebraExpression argument)
 		: base(PrimaryName, ImmutableList<AlgebraExpression>.Empty.Add(argument))
@@ -14,7 +14,7 @@ public class CosineFunctionExpression : FunctionInvocationExpression
 
 	public const string PrimaryName = "cos";
 
-	public AlgebraExpression Argument => this.Arguments[0];
+	public AlgebraExpression Argument => Arguments[0];
 }
 
 public static partial class WellKnownFunctionNames

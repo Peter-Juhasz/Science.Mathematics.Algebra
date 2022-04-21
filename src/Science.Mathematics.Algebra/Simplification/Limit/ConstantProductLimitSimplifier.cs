@@ -17,6 +17,6 @@ public class ConstantProductLimitSimplifier : ISimplifier<LimitExpression>
 		if (!constants.Any())
 			return expression;
 
-		return Product(constants) * expression.WithExpression(Product(body.Terms.Except(constants).ToList()));
+		return Product(constants) * expression with { Expression = Product(body.Terms.Except(constants).ToList()) };
 	}
 }

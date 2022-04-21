@@ -11,4 +11,10 @@ internal static class Extensions
 
 	public static double Product<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector) => source.Select(selector).Aggregate((x, y) => x * y);
 	public static double? Product<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector) => source.Select(selector).Aggregate((x, y) => x * y);
+
+	public static decimal Product(this IEnumerable<decimal> source) => source.Product(_ => _);
+	public static decimal? Product(this IEnumerable<decimal?> source) => source.Product(_ => _);
+
+	public static decimal Product<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector) => source.Select(selector).Aggregate((x, y) => x * y);
+	public static decimal? Product<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector) => source.Select(selector).Aggregate((x, y) => x * y);
 }

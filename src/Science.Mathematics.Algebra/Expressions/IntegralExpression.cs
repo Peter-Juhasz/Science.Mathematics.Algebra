@@ -9,88 +9,24 @@ using static ExpressionFactory;
 /// <summary>
 /// Represents a differentiation expression.
 /// </summary>
-public class IntegralExpression : AlgebraExpression, IEquatable<IntegralExpression>
+public record class IntegralExpression(AlgebraExpression Expression, SymbolExpression RespectTo, AlgebraExpression? From, AlgebraExpression? To) : AlgebraExpression, IEquatable<IntegralExpression>
 {
-	public IntegralExpression(AlgebraExpression expression, SymbolExpression respectTo, AlgebraExpression from, AlgebraExpression to)
-	{
-		if (expression == null)
-			throw new ArgumentNullException(nameof(expression));
+	public override decimal? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken)) => null;
 
-		if (respectTo == null)
-			throw new ArgumentNullException(nameof(respectTo));
-
-		if (from != null && to == null)
-			throw new ArgumentNullException(nameof(to));
-
-		if (from == null && to != null)
-			throw new ArgumentNullException(nameof(from));
-
-		this.Expression = expression;
-		this.RespectTo = respectTo;
-		this.From = from;
-		this.To = to;
-	}
-	public IntegralExpression(AlgebraExpression expression, SymbolExpression respectTo)
-		: this(expression, respectTo, null, null)
-	{ }
-
-
-	/// <summary>
-	/// Gets the expression to differentiate.
-	/// </summary>
-	public AlgebraExpression Expression { get; private set; }
-
-	/// <summary>
-	/// 
-	/// </summary>
-	public SymbolExpression RespectTo { get; private set; }
-
-	/// <summary>
-	/// Gets the expression to differentiate.
-	/// </summary>
-	public AlgebraExpression From { get; private set; }
-
-	/// <summary>
-	/// Gets the expression to differentiate.
-	/// </summary>
-	public AlgebraExpression To { get; private set; }
-
-
-	public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken)) => null;
-
-	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this.WithExpression(this.Expression.Substitute(variable, replacement));
+	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this with 
+	{ 
+		Expression = Expression.Substitute(variable, replacement) 
+	};
 
 	public override IEnumerable<AlgebraExpression> Children()
 	{
-		yield return this.Expression;
-		yield return this.RespectTo;
+		yield return Expression;
+		yield return RespectTo;
 	}
-
-
-	#region Immutability
-	public IntegralExpression WithRespectTo(SymbolExpression newVariable) => Integrate(this.Expression, newVariable, this.From, this.To);
-
-	public IntegralExpression WithExpression(AlgebraExpression newExpression) => Integrate(newExpression, this.RespectTo, this.From, this.To);
-
-	public IntegralExpression WithFrom(AlgebraExpression newExpression) => Integrate(this.Expression, this.RespectTo, newExpression, this.To);
-
-	public IntegralExpression WithTo(AlgebraExpression newExpression) => Integrate(this.Expression, this.RespectTo, this.From, newExpression);
-	#endregion
-
 
 	public override string ToString() => $"int_{From}^{To} {Expression} d{RespectTo}";
 
-	public bool Equals(IntegralExpression other)
-	{
-		if (Object.ReferenceEquals(other, null)) return false;
-
-		return this.Expression.Equals(other.Expression)
-			&& this.RespectTo.Equals(other.RespectTo);
-	}
-
-	public override int GetHashCode() => this.Expression.GetHashCode();
-
-	public override bool Equals(object obj) => this.Equals(obj as IntegralExpression);
+	public override int GetHashCode() => Expression.GetHashCode();
 }
 
 public static partial class AlgebraExpressionExtensions
@@ -105,9 +41,9 @@ public static partial class AlgebraExpressionExtensions
 
 public static partial class ExpressionFactory
 {
-	public static SymbolExpression IntegralConstant = Symbol("C");
+	public static readonly SymbolExpression IntegralConstant = Symbol("C");
 
-	public static IntegralExpression Integrate(AlgebraExpression expression, SymbolExpression respectTo) => new IntegralExpression(expression, respectTo);
+	public static IntegralExpression Integrate(AlgebraExpression expression, SymbolExpression respectTo) => Integrate(expression, respectTo, null, null);
 
-	public static IntegralExpression Integrate(AlgebraExpression expression, SymbolExpression respectTo, AlgebraExpression from, AlgebraExpression to) => new IntegralExpression(expression, respectTo, from, to);
+	public static IntegralExpression Integrate(AlgebraExpression expression, SymbolExpression respectTo, AlgebraExpression from, AlgebraExpression to) => new(expression, respectTo, from, to);
 }

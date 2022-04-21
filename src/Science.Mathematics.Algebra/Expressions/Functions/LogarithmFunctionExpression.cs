@@ -8,7 +8,7 @@ using static ExpressionFactory;
 /// Represents the sine function.
 /// </summary>
 [FunctionName(PrimaryName)]
-public class LogarithmFunctionExpression : FunctionInvocationExpression
+public record class LogarithmFunctionExpression : FunctionInvocationExpression
 {
 	public LogarithmFunctionExpression(AlgebraExpression argument, AlgebraExpression @base)
 		: base(PrimaryName, ImmutableList<AlgebraExpression>.Empty.Add(argument).Add(@base))
@@ -20,16 +20,9 @@ public class LogarithmFunctionExpression : FunctionInvocationExpression
 	public const string PrimaryName = "log";
 
 
-	public AlgebraExpression Base => this.Arguments[1];
+	public AlgebraExpression Base => Arguments[1];
 
-	public AlgebraExpression Argument => this.Arguments[0];
-
-
-	#region Immutability
-	public LogarithmFunctionExpression WithBase(AlgebraExpression newBase) => Logarithm(this.Argument, newBase);
-
-	public LogarithmFunctionExpression WithArgument(AlgebraExpression newArgument) => Logarithm(newArgument, this.Base);
-	#endregion
+	public AlgebraExpression Argument => Arguments[0];
 }
 
 public static partial class WellKnownFunctionNames

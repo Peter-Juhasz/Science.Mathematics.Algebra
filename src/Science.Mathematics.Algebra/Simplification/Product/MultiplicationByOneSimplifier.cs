@@ -21,7 +21,7 @@ internal sealed class MultiplicationByOneSimplifier : ISimplifier<ProductExpress
 			return One;
 
 		if (otherTerms.Count != expression.Terms.Count)
-			return expression.WithTerms(otherTerms);
+			return expression with { Terms = otherTerms };
 
 		return expression;
 	}

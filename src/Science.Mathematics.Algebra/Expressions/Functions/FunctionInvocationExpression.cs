@@ -11,69 +11,28 @@ namespace Science.Mathematics.Algebra;
 /// <summary>
 /// Represents a function invocation expression.
 /// </summary>
-public class FunctionInvocationExpression : AlgebraExpression, IEquatable<FunctionInvocationExpression>
+public record class FunctionInvocationExpression(string Name, IImmutableList<AlgebraExpression> Arguments) : AlgebraExpression, IEquatable<FunctionInvocationExpression>
 {
-	public FunctionInvocationExpression(string name, IImmutableList<AlgebraExpression> arguments)
+	public override decimal? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken)) => null;
+
+	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this with
 	{
-		if (name == null)
-			throw new ArgumentNullException(nameof(name));
+		Arguments = Arguments.Select(a => a.Substitute(variable, replacement)).ToImmutableList()
+	};
 
-		if (arguments == null)
-			throw new ArgumentNullException(nameof(arguments));
+	public override IEnumerable<AlgebraExpression> Children() => Arguments;
 
-		this.Name = name;
-		this.Arguments = arguments;
-	}
+	public virtual bool Equals(FunctionInvocationExpression? other) => other != null && Name == other.Name && Arguments.Zip(other.Arguments, (x, y) => x.Equals(y)).All(i => i);
 
-
-	/// <summary>
-	/// Gets the name of the invoked function.
-	/// </summary>
-	public string Name { get; private set; }
-
-	/// <summary>
-	/// Gets the arguments of the invocation.
-	/// </summary>
-	public IImmutableList<AlgebraExpression> Arguments { get; private set; }
-
-
-	public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken)) => null;
-
-	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this.WithArguments(this.Arguments.Select(a => a.Substitute(variable, replacement)).ToImmutableList());
-
-	public override IEnumerable<AlgebraExpression> Children() => this.Arguments;
-
-
-	#region Immutability
-	public FunctionInvocationExpression WithName(string name) => ExpressionFactory.Invoke(name, this.Arguments);
-
-	public FunctionInvocationExpression WithArguments(IImmutableList<AlgebraExpression> arguments) => ExpressionFactory.Invoke(this.Name, arguments);
-	#endregion
-
-
-	public bool Equals(FunctionInvocationExpression other)
-	{
-		if (Object.ReferenceEquals(other, null)) return false;
-
-		if (this.Name != other.Name)
-			return false;
-
-		if (this.Arguments.Count != other.Arguments.Count)
-			return false;
-
-		return this.Arguments.Zip(other.Arguments, (x, y) => x.Equals(y)).All(b => b);
-	}
-	public override bool Equals(object obj) => this.Equals(obj as FunctionInvocationExpression);
-
-	public override int GetHashCode() => this.Arguments.Select(o => o.GetHashCode()).Aggregate(this.Name.GetHashCode(), (x, y) => x ^ y);
+	public override int GetHashCode() => Arguments.Select(o => o.GetHashCode()).Aggregate(Name.GetHashCode(), (x, y) => x ^ y);
 
 	public override string ToString()
 	{
-		StringBuilder sb = new StringBuilder();
+		var sb = new StringBuilder();
 
-		sb.Append(this.Name);
+		sb.Append(Name);
 		sb.Append('(');
-		sb.Append(String.Join(", ", this.Arguments));
+		sb.Append(String.Join(", ", Arguments));
 		sb.Append(')');
 
 		return sb.ToString();

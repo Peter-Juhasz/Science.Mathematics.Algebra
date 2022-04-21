@@ -20,7 +20,7 @@ internal sealed class CollectNumbersInProductSimplifier : ISimplifier<ProductExp
 		{
 			// collect coefficients
 			IImmutableList<AlgebraExpression> terms = expression.Terms;
-			double coefficient = 1D;
+			decimal coefficient = 1m;
 
 			foreach (var kv in constants.Where(kv => kv.Value.HasValue))
 			{

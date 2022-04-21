@@ -17,6 +17,6 @@ public class ConstantSumLimitSimplifier : ISimplifier<LimitExpression>
 		if (!constants.Any())
 			return expression;
 
-		return Sum(constants) + expression.WithExpression(Sum(body.Terms.Except(constants).ToList()));
+		return Sum(constants) + expression with { Expression = Sum(body.Terms.Except(constants).ToList()) };
 	}
 }

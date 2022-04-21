@@ -10,13 +10,13 @@ using static ExpressionFactory;
 /// <summary>
 /// Represents an algebra expression. Serves as the base class of all expressions.
 /// </summary>
-public abstract class AlgebraExpression
+public abstract record class AlgebraExpression
 {
 	/// <summary>
 	/// Computes the constant value of the expression.
 	/// </summary>
 	/// <returns></returns>
-	public abstract double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken));
+	public abstract decimal? GetConstantValue(CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// Replaces every occurrences of <paramref name="subject"/> to <paramref name="replacement"/>.
@@ -31,125 +31,46 @@ public abstract class AlgebraExpression
 	public virtual bool IsInfinity() => this.DescendantsAndSelf().OfType<InfinityExpression>().Any();
 
 	#region Operators
-	public static SumExpressionList operator +(AlgebraExpression left, AlgebraExpression right)
-	{
-		return Add(left, right);
-	}
-	public static SumExpressionList operator +(double left, AlgebraExpression right)
-	{
-		return Add(Number(left), right);
-	}
-	public static SumExpressionList operator +(AlgebraExpression left, double right)
-	{
-		return Add(left, Number(right));
-	}
+	public static SumExpressionList operator +(AlgebraExpression left, AlgebraExpression right) => Add(left, right);
+	public static SumExpressionList operator +(decimal left, AlgebraExpression right) => Add(Number(left), right);
+	public static SumExpressionList operator +(AlgebraExpression left, decimal right) => Add(left, Number(right));
 
-	public static SumExpressionList operator -(AlgebraExpression left, AlgebraExpression right)
-	{
-		return Subtract(left, right);
-	}
-	public static SumExpressionList operator -(double left, AlgebraExpression right)
-	{
-		return Subtract(Number(left), right);
-	}
-	public static SumExpressionList operator -(AlgebraExpression left, double right)
-	{
-		return Subtract(left, Number(right));
-	}
+	public static SumExpressionList operator -(AlgebraExpression left, AlgebraExpression right) => Subtract(left, right);
+	public static SumExpressionList operator -(decimal left, AlgebraExpression right) => Subtract(Number(left), right);
+	public static SumExpressionList operator -(AlgebraExpression left, decimal right) => Subtract(left, Number(right));
 
-	public static ProductExpressionList operator *(AlgebraExpression left, AlgebraExpression right)
-	{
-		return Multiply(left, right);
-	}
-	public static ProductExpressionList operator *(double left, AlgebraExpression right)
-	{
-		return Multiply(Number(left), right);
-	}
-	public static ProductExpressionList operator *(AlgebraExpression left, double right)
-	{
-		return Multiply(left, Number(right));
-	}
+	public static ProductExpressionList operator *(AlgebraExpression left, AlgebraExpression right) => Multiply(left, right);
+	public static ProductExpressionList operator *(decimal left, AlgebraExpression right) => Multiply(Number(left), right);
+	public static ProductExpressionList operator *(AlgebraExpression left, decimal right) => Multiply(left, Number(right));
 
-	public static ProductExpressionList operator /(AlgebraExpression left, AlgebraExpression right)
-	{
-		return Divide(left, right);
-	}
-	public static ProductExpressionList operator /(double left, AlgebraExpression right)
-	{
-		return Divide(Number(left), right);
-	}
-	public static ProductExpressionList operator /(AlgebraExpression left, double right)
-	{
-		return Divide(left, Number(right));
-	}
+	public static ProductExpressionList operator /(AlgebraExpression left, AlgebraExpression right) => Divide(left, right);
+	public static ProductExpressionList operator /(decimal left, AlgebraExpression right) => Divide(Number(left), right);
+	public static ProductExpressionList operator /(AlgebraExpression left, decimal right) => Divide(left, Number(right));
 
-	public static PowerExpression operator ^(AlgebraExpression left, AlgebraExpression right)
-	{
-		return Exponentiate(left, right);
-	}
-	public static PowerExpression operator ^(double left, AlgebraExpression right)
-	{
-		return Exponentiate(Number(left), right);
-	}
-	public static PowerExpression operator ^(AlgebraExpression left, double right)
-	{
-		return Exponentiate(left, Number(right));
-	}
+	public static PowerExpression operator ^(AlgebraExpression left, AlgebraExpression right) => Exponentiate(left, right);
+	public static PowerExpression operator ^(decimal left, AlgebraExpression right) => Exponentiate(Number(left), right);
+	public static PowerExpression operator ^(AlgebraExpression left, decimal right) => Exponentiate(left, Number(right));
 
-	public static ProductExpressionList operator -(AlgebraExpression expr)
-	{
-		return Negate(expr);
-	}
-
-	public static bool operator ==(AlgebraExpression left, AlgebraExpression right)
-	{
-		if (Object.ReferenceEquals(left, right)) return true;
-
-		return left.Equals(right);
-	}
-	public static bool operator !=(AlgebraExpression left, AlgebraExpression right)
-	{
-		return !(left == right);
-	}
+	public static ProductExpressionList operator -(AlgebraExpression expr) => Negate(expr);
 	#endregion
 
-	public override bool Equals(object obj) => this == obj as AlgebraExpression;
+	public override int GetHashCode() => ToString().GetHashCode();
 
-	public override int GetHashCode() => this.ToString().GetHashCode();
-
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="other"></param>
-	/// <returns></returns>
 	public bool IsEquivalentTo(AlgebraExpression other)
 	{
-		if (this.Equals(other))
+		if (Equals(other))
 			return true;
 
 		return this.Simplify().Equals(other.Simplify());
 	}
 
 	#region Conversions
-	public static implicit operator AlgebraExpression(int value)
-	{
-		return Constant(value);
-	}
+	public static implicit operator AlgebraExpression(int value) => Number(value);
+	public static implicit operator AlgebraExpression(double value) => Number(value);
+	public static implicit operator AlgebraExpression(decimal value) => Number(value);
 
-	public static implicit operator AlgebraExpression(double value)
-	{
-		return Number(value);
-	}
-
-	public static implicit operator AlgebraExpression(string name)
-	{
-		return ExpressionFactory.Symbol(name);
-	}
-
-	public static implicit operator AlgebraExpression(char name)
-	{
-		return ExpressionFactory.Symbol(name);
-	}
+	public static implicit operator AlgebraExpression(char ch) => Symbol(ch.ToString());
+	public static implicit operator AlgebraExpression(string name) => Symbol(name);
 	#endregion
 }
 

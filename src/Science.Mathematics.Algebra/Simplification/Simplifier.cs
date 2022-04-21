@@ -18,7 +18,7 @@ public static class Simplifier
 	/// <param name="expression"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public static AlgebraExpression Simplify(this AlgebraExpression expression, CancellationToken cancellationToken = default(CancellationToken))
+	public static AlgebraExpression Simplify(this AlgebraExpression expression, CancellationToken cancellationToken = default)
 	{
 		AlgebraExpression simplified = expression;
 		AlgebraExpression lastResult;
@@ -71,15 +71,15 @@ public static class Simplifier
 	}
 
 	private static IEnumerable<Type> FindSimplifiers(Type expressionType) => typeof(ISimplifier<>).GetTypeInfo().Assembly.GetTypes()
-			.Where(t =>
-				t.GetTypeInfo().ImplementedInterfaces
-					.Where(i => i.IsConstructedGenericType)
-					.Where(i => i.GetGenericTypeDefinition() == typeof(ISimplifier<>))
-					.Any(i => i.GenericTypeArguments[0].GetTypeInfo().IsAssignableFrom(expressionType.GetTypeInfo()))
-			)
-		;
+		.Where(t =>
+			t.GetTypeInfo().ImplementedInterfaces
+				.Where(i => i.IsConstructedGenericType)
+				.Where(i => i.GetGenericTypeDefinition() == typeof(ISimplifier<>))
+				.Any(i => i.GenericTypeArguments[0].GetTypeInfo().IsAssignableFrom(expressionType.GetTypeInfo()))
+		)
+	;
 
 	private static IReadOnlyCollection<object> GetSimplifiers(AlgebraExpression expression) => FindSimplifiers(expression.GetType())
-			.Select(Activator.CreateInstance)
-			.ToList();
+		.Select(Activator.CreateInstance)
+		.ToList();
 }

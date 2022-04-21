@@ -9,7 +9,8 @@ namespace Science.Mathematics.Algebra;
 /// </summary>
 internal sealed class GenericFunctionInvocationSimplifier : ISimplifier<FunctionInvocationExpression>
 {
-	public AlgebraExpression Simplify(FunctionInvocationExpression expression, CancellationToken cancellationToken) => expression
-			.WithArguments(expression.Arguments.Select(a => a.Simplify()).ToImmutableList())
-		;
+	public AlgebraExpression Simplify(FunctionInvocationExpression expression, CancellationToken cancellationToken) => expression with
+	{
+		Arguments = expression.Arguments.Select(a => a.Simplify(cancellationToken)).ToImmutableList()
+	};
 }

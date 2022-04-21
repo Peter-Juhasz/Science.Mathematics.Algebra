@@ -22,13 +22,14 @@ internal sealed class CollectBasesInProductSimplifier : ISimplifier<ProductExpre
 
 		if (groups.Any())
 		{
-			return expression.WithTerms(
-				expression.Terms
+			return expression with
+			{
+				Terms = expression.Terms
 					.RemoveRange(groups.SelectMany(g => g))
 					.AddRange(
 						groups.Select(g => Product(g.Select(g2 => g2.Base).ToImmutableList()) ^ g.Key)
 					)
-			);
+			};
 		}
 
 		return expression;

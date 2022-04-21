@@ -7,5 +7,6 @@ namespace Science.Mathematics.Algebra;
 /// </summary>
 internal sealed class GenericAbsoluteValueSimplifier : ISimplifier<AbsoluteValueExpression>
 {
-	public AlgebraExpression Simplify(AbsoluteValueExpression expression, CancellationToken cancellationToken) => expression.WithExpression(expression.Expression.Simplify());
+	public AlgebraExpression Simplify(AbsoluteValueExpression expression, CancellationToken cancellationToken) =>
+		expression with { Expression = expression.Expression.Simplify(cancellationToken) };
 }

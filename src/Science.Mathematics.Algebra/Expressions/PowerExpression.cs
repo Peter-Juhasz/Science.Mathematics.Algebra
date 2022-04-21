@@ -10,90 +10,53 @@ using static ExpressionFactory;
 /// <summary>
 /// Represents a power expression.
 /// </summary>
-public class PowerExpression : AlgebraExpression
+public record class PowerExpression(AlgebraExpression Base, AlgebraExpression Exponent) : AlgebraExpression
 {
-	public PowerExpression(AlgebraExpression @base, AlgebraExpression exponent)
+	public override decimal? GetConstantValue(CancellationToken cancellationToken = default)
 	{
-		if (@base == null)
-			throw new ArgumentNullException(nameof(@base));
-
-		if (exponent == null)
-			throw new ArgumentNullException(nameof(exponent));
-
-		this.Base = @base;
-		this.Exponent = exponent;
-	}
-
-	/// <summary>
-	/// Gets the base of the power.
-	/// </summary>
-	public AlgebraExpression Base { get; private set; }
-
-	/// <summary>
-	/// Gets the exponent of the power.
-	/// </summary>
-	public AlgebraExpression Exponent { get; private set; }
-
-
-	public override double? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken))
-	{
-		double? @base = this.Base.GetConstantValue(cancellationToken),
-			exponent = this.Exponent.GetConstantValue(cancellationToken);
+		var @base = Base.GetConstantValue(cancellationToken);
+		var exponent = Exponent.GetConstantValue(cancellationToken);
 
 		if (@base != null && exponent != null)
-			return Math.Pow(@base.Value, exponent.Value);
+			return (decimal)Math.Pow((double)@base.Value, (double)exponent.Value);
 
 		return null;
 	}
 
 
-	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this
-			.WithBase(this.Base.Substitute(variable, replacement))
-			.WithExponent(this.Exponent.Substitute(variable, replacement))
-		;
+	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this with
+	{
+		Base = Base.Substitute(variable, replacement),
+		Exponent = Exponent.Substitute(variable, replacement)
+	};
 
 	public override IEnumerable<AlgebraExpression> Children()
 	{
-		yield return this.Base;
-		yield return this.Exponent;
+		yield return Base;
+		yield return Exponent;
 	}
-
-
-	#region Immutability
-	public PowerExpression WithBase(AlgebraExpression newBase) => ExpressionFactory.Exponentiate(newBase, this.Exponent);
-	public PowerExpression WithExponent(AlgebraExpression newExponent) => ExpressionFactory.Exponentiate(this.Base, newExponent);
-	#endregion
 
 
 	internal AlgebraExpression Normalize()
 	{
-		if (this.Exponent == One)
-			return this.Base;
+		if (Exponent == One)
+			return Base;
 
 		return this;
 	}
 
 
-	public override bool Equals(object obj) => this.Equals(obj as PowerExpression);
-
-	public bool Equals(PowerExpression other)
-	{
-		if (Object.ReferenceEquals(other, null)) return false;
-
-		return this.Base == other.Base && this.Exponent == other.Exponent;
-	}
-
-	public override int GetHashCode() => this.Base.GetHashCode() ^ this.Exponent.GetHashCode();
+	public override int GetHashCode() => HashCode.Combine(Base, Exponent);
 
 	public override string ToString()
 	{
-		StringBuilder result = new StringBuilder();
+		var result = new StringBuilder();
 
-		var baseNeedsParenthesis = this.Base is ExpressionList;
+		var baseNeedsParenthesis = Base is ExpressionList;
 		if (baseNeedsParenthesis)
 			result.Append('(');
 
-		result.Append(this.Base);
+		result.Append(Base);
 
 		if (baseNeedsParenthesis)
 			result.Append(')');
@@ -102,11 +65,11 @@ public class PowerExpression : AlgebraExpression
 		result.Append('^');
 		result.Append(' ');
 
-		var exponentNeedsParenthesis = this.Exponent is ExpressionList;
+		var exponentNeedsParenthesis = Exponent is ExpressionList;
 		if (exponentNeedsParenthesis)
 			result.Append('(');
 
-		result.Append(this.Exponent);
+		result.Append(Exponent);
 
 		if (exponentNeedsParenthesis)
 			result.Append(')');
@@ -117,19 +80,17 @@ public class PowerExpression : AlgebraExpression
 
 public static partial class AlgebraExpressionExtensions
 {
-	public static PowerExpression AsPower(this AlgebraExpression expression)
+	public static PowerExpression AsPower(this AlgebraExpression expression) => expression switch
 	{
-		if (expression is PowerExpression power)
-			return power;
-
-		return ExpressionFactory.Exponentiate(expression, ExpressionFactory.One);
-	}
+		PowerExpression power => power,
+		_ => Exponentiate(expression, One)
+	};
 }
 
 public static partial class ExpressionFactory
 {
-	public static PowerExpression Exponentiate(AlgebraExpression @base, AlgebraExpression exponent) => new PowerExpression(@base, exponent);
+	public static PowerExpression Exponentiate(AlgebraExpression @base, AlgebraExpression exponent) => new(@base, exponent);
 	public static PowerExpression Root(AlgebraExpression @base, AlgebraExpression exponent) => Exponentiate(@base, Divide(NumberExpression.One, exponent));
-	public static PowerExpression Square(AlgebraExpression expression) => Exponentiate(expression, Constant(2));
-	public static PowerExpression SquareRoot(AlgebraExpression expression) => Exponentiate(expression, Divide(NumberExpression.One, Constant(2)));
+	public static PowerExpression Square(AlgebraExpression expression) => Exponentiate(expression, Number(2));
+	public static PowerExpression SquareRoot(AlgebraExpression expression) => Exponentiate(expression, Divide(NumberExpression.One, Number(2)));
 }

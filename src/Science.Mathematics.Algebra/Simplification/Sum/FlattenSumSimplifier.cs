@@ -24,6 +24,6 @@ internal sealed class FlattenSumSimplifier : ISimplifier<SumExpressionList>
 			newTerms = newTerms.RemoveAt(index).InsertRange(index, nested.Terms);
 		}
 
-		return expression.WithTerms(newTerms);
+		return expression with { Terms = newTerms };
 	}
 }
