@@ -59,6 +59,15 @@ namespace Science.Mathematics.Algebra
         }
 
 
+        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, MatchContext context, CancellationToken cancellationToken = default)
+        {
+            if (expression is DifferentiationExpression diffExpression)
+                return this.Expression.MatchTo(diffExpression.Expression, context, cancellationToken);
+
+            return Enumerable.Empty<PatternMatch>();
+        }
+
+
         public LimitExpression ToLimit()
         {
             var delta = Symbol("h");

@@ -30,7 +30,7 @@ namespace Science.Mathematics.Algebra
         /// Gets the name of the variable.
         /// </summary>
         public string Name { get; private set; }
-
+        
 
         public override double? GetConstantValue(CancellationToken cancellationToken = default)
         {
@@ -43,8 +43,11 @@ namespace Science.Mathematics.Algebra
             return this.Name == variable.Name ? replacement : this;
         }
 
-        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, CancellationToken cancellationToken = default)
+        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, MatchContext context, CancellationToken cancellationToken = default)
         {
+            if (context.MatchedVariables.ContainsKey(Name))
+                yield break;
+
             yield return new PatternMatch(this, this, expression);
         }
 

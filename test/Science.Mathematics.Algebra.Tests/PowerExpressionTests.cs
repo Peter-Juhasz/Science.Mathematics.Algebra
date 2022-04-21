@@ -37,8 +37,7 @@ namespace Science.Mathematics.Algebra.Tests
             var @base = new SymbolExpression("x");
 
             var expression = Exponentiation(@base, 1);
-            var simplifier = new ExponentOneSimplifier();
-            var result = simplifier.Simplify(expression, CancellationToken.None);
+            var result = expression.Simplify();
 
             Assert.AreEqual(@base, result);
         }
@@ -49,8 +48,7 @@ namespace Science.Mathematics.Algebra.Tests
             var @base = new SymbolExpression("x");
 
             var expression = Exponentiation(@base, 0);
-            var simplifier = new ExponentZeroSimplifier();
-            var result = simplifier.Simplify(expression, CancellationToken.None);
+            var result = expression.Simplify();
 
             Assert.IsInstanceOfType(result, typeof(NumberExpression));
             Assert.AreEqual(1, result.GetConstantValue());
@@ -60,8 +58,7 @@ namespace Science.Mathematics.Algebra.Tests
         public void Power_Simplify_WhenBaseEqualsZero()
         {
             var expression = Exponentiation(0, 2);
-            var simplifier = new BaseZeroSimplifier();
-            var result = simplifier.Simplify(expression, CancellationToken.None);
+            var result = expression.Simplify();
 
             Assert.IsInstanceOfType(result, typeof(NumberExpression));
             Assert.AreEqual(0, result.GetConstantValue());
@@ -73,8 +70,7 @@ namespace Science.Mathematics.Algebra.Tests
             var exponent = new SymbolExpression("x");
 
             var expression = Exponentiation(1, exponent);
-            var simplifier = new BaseOneSimplifier();
-            var result = simplifier.Simplify(expression, CancellationToken.None);
+            var result = expression.Simplify();
 
             Assert.IsInstanceOfType(result, typeof(NumberExpression));
             Assert.AreEqual(1, result.GetConstantValue());

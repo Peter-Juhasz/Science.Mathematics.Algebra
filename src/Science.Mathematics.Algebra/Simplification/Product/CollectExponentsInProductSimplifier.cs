@@ -9,8 +9,6 @@ namespace Science.Mathematics.Algebra
     /// </summary>
     internal sealed class CollectExponentsInProductSimplifier : ISimplifier<ProductExpressionList>
     {
-        private static readonly ExponentOneSimplifier exponentSimplifier = new ExponentOneSimplifier();
-
         public AlgebraExpression Simplify(ProductExpressionList expression, CancellationToken cancellationToken)
         {
             var results = expression.Terms
@@ -25,7 +23,7 @@ namespace Science.Mathematics.Algebra
                         .Select(g =>
                             ExpressionFactory.Exponentiation(g.Key, ExpressionFactory.Sum(g.Select(p => p.Exponent).ToImmutableList()))
                         )
-                        .Select(p => exponentSimplifier.Simplify(p, cancellationToken))
+                        .Select(p => p.Simplify())
                         .ToImmutableList()
                 );
             }

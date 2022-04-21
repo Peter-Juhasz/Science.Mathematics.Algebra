@@ -18,76 +18,96 @@ namespace Science.Mathematics.Algebra
         static Simplifier()
         {
             // powers
-            Simplifier.AddRule(x => x ^ 0, x => 1);
-            Simplifier.AddRule(x => x ^ 1, x => x);
-            Simplifier.AddRule(x => 1 ^ x, x => 1);
-            Simplifier.AddRule(x => 0 ^ x, x => 0);
-            Simplifier.AddRule((a, b, c) => (a ^ b) ^ c, (a, b, c) => a ^ (b * c));
-            Simplifier.AddRule(
+            AddRule(0 ^ 0, 0);
+            AddRule(x => x ^ 0, 1);
+            AddRule(x => x ^ 1, x => x);
+            AddRule(x => 1 ^ x, x => 1);
+            AddRule(x => 0 ^ x, 0);
+            AddRule(() => i ^ 2, () => 1);
+            AddRule((a, b, c) => (a ^ b) ^ c, (a, b, c) => a ^ (b * c));
+            AddRule(
                 (a, x) => IndefiniteIntegral(a ^ x, x),
                 (a, x) => (a ^ x) / NaturalLogarithm(a) + IntegralConstant,
                 (a, x) => !a.DependsUpon(x)
             );
-            Simplifier.AddRule(
+            AddRule(
                (a, x) => IndefiniteIntegral(x ^ a, x),
                (a, x) => (x ^ (a + 1)) / (a + 1) + IntegralConstant,
                (a, x) => a.GetConstantValue() != -1
             );
-            Simplifier.AddRule(
+            AddRule(
                 (a, x) => IndefiniteIntegral(e ^ (a * x), x),
                 (a, x) => (e ^ (a * x)) / a + IntegralConstant,
                 (a, x) => !a.DependsUpon(x)
             );
 
+            // differentiation
+            AddRule(x => Differentiate(e ^ x, x), x => e ^ x);
+            AddRule((f, g, x) => Differentiate(f ^ g, x), (f, g, x) => (f ^ (g - 1)) * (g * f.Differentiation(x) + f * NaturalLogarithm(f) * g.Differentiation(x)));
+            AddRule(x => Sine(x).Differentiation(x), x => Cosine(x));
+
             // sums
-            Simplifier.AddRule(x => x + 0, x => x);
-            Simplifier.AddRule(x => x - 0, x => x);
-            Simplifier.AddRule((c, x, y) => (c * x) + (c * y), (c, x, y) => c * (x + y));
+            AddRule(x => x + 0, x => x);
+            AddRule(x => x - 0, x => x);
+            AddRule((c, x, y) => (c * x) + (c * y), (c, x, y) => c * (x + y));
 
             // products
-            Simplifier.AddRule(x => x * 1, x => x);
-            Simplifier.AddRule(x => x / 1, x => x);
-            Simplifier.AddRule((b, x, y) => (b ^ x) * (b ^ y), (b, x, y) => b ^ (x + y));
-            Simplifier.AddRule(
+            AddRule(x => x * 1, x => x);
+            AddRule(x => x / 1, x => x);
+            AddRule((b, x, y) => (b ^ x) * (b ^ y), (b, x, y) => b ^ (x + y));
+            AddRule(
                 x => IndefiniteIntegral(1 / x, x),
                 x => NaturalLogarithm(AbsoluteValue(x)) + IntegralConstant
             );
 
             // absolute value
-            Simplifier.AddRule(x => AbsoluteValue(AbsoluteValue(x)), x => AbsoluteValue(x));
+            AddRule(() => AbsoluteValue(0), () => 0);
+            AddRule(x => AbsoluteValue(AbsoluteValue(x)), x => AbsoluteValue(x));
 
             // trigonometry
-            Simplifier.AddRule(
+            AddRule(
                 (x, n) => IndefiniteIntegral(Sine(x) ^ n, x),
                 (x, n) => -Exponentiation(Sine(x), n - 1) * Cosine(x) / n + (n - 1) / n * IndefiniteIntegral(Sine(x) ^ (n - 2), x) + IntegralConstant
             );
-            Simplifier.AddRule(
+            AddRule(
                 (x, n) => IndefiniteIntegral(Cosine(x) ^ n, x),
                 (x, n) => Exponentiation(Cosine(x), n - 1) * Sine(x) / n + (n - 1) / n * IndefiniteIntegral(Cosine(x) ^ (n - 2), x) + IntegralConstant
             );
 
             // logarithms
-            Simplifier.AddRule(
+            AddRule(
                 x => IndefiniteIntegral(NaturalLogarithm(x), x),
                 x => x * NaturalLogarithm(x) - x + IntegralConstant
             );
-            Simplifier.AddRule(
+            AddRule(
                 (x, a) => IndefiniteIntegral(Logarithm(x, a), x),
                 (x, a) => x * Logarithm(x, a) - x / NaturalLogarithm(a) + IntegralConstant
             );
 
             // integrals
-            Simplifier.AddRule(
+            AddRule(
                 () => IntegralConstant + IntegralConstant,
                 () => IntegralConstant
             );
-            Simplifier.AddRule(
+            AddRule(
                 (x, n, c) => IndefiniteIntegral((x ^ n) * Exponentiation(e, c * x), x),
                 (x, n, c) => (x ^ n) * Exponentiation(e, c * x) / c - (n / c) * IndefiniteIntegral(Exponentiation(x, n -1) * Exponentiation(e, c * x), x)
             );
+
+            // euler's identity
+            AddRule(e ^ (Pi * i), -1);
         }
 
         public static ICollection<ExpressionTransformationRule> Rules { get; } = new HashSet<ExpressionTransformationRule>();
+
+        public static void AddRule(
+            AlgebraExpression pattern,
+            AlgebraExpression result,
+            params Func<SymbolExpression, bool>[] conditions
+        )
+        {
+            Rules.Add(new ExpressionTransformationRule(pattern, result));
+        }
 
         public static void AddRule(
             Expression<Func<AlgebraExpression>> pattern,
@@ -99,6 +119,15 @@ namespace Science.Mathematics.Algebra
         }
 
         public static void AddRule(
+            Expression<Func<AlgebraExpression>> pattern,
+            AlgebraExpression result,
+            params Func<SymbolExpression, bool>[] conditions
+        )
+        {
+            Rules.Add(new ExpressionTransformationRule(pattern.Compile()(), result));
+        }
+
+        public static void AddRule(
             Expression<Func<SymbolExpression, AlgebraExpression>> pattern,
             Expression<Func<SymbolExpression, AlgebraExpression>> result,
             params Func<SymbolExpression, bool>[] conditions
@@ -107,6 +136,16 @@ namespace Science.Mathematics.Algebra
             var p1 = Symbol(pattern.Parameters[0].Name);
             var r1 = Symbol(result.Parameters[0].Name);
             Rules.Add(new ExpressionTransformationRule(pattern.Compile()(p1), result.Compile()(r1)));
+        }
+
+        public static void AddRule(
+            Expression<Func<SymbolExpression, AlgebraExpression>> pattern,
+            AlgebraExpression result,
+            params Func<SymbolExpression, bool>[] conditions
+        )
+        {
+            var p1 = Symbol(pattern.Parameters[0].Name);
+            Rules.Add(new ExpressionTransformationRule(pattern.Compile()(p1), result));
         }
 
         public static void AddRule(
@@ -147,71 +186,24 @@ namespace Science.Mathematics.Algebra
         {
             AlgebraExpression simplified = expression;
             AlgebraExpression lastResult;
+            MatchContext context = new MatchContext();
 
             do
             {
                 lastResult = simplified;
 
-                // simplify by kind
-                simplified = SimplifySpecificKind(simplified, cancellationToken);
-            } while (!lastResult.Equals(simplified));
-
-            return simplified;
-        }
-
-
-        private static AlgebraExpression SimplifySpecificKind(AlgebraExpression expression, CancellationToken cancellationToken)
-        {
-            AlgebraExpression simplified = expression;
-            AlgebraExpression lastResult;
-
-            // find applicable simplifiers
-            IReadOnlyCollection<object> simplifiers = GetSimplifiers(expression);
-
-            do
-            {
-                lastResult = simplified;
-
-                // query each simplifier
-                foreach (var simplifier in simplifiers)
+                foreach (var pattern in Rules)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
-
-                    var original = simplified;
-
-                    MethodInfo method = simplifier.GetType().GetRuntimeMethod(nameof(ISimplifier<AlgebraExpression>.Simplify), new[] { expression.GetType(), typeof(CancellationToken) });
-                    simplified = method.Invoke(simplifier, new object[] { simplified, cancellationToken }) as AlgebraExpression;
-                    
-                    // trace
-                    if (!original.Equals(simplified))
-                        Debug.WriteLine($"Simplified '{original}' to '{simplified}' using '{simplifier}'");
-
-                    // stop if not the same kind of expression
-                    if (lastResult.GetType() != simplified.GetType())
-                        return simplified;
+                    var match = pattern.Pattern.MatchTo(lastResult, context, cancellationToken).FirstOrDefault();
+                    if (match != null)
+                    {
+                        simplified = pattern.Result.Substitute(match.Values);
+                        continue;
+                    }
                 }
             } while (!lastResult.Equals(simplified));
 
             return simplified;
-        }
-
-        private static IEnumerable<Type> FindSimplifiers(Type expressionType)
-        {
-            return typeof(ISimplifier<>).GetTypeInfo().Assembly.GetTypes()
-                .Where(t =>
-                    t.GetTypeInfo().ImplementedInterfaces
-                        .Where(i => i.IsConstructedGenericType)
-                        .Where(i => i.GetGenericTypeDefinition() == typeof(ISimplifier<>))
-                        .Any(i => i.GenericTypeArguments[0].GetTypeInfo().IsAssignableFrom(expressionType.GetTypeInfo()))
-                )
-            ;
-        }
-
-        private static IReadOnlyCollection<object> GetSimplifiers(AlgebraExpression expression)
-        {
-            return FindSimplifiers(expression.GetType())
-                .Select(Activator.CreateInstance)
-                .ToList();
         }
     }
 }

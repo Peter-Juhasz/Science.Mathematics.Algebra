@@ -62,17 +62,15 @@ namespace Science.Mathematics.Algebra
         }
 
 
-        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, CancellationToken cancellationToken = default)
+        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, MatchContext context, CancellationToken cancellationToken = default)
         {
             if (expression is PowerExpression power)
             {
-                foreach (var exponentMatch in power.Exponent.Match(this.Exponent, cancellationToken))
-                {
-                    var newBase = power.Base.Substitute(exponentMatch.Values);
+                foreach (var match in ExpressionMatcher.MatchVariations(new[] { power.Exponent, power.Base }, new[] { this.Exponent, this.Base }, context, cancellationToken))
+                    yield return match;
 
-                    foreach (var baseMatch in power.Base.Match(this.Base, cancellationToken))
-                        yield return exponentMatch.AddValues(baseMatch.Values);
-                }
+                foreach (var match in ExpressionMatcher.MatchVariations(new[] { power.Exponent, power.Base }, new[] { this.Base, this.Exponent }, context, cancellationToken))
+                    yield return match;
             }
         }
 

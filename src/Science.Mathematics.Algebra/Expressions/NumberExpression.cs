@@ -53,7 +53,7 @@ namespace Science.Mathematics.Algebra
             return this;
         }
 
-        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, CancellationToken cancellationToken = default)
+        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, MatchContext context, CancellationToken cancellationToken = default)
         {
             if (expression.GetConstantValue(cancellationToken) == Value)
                 yield return new PatternMatch(this);

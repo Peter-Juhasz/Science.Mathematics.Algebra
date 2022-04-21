@@ -43,6 +43,14 @@ namespace Science.Mathematics.Algebra.Tests
         }
 
         [TestMethod]
+        public void AbsoluteValue_Zero()
+        {
+            var expression = AbsoluteValue(0);
+            var simplified = expression.Simplify();
+            Assert.AreEqual(Zero, simplified);
+        }
+
+        [TestMethod]
         public void AbsoluteValue_ToString()
         {
             const int reference = 3;

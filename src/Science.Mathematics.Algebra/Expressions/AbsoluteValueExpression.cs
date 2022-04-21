@@ -35,7 +35,7 @@ namespace Science.Mathematics.Algebra
 
         public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement)
         {
-            return this;
+            return WithExpression(Expression.Substitute(variable, replacement));
         }
 
         public override IEnumerable<AlgebraExpression> Children()
@@ -43,10 +43,10 @@ namespace Science.Mathematics.Algebra
             yield return this.Expression;
         }
 
-        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, CancellationToken cancellationToken = default)
+        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, MatchContext context, CancellationToken cancellationToken = default)
         {
             if (expression is AbsoluteValueExpression absoluteValue)
-                return absoluteValue.Expression.Match(this.Expression, cancellationToken);
+                return this.Expression.MatchTo(absoluteValue.Expression, context, cancellationToken);
 
             return Enumerable.Empty<PatternMatch>();
         }

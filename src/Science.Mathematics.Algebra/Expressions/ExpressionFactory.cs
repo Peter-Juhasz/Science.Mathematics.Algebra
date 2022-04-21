@@ -20,6 +20,10 @@ namespace Science.Mathematics.Algebra
         /// </summary>
         public static readonly SymbolExpression Pi = Symbol("π");
 
+        /// <summary>
+        /// Represents the imaginary constant.
+        /// </summary>
+        public static readonly SymbolExpression i = Symbol("i");
 
         public static SumExpressionList Polynomial(SymbolExpression variable, IReadOnlyList<AlgebraExpression> coefficients)
         {

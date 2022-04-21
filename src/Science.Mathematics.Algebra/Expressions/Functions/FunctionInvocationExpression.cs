@@ -52,6 +52,14 @@ namespace Science.Mathematics.Algebra
             return this.Arguments;
         }
 
+        public override IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, MatchContext context, CancellationToken cancellationToken = default)
+        {
+            if (expression is FunctionInvocationExpression diffExpression && diffExpression.Name == this.Name)
+                return ExpressionMatcher.MatchVariations(diffExpression.Arguments, this.Arguments, context, cancellationToken);
+
+            return Enumerable.Empty<PatternMatch>();
+        }
+
 
         #region Immutability
         public FunctionInvocationExpression WithName(string name)

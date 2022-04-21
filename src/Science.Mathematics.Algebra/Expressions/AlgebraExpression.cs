@@ -31,7 +31,7 @@ namespace Science.Mathematics.Algebra
 
         public virtual bool IsInfinity() => this.DescendantsAndSelf().OfType<InfinityExpression>().Any();
 
-        public virtual IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, CancellationToken cancellationToken = default)
+        public virtual IEnumerable<PatternMatch> MatchTo(AlgebraExpression expression, MatchContext context, CancellationToken cancellationToken = default)
         {
             yield break;
         }
@@ -198,17 +198,8 @@ namespace Science.Mathematics.Algebra
 
         public static IEnumerable<PatternMatch> Match(this AlgebraExpression subject, AlgebraExpression pattern, CancellationToken cancellationToken = default)
         {
-            return pattern.MatchTo(subject, cancellationToken);
+            return pattern.MatchTo(subject, new MatchContext(), cancellationToken);
         }
-        public static IEnumerable<PatternMatch> Match(
-            this AlgebraExpression subject,
-            Expression<Func<SymbolExpression, AlgebraExpression>> pattern,
-            CancellationToken cancellationToken = default)
-        {
-            var p1 = Symbol(pattern.Parameters[0].Name);
-            return subject.MatchTo(pattern.Compile()(p1), cancellationToken);
-        }
-
 
         public static AlgebraExpression Substitute(this AlgebraExpression expression, IReadOnlyDictionary<SymbolExpression, AlgebraExpression> map)
         {
