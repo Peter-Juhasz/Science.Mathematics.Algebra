@@ -8,11 +8,9 @@ namespace Science.Mathematics.Algebra;
 /// </summary>
 internal sealed class SingleProductSimplifier : ISimplifier<ProductExpressionList>
 {
-	public AlgebraExpression Simplify(ProductExpressionList expression, CancellationToken cancellationToken)
+	public AlgebraExpression Simplify(ProductExpressionList expression, CancellationToken cancellationToken) => expression switch
 	{
-		if (expression.Terms.Count == 1)
-			return expression.Terms.Single();
-
-		return expression;
-	}
+		[AlgebraExpression single] => single,
+		_ => expression
+	};
 }

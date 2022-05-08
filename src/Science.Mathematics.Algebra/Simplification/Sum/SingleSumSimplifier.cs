@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 
 namespace Science.Mathematics.Algebra;
 
@@ -8,11 +7,9 @@ namespace Science.Mathematics.Algebra;
 /// </summary>
 internal sealed class SingleSumSimplifier : ISimplifier<SumExpressionList>
 {
-	public AlgebraExpression Simplify(SumExpressionList expression, CancellationToken cancellationToken)
+	public AlgebraExpression Simplify(SumExpressionList expression, CancellationToken cancellationToken) => expression switch
 	{
-		if (expression.Terms.Count == 1)
-			return expression.Terms.Single();
-
-		return expression;
-	}
+		[AlgebraExpression single] => single,
+		_ => expression
+	};
 }

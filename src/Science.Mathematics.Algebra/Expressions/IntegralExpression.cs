@@ -11,7 +11,7 @@ using static ExpressionFactory;
 /// </summary>
 public record class IntegralExpression(AlgebraExpression Expression, SymbolExpression RespectTo, AlgebraExpression? From, AlgebraExpression? To) : AlgebraExpression, IEquatable<IntegralExpression>
 {
-	public override decimal? GetConstantValue(CancellationToken cancellationToken = default(CancellationToken)) => null;
+	public override decimal? GetConstantValue(CancellationToken cancellationToken = default) => null;
 
 	public override AlgebraExpression Substitute(SymbolExpression variable, AlgebraExpression replacement) => this with 
 	{ 

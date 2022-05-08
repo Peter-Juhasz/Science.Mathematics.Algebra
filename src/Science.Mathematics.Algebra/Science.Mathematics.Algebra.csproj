@@ -5,6 +5,7 @@
 		<AssemblyName>Science.Mathematics.Algebra</AssemblyName>
 		<PackageId>Science.Mathematics.Algebra</PackageId>
 		<Nullable>enable</Nullable>
+		<LangVersion>preview</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
